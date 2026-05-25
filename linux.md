@@ -126,10 +126,10 @@ O comando `shutdown` é um *handler* para todos esses comandos mas faz o "encerr
 - `<time>`: `hh:mm` no padrão 24h ou `+m` onde "m" é a quantidade de minutos a partir de agora, ex. `+5` se refere daqui a 5 minutos (*default*: `+1`)
 - `<wall>`: Mensagem de aviso de desligamento do sistema para os usuário "logados"
 
-*Opções usados:*
+*Opções usadas:*
 
 - `-H`: Para a máquina
-- `-P`: Desliga a máquina (*desliga*)
+- `-P`: Desliga a máquina (*default*)
 - `-r`: Reinicia a máquina
 - `-c`: Cancela a operação de *shutdown* pendente
 - `--show`: Mostra (se houver) a operação de *shutdown* pendente
@@ -138,6 +138,77 @@ O comando `shutdown` é um *handler* para todos esses comandos mas faz o "encerr
 shutdown [<options>] [<time>|now [wall]]
 ```
 
+### `fdisk`
+
+*Parâmetros usados:*
+
+- `X`: Letra do disco
+- `Y`: Número da partição
+
+Lista informações de todos os discos:
+
+```sh
+[sudo] fdisk -l
+```
+
+Lista informações de um disco específico:
+
+```sh
+[sudo] fdisk -l /dev/sdX
+```
+
+Interface interativo para manipulação avançada da tabela de partiçẽos e partiçẽos:
+
+```sh
+[sudo] fdisk /dev/sdX
+```
+
+*LINKS*:
+
+- [MBR Partitions Types¹](https://en.wikipedia.org/wiki/Partition_type)
+- [MBR Partitions Types²](https://tldp.org/HOWTO/Partition-Mass-Storage-Definitions-Naming-HOWTO/x190.html)
+- [GPT Partitions Types](https://en.wikipedia.org/wiki/GUID_Partition_Table#Partition_type_GUIDs)
+- [fdisk (archwiki)](https://wiki.archlinux.org/title/fdisk)
+
+### `sfdisk`
+
+*Parâmetros usados:*
+
+- `<device>`: Nome do dispositivo de bloco
+- `<partition>`: Número da partição do dispositivo
+- `<sectors>`: Número de setores do dispositivo
+
+*Backup* do esquema de partições do *device*:
+
+```sh
+sfdisk -d /dev/sdX > ./layout.dump
+```
+
+Restaurar *layout* de partições "backupiado":
+
+```sh
+sfdisk /dev/sdX < ./layout.dump
+```
+
+Mover partições (alterar o valor de início e fim dos blocos):
+
+```sh
+echo '+<sectors>,' | sfdisk --move-data <device> -N <partition>
+```
+
+Reordernar partições (caso alguma tenha sido excluida ou tinha sido criada no meio de outras):
+
+```sh
+sfdisk -r /dev/sdX
+```
+
+*OBSERVAÇÕES*:
+
+- Com o sinal de `+`, move-se o ínicio do setor para o valor de setores passados em `<sectors>`
+
+*LINKS*:
+
+- [Reread/Resort Partitions](https://serverfault.com/questions/36038/reread-partition-table-without-rebooting) (em caso mudança de na ordenação das partições)
 
 ## Configurações
 
