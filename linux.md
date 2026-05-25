@@ -16,6 +16,7 @@ Faça o setup pelo guia do [Flatpak](https://flatpak.org/setup) ou do [Flathub](
 
 - `<remote>`: Repositório remoto, ex. `flathub`
 - `<app>`: *ID* do aplicativo remota ou localmente, ex. `org.mozilla.firefox`
+- `<commit>`: *Hash* do *commit*
 
 Instalar app flatpak:
 
@@ -60,10 +61,6 @@ flatpak mask [--remove] <app>
 ```
 
 #### *Rollback*
-
-*Parâmetros usados:*
-
-- `<commit>`: *Hash* do *commit*
 
 Listar as versões do app flatpak:
 
@@ -174,9 +171,9 @@ Interface interativo para manipulação avançada da tabela de partiçẽos e pa
 
 *Parâmetros usados:*
 
-- `<device>`: Nome do dispositivo de bloco
-- `<partition>`: Número da partição do dispositivo
-- `<sectors>`: Número de setores do dispositivo
+- `<device>`: Nome do dispositivo
+- `<partition>`: Número da partição
+- `<sectors>`: Número de setores
 
 *Backup* do esquema de partições do *device*:
 
@@ -209,6 +206,66 @@ sfdisk -r /dev/sdX
 *LINKS*:
 
 - [Reread/Resort Partitions](https://serverfault.com/questions/36038/reread-partition-table-without-rebooting) (em caso mudança de na ordenação das partições)
+
+### `parted`
+
+Listar os discos na máquina:
+
+```sh
+parted -l
+```
+
+### `mkfs`
+
+Programas necessários para `fat32`:
+
+```sh
+[sudo] apt install mtools
+```
+
+Programas necessários para `exfat`:
+
+```sh
+[sudo] apt install exfatprogs
+```
+
+*Parâmetros usados:*
+
+- `X`: Letra do disco
+- `Y`: Número da partição
+
+Formatar **fat32**:
+
+- `-n`: Adiciona *label* na formatação
+
+```sh
+[sudo] mkfs.fat -F 32 [-n <label>] /dev/sdXY
+```
+
+Formatar **ext4**:
+
+- `-L`: Adiciona label na formatação
+
+```sh
+[sudo] mkfs.ext4 [-L <label>] /dev/sdXY
+```
+
+Formatar **exfat**:
+
+- `-L`: Adiciona label na formatação
+
+```sh
+[sudo] mkfs.exfat [-L <label>] /dev/sdXY
+```
+
+Formatar **ntfs**:
+
+- `-Q`: Formatação rapida
+- `-L`: Adiciona label na formatação
+
+```sh
+[sudo] mkfs.ntfs [-Q] [-L <label>] /dev/sdXY
+```
 
 ## Configurações
 
@@ -246,3 +303,125 @@ Colocar as pastas de fontes dentro das pastas dos seus respectivos tipos, ex. `<
 
 - Listar todas as fontes: `fc-list`
 - Atualizar o cache de fontes: `fc-cache`
+
+### Partições
+
+> If you are growing a partition, you have to first resize the partition and then resize the filesystem on it, while for shrinking the filesystem must be resized before the partition to avoid data loss.
+
+*Parâmetros usados:*
+
+- `X`: Letra do disco
+- `Y`: Número da partição
+- `<sectors>`: Número de setores
+- `<device>`: Nome do dispositivo
+- `<partition>`: Número da partição
+- `<end>`: Tamanho (*size*) final
+- `<new>`: Tamanho (*size*) novo
+- `<label>`: Nome da *label* da partição
+
+Formulas de cálculo entre MB/GB e setores:
+
+- *SECTORS > MB*: `<sectors>/2/1024`
+- *SECTORS > GB*: `<sectors>/2/1024^2`
+- *MB > SECTORS*: `<megas>*1048576/512`
+- *GB > SECTORS*: `<gigas>*(1048576*1024)/512`
+
+#### *Growing*
+
+1. Aumente a partição (com `parted` no modo interativo):
+	```sh
+	(parted) resizepart <partition> <end>
+	```
+1. Aumente o sistema de arquivos (`ext*`):
+	```sh
+	resize2fs /dev/sdXY <new>
+	```
+
+#### *Shrinking*
+
+1. Diminua o sistema de arquivos (`ext*`):
+	```sh
+	resize2fs /dev/sdXY <new>
+	```
+1. Diminua a partição (com `parted` no modo interativo):
+	```sh
+	(parted) resizepart <partition> <end>
+	```
+1. Informe ao **kernel** sobre a mudança:
+	```sh
+	resizepart <device> <partition> <new>
+	```
+
+*Observações*:
+
+- Caso a partição seja `exfat` realize somente o passo 2?
+
+#### *Labels*
+
+Programas necessários para `fat32`:
+
+```sh
+[sudo] apt install mtools
+```
+
+Programas necessários para `exfat`:
+
+```sh
+[sudo] apt install exfatlabel
+```
+
+##### ext4
+
+Ver:
+
+```sh
+[sudo] e2label /dev/sdXY
+```
+
+Renomear:
+
+```sh
+[sudo] e2label /dev/sdXY <label>
+```
+
+##### fat32
+
+Ver:
+
+```sh
+[sudo] mlabel -i /dev/sdXY -s ::
+```
+
+Renomear:
+
+```sh
+[sudo] mlabel -i /dev/sdXY ::<label>
+```
+
+##### exfat
+
+Ver:
+
+```sh
+[sudo] exfatlabel /dev/sdXY
+```
+
+Renomear:
+
+```sh
+[sudo] exfatlabel /dev/sdXY <label>
+```
+
+##### ntfs
+
+Ver:
+
+```sh
+[sudo] ntfslabel /dev/sdXY
+```
+
+Renomear:
+
+```sh
+[sudo] ntfslabel /dev/sdXY <label>
+```
