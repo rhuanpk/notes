@@ -8,6 +8,20 @@ Por via de regra, comandos de sistema são exemplificados utilizando abordagens 
 
 Anotações gerais sobre ferramentas CLI (comandos).
 
+### `hostname`
+
+Saber hostname:
+
+```sh
+hostname
+```
+
+IP interno:
+
+```sh
+hostname -I
+```
+
 ### `flatpak`
 
 Faça o setup pelo guia do [Flatpak](https://flatpak.org/setup) ou do [Flathub](https://flathub.org/setup).
@@ -160,7 +174,7 @@ Interface interativo para manipulação avançada da tabela de partiçẽos e pa
 [sudo] fdisk /dev/sdX
 ```
 
-*LINKS*:
+*LINKS:*
 
 - [MBR Partitions Types¹](https://en.wikipedia.org/wiki/Partition_type)
 - [MBR Partitions Types²](https://tldp.org/HOWTO/Partition-Mass-Storage-Definitions-Naming-HOWTO/x190.html)
@@ -199,11 +213,11 @@ Reordernar partições (caso alguma tenha sido excluida ou tinha sido criada no 
 sfdisk -r /dev/sdX
 ```
 
-*OBSERVAÇÕES*:
+*OBSERVAÇÕES:*
 
 - Com o sinal de `+`, move-se o ínicio do setor para o valor de setores passados em `<sectors>`
 
-*LINKS*:
+*LINKS:*
 
 - [Reread/Resort Partitions](https://serverfault.com/questions/36038/reread-partition-table-without-rebooting) (em caso mudança de na ordenação das partições)
 
@@ -265,6 +279,258 @@ Formatar **ntfs**:
 
 ```sh
 [sudo] mkfs.ntfs [-Q] [-L <label>] /dev/sdXY
+```
+
+### *Runlevels*
+
+Runlevels são os níveis de execução do sistema criados no *System V* (*SysV*). Cada Runlevel diz ao sistema em qual "camada" o sistema deve operar (qual o seu estado atual).
+
+> Como também é um recurso de segurança do Linux, um dos critérios para saber se um devido processo deve ser executado ou não são os *Runlevels*?
+
+Eles variam de `0-6`:
+
+| Runlevel | Mode               | Action                                                     |
+| :------- | :----------------- | :--------------------------------------------------------- |
+| 0        | *Halt*             | Poweroff the system.                                       |
+| 1        | *Mono-User*        | Recovery mode, does not configure network, only root user. |
+| 2        | -                  | -                                                          |
+| 3        | *Multi-User*       | Start the system without GUI.                              |
+| 4        | -                  | -                                                          |
+| 5        | *Graphical Server* | Start the system with GUI.                                 |
+| 6        | *Reboot*           | Reboot the system.                                         |
+
+Verificar o *runlevel* atual:
+
+```sh
+runlevel
+```
+
+Chamar (mudar para) *runlevel*:
+
+```sh
+telinit <runlevel>
+```
+
+*LINKS:*
+
+- [Runlevels & Targets](https://access.redhat.com/articles/754933)
+
+### *Targets*
+
+Targets são equivalentes aos Runlevels, porém, foram criados no *Systemd*, com o mesmo conceito e com outra conveção.
+
+Num sistema com `systemd` os Runlevels são convertidos para Targets:
+
+| Traditional Runlevel | New Target Name    | Symbolic Link       |
+| :------------------- | :----------------- | :------------------ |
+| Runlevel 0           | *runlevel0.target* | `poweroff.target`   |
+| Runlevel 1           | *runlevel1.target* | `rescue.target`     |
+| Runlevel 2           | *runlevel2.target* | `multi-user.target` |
+| Runlevel 3           | *runlevel3.target* | `multi-user.target` |
+| Runlevel 4           | *runlevel4.target* | `multi-user.target` |
+| Runlevel 5           | *runlevel5.target* | `graphical.target`  |
+| Runlevel 6           | *runlevel6.target* | `reboot.target`     |
+
+O diretório dos *targets* está localizado em `/lib/systemd/system/`.
+
+Verificar qual *target* padrão está definido para o `systemd`:
+
+```sh
+systemctl get-default
+```
+
+Listar todos os *targets* disponíveis no sistema:
+
+```sh
+systemctl list-units --type=target --all
+```
+
+Mudar o *target* padrão:
+
+```sh
+systemctl set-default <target>.target
+```
+
+Mudar o *target* somente para o próximo *boot*:
+
+```sh
+systemctl isolate <target>.target
+```
+
+*LINKS:*
+
+- [Runlevels & Targets](https://access.redhat.com/articles/754933)
+
+### `tree`
+
+*Parâmetros usados:*
+
+- `<depth>`: Inteiro de profundidade
+- `<pattern>`: *String* de RegEx
+
+*Opções usadas:*
+
+- `-a`: Lista arquivos ocultos
+- `-F`: Sufixa diretórios com `/`
+- `-C`: Define *color always*
+- `-p`: Exibe permissões
+- `-L <depth>`: Limita a quantidade de níveis de diretórios na busca
+- `-P <pattern>`: Retorna somente o que casar com o padrão
+- `-I <pattern>`: Exclui os arquivos e pastas do padrão
+
+Listar estrutura de diretórios em formato de árvore:
+
+```sh
+tree [<options>]
+```
+
+Busca o caminho de somente um arquivo:
+
+```sh
+tree /path/to/tree --matchdirs --prune -P <pattern>
+```
+### `du`
+
+*Opções usadas:*
+
+- `-s`: Simplifica a saída mostrando somente os arquivos na raiz
+- `-c`: Mostra a somatória total de todos os arquivos contados
+- `-h`: Unidades de medida mais legíveis
+
+Mostra o tamanho dos arquivos e pastas:
+
+```sh
+du -sch /path/to/sizes/*
+```
+
+### `df`
+
+*Opções usadas:*
+
+- `-h`: Unidades de medida mais legíveis
+
+Mostra partições e tamanho dos discos:
+
+```sh
+df -h
+```
+
+### `ncdu`
+
+*Parâmetros usados:*
+
+- `<folder>`: Caminho do diretórios raiz a ser analisa (*default*: diretório atual)
+
+Gerenciar graficamente via terminal (TUI) arquivos por tamanho:
+
+```sh
+ncdu [<folder>]
+```
+
+### `ls`
+
+- `-a`: Exibe arquivos ocultos
+- `-A`: Exibe arquivos ocultos exceto `.` e `..`
+- `-i`: Exibe *inode* dos arquivos
+- `-l`: Saída longa (tipo de arquivo, dono, grupo, tamanho e `mtime`)
+- `-h`: Saída humana (unidade de medida legível para humanos)
+- `-t`: Ordena por `mtime`
+- `-d`: Não expande diretórios (quando usando *globs*)
+- `-F`: Sufixa diretórios com `/`
+- `--color={auto|never|always}`: Definir modo de cor da saída (*default*: `auto`)
+
+Sintaxe base:
+
+```bash
+ls [<options>] [<path>]
+```
+
+### `grep`
+
+*Parâmetros usados:*
+
+- `<count>`: Inteiro de quantidade de vezes
+- `<lines>`: Inteiro de quantidade de linhas
+- `<pattern>`: *String* de RegEx
+- `<path>`: Caminho para arquivo ou pasta
+
+*Opções usadas:*
+
+- `-i`: *Case insensitive*
+- `-r`: Recursividade não seguindo *symlinks*
+- `-n`: Número da linha da ocorrência
+- `-h`: Nome do arquivo da ocorrência
+- `-s`: Suprime somente mensagens de erro
+- `-v`: Inverte a ocorrência (retorna todas as linhas que não casaram)
+- `-o`: Retorna somente a ocorrência da linha (e não a linha toda)
+- `-R`: Recursividade seguindo *symlinks*
+- `-E`: Expressão Regular extendida
+- `-P`: Expressão Regular PCRE
+- `-I`: Rejeita arquivos binários na busca
+- `-m <count>`: Pare depois de *n* ocorrências
+- `-A <lines>`: Mostra *n* linhas à baixo da *match line*
+- `-B <lines>`: Mostra *n* linhas à cima da *match line*
+- `-C <lines>`: Mostra *n* linhas ao redor da *match line*
+
+Sintaxe base:
+
+```sh
+grep [<options>] <pattern> {/path/to/file.txt|/path/to/folder/[ ...]}
+```
+
+Exemplos de exclusão:
+
+- Arquivos:
+	```sh
+	grep --exclude=*file_{3,4}* <pattern> <path>
+	```
+- Diretórios:
+	```sh
+	grep --exclude-dir={dir_1,dir_2} <pattern> <path>
+	```
+
+*OBSERVAÇÕES:*
+
+- As exclusões irão excluir todos os arquivos e(ou) diretórios independente do nível do lugar que o grep estiver percorrendo que casar com a cadeia do `exclude` passado a partir da pasta *root*
+
+### `file`
+
+Mostra o tipo do arquivo e seu *path*:
+
+```sh
+file /path/to/file.txt
+```
+
+### `ln`
+
+*Hard Link* (Conexão Física):
+
+- Não podem ser feitos por arquivos que estão em outros pontos de montagem
+- O *link* tem o mesmo *inode* do original
+- Se o original for corrompido o *link* fica independente
+
+Symbolic Link (Conexão Simbólica):
+
+- Tem que passar o *path* completo para este tipo de conexão
+- O *link* terá um *inode* diferente do arquivo original
+- Se arquivo original for corrompido o *link* quebrará
+
+*Opções usadas:*
+
+- `-s`: Cria um *link* simbólico
+- `-f`: Força a criação do *link*
+- `-v`: Deixa a saída verbosa
+
+Criar *link* físico:
+
+```bash
+ln /path/to/original/file.txt /path/to/hardlink
+```
+
+Criar *link* simbólico:
+
+```bash
+ln -s /path/to/original/file.txt /path/to/symlink
 ```
 
 ## Configurações
@@ -352,7 +618,7 @@ Formulas de cálculo entre MB/GB e setores:
 	resizepart <device> <partition> <new>
 	```
 
-*Observações*:
+*OBSERVAÇÕES:*
 
 - Caso a partição seja `exfat` realize somente o passo 2?
 
