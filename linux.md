@@ -8,6 +8,43 @@ Por via de regra, comandos de sistema são exemplificados utilizando abordagens 
 
 Anotações gerais sobre ferramentas CLI (comandos).
 
+### `sudo`
+
+*Parâmetros usados:*
+
+- `<password>`: Senha do usuário
+- `<command>`: Comando completo
+
+*Opções usadas:*
+
+- `-S`: Aceita receber entrada via *pipe* (STDIN) e *new line* como delimitador
+- `-k`: Reseta ou não salva a senha no *cache*
+- `-v`: Valida ou atualiza o tempo de *cache* da senha
+
+Passar senha via *pipe*:
+
+```sh
+echo -e "<password>\n" | sudo -S <command>
+```
+
+Renovar tempo de *cache* da senha:
+
+```sh
+sudo -v
+```
+
+Resetar tempo de *cache* da senha:
+
+```sh
+sudo -k
+```
+
+Executar sem guardar a senha em *cache*:
+
+```sh
+sudo -k <command>
+```
+
 ### `hostname`
 
 Saber hostname:
@@ -389,6 +426,7 @@ Busca o caminho de somente um arquivo:
 ```sh
 tree /path/to/tree --matchdirs --prune -P <pattern>
 ```
+
 ### `du`
 
 *Opções usadas:*
@@ -537,6 +575,10 @@ ln -s /path/to/original/file.txt /path/to/symlink
 
 Anotações gerais sobre procedimentos (tutoriais).
 
+### Sudo
+
+
+
 ### Bash
 
 Variável PS1:
@@ -568,7 +610,7 @@ Colocar as pastas de fontes dentro das pastas dos seus respectivos tipos, ex. `<
 #### Comandos
 
 - Listar todas as fontes: `fc-list`
-- Atualizar o cache de fontes: `fc-cache`
+- Atualizar o *cache* de fontes: `fc-cache`
 
 ### Partições
 
