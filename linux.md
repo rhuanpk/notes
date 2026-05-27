@@ -1005,6 +1005,35 @@ Renomear:
 [sudo] ntfslabel /dev/sdXY <label>
 ```
 
+### SSH
+
+#### Arquivos e Pastas
+
+Arquivos de coniguração:
+
+- Arquivo de configuração do usuário (*client*):
+    `~/.ssh/config`
+- Arquivo global de configuração (*client*):
+    `/etc/ssh/ssh_config`
+- Arquivo global de configuração (*server*):
+    `/etc/ssh/sshd_config`
+
+Diretórios de configuração:
+
+- Pasta de configuração do usuário (*client*):
+    `~/.ssh/`
+- Pasta global de configuração:
+    `/etc/ssh/`
+- Pasta de configuração do usuário (*client*):
+    `/etc/ssh/ssh_config.d/`
+- Pasta de configuração do usuário (*server*):
+    `/etc/ssh/sshd_config.d/`
+
+Arquivos de identificação:
+
+- `known_hosts`: Servidores que o *client* (usuário) aceitou como confiaveis na hora de estabelecer/solicitar conexão com um servidor. Ele envia seu *fingerprint* para que o *client* possa validar que está se conectando com o destino correto
+- `authorized_keys`: Clientes que o usuário aceitou como confiaveis para se conectar. Caso o *server* estiver cofigurado para aceitar apenas conexões via chave, somente os clientes que tem suas chaves públicas adicionadas neste arquivo serão bem-sucedidos
+
 ### Fonts
 
 Configuração de fontes no sistema.
