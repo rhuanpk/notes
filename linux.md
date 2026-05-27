@@ -1007,6 +1007,16 @@ Renomear:
 
 ### SSH
 
+Configurações do SSH (*client & sever*) no sistema.
+
+*Parâmetros usados:*
+
+- `<user>`: Usuário para conexão (*default*: usuário atual)
+- `<host>`: Domínio ou IP para conexão (*default*: *host* atual)
+- `<port>`: Porta do serviço SSH
+- `<seconds>`: Quantidade de segundos
+- `<count>`: Inteiro de quantidade de vezes
+
 #### Arquivos e Pastas
 
 Arquivos de coniguração:
@@ -1033,6 +1043,45 @@ Arquivos de identificação:
 
 - `known_hosts`: Servidores que o *client* (usuário) aceitou como confiaveis na hora de estabelecer/solicitar conexão com um servidor. Ele envia seu *fingerprint* para que o *client* possa validar que está se conectando com o destino correto
 - `authorized_keys`: Clientes que o usuário aceitou como confiaveis para se conectar. Caso o *server* estiver cofigurado para aceitar apenas conexões via chave, somente os clientes que tem suas chaves públicas adicionadas neste arquivo serão bem-sucedidos
+
+#### Segurança
+
+Nos arquivos de configuração para o servidor/*daemon*/`sshd`:
+
+- Trocar porta de conexão:
+	`Port <port>`
+- Permitir ou não o acesso direto ao *root*:
+	`PermitRootLogin {yes|no}`
+- Permitir ou não senha vazias:
+	`PermitEmptyPasswords {yes|no}`
+- Quantidade e tempo de inatividade (sem tráfego de pacotes) até receber *disconect*:
+	- Tempo de inatividade a cada *request TCPKeepAlive*:
+		`ClientAliveInterval <seconds>`
+	- Quantidade de *request TCPKeepAlive* antes do *disconect*:
+		`ClientAliveCountMax <count>`
+- Máximo de conexões simultâneas:
+	`MaxSessions <count>`
+- Máximo de tentativas de conexão:
+	`MaxAuthTries <count>`
+- Permitir ou não autênticação por senha (caso não, a autênticação será feita somente via par de chaves):
+	`PasswordAuthentication no`
+- Bloquear ou liberar determinados IPs (corings `*` e `?` podem ser usados):
+	`{Allow|Deny}Users <user>[@<host>][ ...]`
+
+Arquivo final de exemplo:
+
+```conf
+Port 9999
+PermitRootLogin no
+PermitEmptyPasswords no
+ClientAliveInterval 30
+ClientAliveCountMax 5
+MaxSessions 3
+MaxAuthTries 5
+PasswordAuthentication no
+AllowUsers user1 user2@ip2
+DenyUsers user3@ip3
+```
 
 ### Fonts
 
