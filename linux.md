@@ -13,7 +13,7 @@ Anotações gerais sobre ferramentas CLI (comandos).
 *Parâmetros usados:*
 
 - `<password>`: Senha do usuário
-- `<command>`: Comando completo
+- `<command>`: Comando fina completo
 
 *Opções usadas:*
 
@@ -44,6 +44,44 @@ Executar sem guardar a senha em *cache*:
 ```sh
 sudo -k <command>
 ```
+
+### `su`
+
+*Parâmetros usados:*
+
+- `<shell>`: Nome do *shell*, ex. `sh`, `bash`
+- `<user>`: Nome do usuário para *login*
+- `<command>`: Comando final completo
+- `<args>`: Parâmetros de opções
+
+*Opções usadas:*
+
+- `-c <command>`: Executa o comando no usuário especificado
+- `-s <shell>`: Especifica o *shell* de login
+- `-p`: Preserva o ambiente, ex. variáveis (não usado com `--login`)
+- `-`, `-l`: Faz o *full login* no usuário, resetando todo o ambiente (recomendado)
+
+"Logar" num *shell* interativo de outro usuário; Diretório de origem é preservado; Somente a variável `$HOME` é trocada (também `$USER` e `$LOGNAME` se usuário não for ***root***); Caso não especifique usuário, `root` é o padrão; Pode haver conflitos de ambiente por não ser um *full login*:
+
+```sh
+su [<user>]
+```
+
+"Logar" num *shell* interativo de outro usuário; Muda para a `$HOME` do usuário; Evita conflitos de ambiente:
+
+```sh
+su - [<user>]
+```
+
+Caso especificado o usuário, é possível passar opções do seu shell de login, por exemplo, se for `bash`, pode-se passar `-x` para o *trace*:
+
+```sh
+su [-] <user> [<args>]
+```
+
+*OBSERVAÇÕES:*
+
+- Caso queira executar comandos em múltiplas linhas (*heredoc*), não é possível, utilize *line breaks* (`\` no final da linha)
 
 ### `hostname`
 
@@ -479,9 +517,22 @@ ncdu [<folder>]
 
 Sintaxe base:
 
-```bash
+```sh
 ls [<options>] [<path>]
 ```
+
+### `cd`
+
+Voltar para o diretorio anterior:
+
+- Utilizando `-`:
+	```sh
+	cd -
+	```
+- Utilizando `$OLDPWD`:
+	```sh
+	cd $OLDPWD
+	```
 
 ### `grep`
 
@@ -561,14 +612,76 @@ Symbolic Link (Conexão Simbólica):
 
 Criar *link* físico:
 
-```bash
+```sh
 ln /path/original/file.txt /path/hardlink
 ```
 
 Criar *link* simbólico:
 
-```bash
+```sh
 ln -s /path/original/file.txt /path/symlink
+```
+
+### `exec`
+
+*Parâmetros usados:*
+
+- `<command>`: Comando final completo
+
+O comando *exec* "substitui" o *shell* atual pelo comando passado. Caso não seja passado passado nenhum argumento, o próprio *shell* atual será "substituido" por ele mesmo.
+
+Quando executamos algum comando num *shell*, geralmente, ele cria um PID para esse comando rodar sob ele, ou seja, um sub-processo. O *exec* faz com que o comando passado como argumento herde o PID do *shell* atual e qualquer *signal* que o novo processo receber, o processo original (o *shell*) também receberá, ou seja, quando o novo processo encerrar, o *shell* atual também encerrará (porque eles tem o "mesmo" PID).
+
+```sh
+exec [<options>] [<command>]
+```
+
+*OBSERVAÇÕES:*
+
+- Use quando quiser que logo depois do termino do comando o *shell* atual seja encerrado
+- Use para redirecionar a saída do próprio *shell* para controles de logs (no final, um script também executa num *shell*)
+
+### `column`
+
+*Parâmetros usados:*
+
+- `<delimiter>`: Caractere que define a separação de informações
+- `<header>`: Nome do cabeçalho
+- `<column>`: É o nome das colunas que foram renomeadas, caso não tenham sido, por padrão são numeradas a partir do índice `1`
+
+*Opções usadas:*
+
+- `-t`: Cria a tabela
+- `-L`: Mantem linhas vazia
+- `-J`: Saída formatada em JSON
+- `-s <delimiter>`: Delimitador de entrada
+- `-o <delimiter>`: Delimitador de saída
+- `-N <header>[,...]`: Nomeia as colunas
+- `-H <column>[,...]`: Esconde as colunas determinadas
+- `-R <column>[,...]`: Alinha as colunas à direita
+
+Exemplos base:
+
+```sh
+column -tL -s ':' -o '|' /etc/passwd
+```
+
+```sh
+column -tL -s ':' -o '|' -H 2,5 /etc/passwd
+```
+
+```sh
+column -tL -s ':' -o '|' -N 'USERNAME,PASSWORD,UID,GID,GECOS,HOME,SHELL' /etc/passwd
+```
+
+```sh
+column -tL -s ':' -o '|' -N 'USERNAME,PASSWORD,UID,GID,GECOS,HOME,SHELL' -H PASSWORD,GECOS /etc/passwd
+```
+
+Exemplo com `jq`:
+
+```sh
+column -J -tL -s ':' -o '|' -N 'USERNAME,PASSWORD,UID,GID,GECOS,HOME,SHELL' /etc/passwd | jq
 ```
 
 ## Configurações
