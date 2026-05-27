@@ -456,7 +456,7 @@ systemctl isolate <target>.target
 Realizar conexão:
 
 ```sh
-ssh [<options>] [-p <port>] <user>[@]<host>
+ssh [<options>] [-p <port>] [<user>][@][<host>]
 ```
 
 #### `ssh-keygen`
@@ -548,7 +548,7 @@ ssh-add -d /path/key
 Adicionar sua chave num servidor:
 
 ```sh
-ssh-copy-id -i <key> [-p <port>] <user>[@]<host>
+ssh-copy-id -i <key> [-p <port>] [<user>][@][<host>]
 ```
 
 #### `ssh-keyscan`
@@ -558,6 +558,10 @@ Pegar a chave pública de um servidor:
 ```sh
 ssh-keyscan [-p <port>] [-t {rsa|dsa|ecdsa|ed25519}[,...]] <host> >> ~/.ssh/know_hosts
 ```
+
+*OBSERVAÇÕES:*
+
+- Este comando lista as chaves pública do próprio servidor SSH (**sshd**) que são as credenciais validadas na hora de se conectar em um novo *host* e que precisamos responder se confiamos ou não (*yes/no*)
 
 ### `tree`
 
@@ -855,7 +859,7 @@ Liberar usuário como **sudo**:
 
 - Via grupo *sudo*:
 	```sh
-	sudo usermod -aG sudo <user>
+	[sudo] usermod -aG sudo <user>
 	```
 - Via arquivo *sudoers*:
 	```sh
@@ -1016,6 +1020,7 @@ Configurações do SSH (*client & sever*) no sistema.
 - `<port>`: Porta do serviço SSH
 - `<seconds>`: Quantidade de segundos
 - `<count>`: Inteiro de quantidade de vezes
+- `<type>`: Tipo da chave ou algoritmo
 
 #### Arquivos e Pastas
 
@@ -1044,7 +1049,7 @@ Arquivos de identificação:
 - `known_hosts`: Servidores que o *client* (usuário) aceitou como confiaveis na hora de estabelecer/solicitar conexão com um servidor. Ele envia seu *fingerprint* para que o *client* possa validar que está se conectando com o destino correto
 - `authorized_keys`: Clientes que o usuário aceitou como confiaveis para se conectar. Caso o *server* estiver cofigurado para aceitar apenas conexões via chave, somente os clientes que tem suas chaves públicas adicionadas neste arquivo serão bem-sucedidos
 
-#### Segurança
+#### Segurança e Privacidade
 
 Nos arquivos de configuração para o servidor/*daemon*/`sshd`:
 
@@ -1082,6 +1087,98 @@ PasswordAuthentication no
 AllowUsers user1 user2@ip2
 DenyUsers user3@ip3
 ```
+
+*OBSERVAÇÕES:*
+
+- Caso o limite de tentativas de autenticação seja 3 e tenha 3 chaves no agente, quando a conexão for estabelecida, tentará ser feito a autenticação com essas 3 chaves e todas as tentativas serão esgotadas imediatamente. Em caso de uso de senha se a primeira falhar, a conexão será encerrada (se não, teria 3 tentativas por senha a serem tentadas)
+
+- Na fase inicial da conexão *ssh* o **cliente** requisita a conexão ao **servidor** que por sua vez envia a sua chave pública (sua *host key*, que é a chave criada automáticamente pelo *ssh* quando instalado, ou seja, é a própria chave do *sshd*) para que o **cliente** possa validar que está se conectando realmente no **servidor** desejado e não em algum impostor. Quando o **servidor** envia a sua *host key*, o **cliente** verifica se ela já consta no `~/.ssh/know_hosts`, caso não, pergunta ao usuário se quer prosseguir com a conexão e então salva a *public key* no arquivo?
+
+#### Agente Atuomático
+
+1. Forma **manual** (mais segura?):
+	- Deixe a chave *ssh* criptografada (com algum utilitário como `gpg` ou `toplip`)
+	- Iniciado a sessão, descriptografe a chave
+	- Faça o processo manual de colocar a chave no agente
+1. Forma **automática** (usando o *keychain*):
+	- Configure o arquivo `~/.ssh/config`
+	- Instale o *keychain*
+	- Configure o *keychain* no `~/.bash_profile`
+
+Exemplo de configuração via `~/.ssh/config`:
+
+```
+Host *
+	UseKeychain yes
+	AddKeysToAgent yes
+	IdentityFile /path/key
+```
+
+Exemplo de configuração via `keychain` (`~/.bash_profile`):
+
+```sh
+
+/usr/bin/keychain --clear /path/key
+. ~/.keychain/$(hostname)-sh
+```
+
+*OBSERVAÇÕES:*
+
+- Quando criamos as chaves **ssh** para o **git** por exemplo, não necessariamente precisamos adiciona-la ao **ssh-agent**, pois, caso você tente dar algum clone ou push (utilizando conexão **ssh** obviamente), por padrão o protocolo procurará se existe alguma chave no *default path* do **ssh** (`/path/key`)
+- Quando for manipulado o respositório **git**, será encontrado a chave privada e será pedido sua senha (é claro que, caso tenha a chave adicionada ao *ssh-agent*, ele nem se quer irá pedir a senha, a autênticação será automática)
+
+#### *Auto Accept*
+
+Aceitar/Confiar em novos *host* automáticamente sem precisar responder que "sim":
+
+```sh
+# also ca put in the config file
+ssh -o 'StrictHostKeychecking=no' [-p <port>] [<user>][@][<host>]
+```
+
+#### *Host Key*
+
+Configurar a *host key* que o servidor entrega (no arquivo de configuração do *server*):
+
+```sh
+HostKey /etc/ssh/ssh_host_<type>_key
+```
+
+Permitir que o cliente aceite mais tipos de *host keys*:
+
+```sh
+# also ca put in the config file
+ssh -o 'HostKeyAlgorithms=+<type>[,...]' [-p <port>] [<user>][@][<host>]
+ssh -o 'PubkeyAcceptedKeyTypes=+<type>[,...]' [-p <port>] [<user>][@][<host>]
+ssh -o 'PubkeyAcceptedAlgorithms=+<type>[,...]' [-p <port>] [<user>][@][<host>]
+```
+
+#### *Banners & Welcome*
+
+1. Para mostrar mensagem antes de se logar precisa colocar a mensagem no *banner*:
+	`[sudo] vim /etc/ssh/banner`
+1. Depois coloque o caminho do *banner* na variável dentro do arquivo de configuração:
+	`Banner /etc/ssh/banner`
+
+#### *Troubleshooting*
+
+A versão 9 e posterior do `openssh` usa o `ssh.socket` como gatilho para o *daemon* `ssh.service`, o que faz com que a porta precise ser configurado via `systemd` e não `sshd_config.conf`.
+
+Para lidar com isso podemos desabilitar o `ssh.socket` e habilitar o `ssh.service`:
+
+1. `[sudo] systemctl disable --now ssh.socket`
+1. `[sudo] systemctl enable --now ssh.service`
+
+Caso não queira desabilita-lo:
+
+1. Edite as configurações do *server*:
+	`/etc/ssh/sshd_config.d/sshd_config.conf`
+1. Recarregue os *daemons* e reinicie o *socket*:
+	`systemctl daemon-reload && systemctl restart ssh.socket`
+
+OBSERVAÇÕES:
+
+- Ao fazer o recarregamento e o reinício, `/usr/lib/systemd/system-generators/sshd-socket-generator` será executado, gerando o arquivo `/run/systemd/generator/ssh.socket.d/addresses.conf` contendo as configurações pro *sshd* funcionar como esperado
 
 ### Fonts
 
