@@ -424,7 +424,7 @@ tree [<options>]
 Busca o caminho de somente um arquivo:
 
 ```sh
-tree /path/to/tree --matchdirs --prune -P <pattern>
+tree /path/folder --matchdirs --prune -P <pattern>
 ```
 
 ### `du`
@@ -438,7 +438,7 @@ tree /path/to/tree --matchdirs --prune -P <pattern>
 Mostra o tamanho dos arquivos e pastas:
 
 ```sh
-du -sch /path/to/sizes/*
+du -sch /path/folder/*
 ```
 
 ### `df`
@@ -513,7 +513,7 @@ ls [<options>] [<path>]
 Sintaxe base:
 
 ```sh
-grep [<options>] <pattern> {/path/to/file.txt|/path/to/folder/[ ...]}
+grep [<options>] <pattern> {/path/file.txt|/path/folder/[ ...]}
 ```
 
 Exemplos de exclusão:
@@ -536,7 +536,7 @@ Exemplos de exclusão:
 Mostra o tipo do arquivo e seu *path*:
 
 ```sh
-file /path/to/file.txt
+file /path/file.txt
 ```
 
 ### `ln`
@@ -562,13 +562,13 @@ Symbolic Link (Conexão Simbólica):
 Criar *link* físico:
 
 ```bash
-ln /path/to/original/file.txt /path/to/hardlink
+ln /path/original/file.txt /path/hardlink
 ```
 
 Criar *link* simbólico:
 
 ```bash
-ln -s /path/to/original/file.txt /path/to/symlink
+ln -s /path/original/file.txt /path/symlink
 ```
 
 ## Configurações
@@ -577,7 +577,34 @@ Anotações gerais sobre procedimentos (tutoriais).
 
 ### Sudo
 
+Manipulação do arquivo **sudoers**:
 
+```
+[sudo] visudo -f /etc/sudoers.d/users
+```
+
+Remover ***cache*** de senha (via *sudoers*):
+
+```
+Defaults:ALL timestamp_timeout=0
+```
+
+Liberar usuário como **sudo**:
+
+- Via grupo *sudo*:
+	```sh
+	sudo usermod -aG sudo <user>
+	```
+- Via arquivo *sudoers*:
+	```sh
+	<user> ALL=(ALL) [NOPASSWD:]ALL
+	```
+
+Liberar apenas comandos específicos (via *sudoers*):
+
+```sh
+<user> ALL=[NOPASSWD:]/absolute/path/command[,...]
+```
 
 ### Bash
 
