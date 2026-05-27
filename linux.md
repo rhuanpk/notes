@@ -879,32 +879,6 @@ Variável PS1:
 - `\W`: Diretório de trabalho atual com o nome base (último segmento) apenas
 - `$(__git_ps1 ["%s"])`: Branch atual caso esteja em um repositório Git, se não, não exibe nada
 
-### Fonts
-
-Configuração de fontes no sistema.
-
-#### Tipos
-
-- `truetype` ou `ttf`
-- `opentype` ou `otf`
-- `webfonts` ou `woff`
-
-Colocar as pastas de fontes dentro das pastas dos seus respectivos tipos, ex. `<path>/truetype/Monospace`.
-
-#### Diretórios
-
-- Nível de sistema:
-	`/usr/share/fonts/<type>/<family>`
-- Nível de usuário:
-	`~/.local/share/fonts/<type>/<family>`
-
-#### Comandos
-
-- Listar todas as fontes:
-	`fc-list`
-- Atualizar o *cache* de fontes:
-	`fc-cache`
-
 ### Partições
 
 > If you are growing a partition, you have to first resize the partition and then resize the filesystem on it, while for shrinking the filesystem must be resized before the partition to avoid data loss.
@@ -1030,3 +1004,29 @@ Renomear:
 ```sh
 [sudo] ntfslabel /dev/sdXY <label>
 ```
+
+### Fonts
+
+Configuração de fontes no sistema.
+
+#### Tipos
+
+- `truetype` ou `ttf`
+- `opentype` ou `otf`
+- `webfonts` ou `woff`
+
+Colocar as pastas de fontes dentro das pastas dos seus respectivos tipos, ex. `<path>/truetype/Monospace`.
+
+#### Diretórios
+
+- Nível de sistema:
+	`/usr/share/fonts/<type>/<family>`
+- Nível de usuário:
+	`~/.local/share/fonts/<type>/<family>`
+
+#### Comandos
+
+- Listar todas as fontes:
+	`fc-list`
+- Atualizar o *cache* de fontes:
+	`fc-cache`
