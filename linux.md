@@ -436,6 +436,129 @@ systemctl isolate <target>.target
 
 - [Runlevels & Targets](https://access.redhat.com/articles/754933)
 
+### SSH
+
+*Parâmetros usados:*
+
+- `<user>`: Usuário para conexão (*default*: usuário atual)
+- `<host>`: Domínio ou IP para conexão (*default*: *host* atual)
+- `<port>`: Porta do serviço SSH
+- `<key>`: Caminho da chave privada
+- `<comment>`: Geralmente algo que identifique o proprietário da chave
+
+#### `ssh`
+
+*Opções usadas:*
+
+- `-p <port>`: Especifica a porta de conexão (*default*: `22`)
+- `-i <key>`: Especifica a privada para conexão
+
+Realizar conexão:
+
+```sh
+ssh [<options>] [-p <port>] <user>[@]<host>
+```
+
+#### `ssh-keygen`
+
+Criar ssh key:
+
+```sh
+ssh-keygen [-t rsa [-b 4096]] [-t ed25519 [-a 32]] [/path/key]
+```
+
+Trocar senha da chave:
+
+```sh
+ssh-keygen -pf /path/key
+```
+
+Trocar comentário da chave:
+
+```sh
+ssh-keygen -cC "<comment>" -f /path/key
+```
+
+Gerar chave pública a partir da privada:
+
+```sh
+ssh-keygen -yf /path/key > /path/key.pub
+```
+
+Saber *fingerprint* da chave:
+
+```sh
+ssh-keygen -lf /path/key[.pub]
+```
+
+Remover *fingerprint* depreciado:
+
+```sh
+ssh-keygen [-f ~/.ssh/known_hosts] -R <host>
+```
+
+#### `ssh-agent`
+
+Iniciar um agente *ssh* (quando algo buscar por uma chave é o *ssh-agent* que irá fornecer):
+
+```sh
+eval `ssh-agent -s`
+```
+
+*OBSERVAÇÕES:*
+
+- Essa é a forma oficial descrita no manual do *ssh*
+- Outra forma de iniciar o *ssh-agent* seria:
+	`exec ssh-agent bash`
+- Para ver o *pid* e o *socket* do agente:
+	`printenv SSH_AGENT_PID SSH_AUTH_SOCK`
+
+#### `ssh-add`
+
+*Opções usadas:*
+
+- `-k`: Processa chaves em validar certificados
+
+Adicionar chave ao agente:
+
+```sh
+ssh-add /path/key
+```
+
+Verificar as chaves publicas adicionadas no agente:
+
+```sh
+ssh-add -l
+```
+
+Remover todas as chave do agente:
+
+```sh
+ssh-add -D
+```
+
+Remover chave específica do agente:
+
+```sh
+ssh-add -d /path/key
+```
+
+#### `ssh-copy-id`
+
+Adicionar sua chave num servidor:
+
+```sh
+ssh-copy-id -i <key> [-p <port>] <user>[@]<host>
+```
+
+#### `ssh-keyscan`
+
+Pegar a chave pública de um servidor:
+
+```sh
+ssh-keyscan [-p <port>] [-t {rsa|dsa|ecdsa|ed25519}[,...]] <host> >> ~/.ssh/know_hosts
+```
+
 ### `tree`
 
 *Parâmetros usados:*
@@ -564,18 +687,18 @@ Voltar para o diretorio anterior:
 Sintaxe base:
 
 ```sh
-grep [<options>] <pattern> {/path/file.txt|/path/folder/[ ...]}
+grep [<options>] <pattern> {/path/file.txt|/path/folder/}[ ...]
 ```
 
 Exemplos de exclusão:
 
 - Arquivos:
 	```sh
-	grep --exclude=*file_{3,4}* <pattern> <path>
+	grep --exclude=*file{4,2}* <pattern> <path>
 	```
 - Diretórios:
 	```sh
-	grep --exclude-dir={dir_1,dir_2} <pattern> <path>
+	grep --exclude-dir={dir1,dir2} <pattern> <path>
 	```
 
 *OBSERVAÇÕES:*
@@ -770,13 +893,17 @@ Colocar as pastas de fontes dentro das pastas dos seus respectivos tipos, ex. `<
 
 #### Diretórios
 
-- Nível de sistema: `/usr/share/fonts/<type>/<family>`
-- Nível de usuário: `~/.local/share/fonts/<type>/<family>`
+- Nível de sistema:
+	`/usr/share/fonts/<type>/<family>`
+- Nível de usuário:
+	`~/.local/share/fonts/<type>/<family>`
 
 #### Comandos
 
-- Listar todas as fontes: `fc-list`
-- Atualizar o *cache* de fontes: `fc-cache`
+- Listar todas as fontes:
+	`fc-list`
+- Atualizar o *cache* de fontes:
+	`fc-cache`
 
 ### Partições
 
@@ -795,10 +922,14 @@ Colocar as pastas de fontes dentro das pastas dos seus respectivos tipos, ex. `<
 
 Formulas de cálculo entre MB/GB e setores:
 
-- *SECTORS > MB*: `<sectors>/2/1024`
-- *SECTORS > GB*: `<sectors>/2/1024^2`
-- *MB > SECTORS*: `<megas>*1048576/512`
-- *GB > SECTORS*: `<gigas>*(1048576*1024)/512`
+- *SECTORS > MB*:
+	`<sectors>/2/1024`
+- *SECTORS > GB*:
+	`<sectors>/2/1024^2`
+- *MB > SECTORS*:
+	`<megas>*1048576/512`
+- *GB > SECTORS*:
+	`<gigas>*(1048576*1024)/512`
 
 #### *Growing*
 
