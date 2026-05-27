@@ -684,6 +684,32 @@ Exemplo com `jq`:
 column -J -tL -s ':' -o '|' -N 'USERNAME,PASSWORD,UID,GID,GECOS,HOME,SHELL' /etc/passwd | jq
 ```
 
+### `yt-dlp`
+
+Listar formatos disponíveis:
+
+```sh
+yt-dlp -F <url>
+```
+
+Baixar somente áudio:
+
+```sh
+yt-dlp -x --audio-format mp3 <url>
+```
+
+Baixar áuido e vídeo, específicando tipo e resolução do vídeo (pode-se específicar somente o tipo ou resolução):
+
+```sh
+yt-dlp -S ext:mp4,res:1080 <url>
+```
+
+Baixar áudio e vídeo na melhor qualidade em conjunto, ou seja, a melhor qualidade de vídeo que tenha seu áuido diretamente compatível:
+
+```sh
+yt-dlp -f mp4 <url>
+```
+
 ## Configurações
 
 Anotações gerais sobre procedimentos (tutoriais).
