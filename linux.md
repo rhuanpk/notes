@@ -356,6 +356,14 @@ Formatar **ntfs**:
 [sudo] mkfs.ntfs [-Q] [-L <label>] /dev/sdXY
 ```
 
+### `ss`
+
+Verificar portas sendo usadas no sistema:
+
+```sh
+[sudo] ss -ntpl
+```
+
 ### *Runlevels*
 
 Runlevels são os níveis de execução do sistema criados no *System V* (*SysV*). Cada Runlevel diz ao sistema em qual "camada" o sistema deve operar (qual o seu estado atual).
