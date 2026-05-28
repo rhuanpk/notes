@@ -785,6 +785,67 @@ Exemplos de exclusão:
 
 - As exclusões irão excluir todos os arquivos e(ou) diretórios independente do nível do lugar que o grep estiver percorrendo que casar com a cadeia do `exclude` passado a partir da pasta *root*
 
+### `sed`
+
+*Parâmetros usados:*
+
+- `<pattern>`: *String* de RegEx
+- `<replacement>`: *String* de substituição
+
+*Opções usadas:*
+
+- `-n`: Suprime a saída padrão e mostra somente o *match*
+
+Substituir nova linha por algum caracter:
+
+```sh
+sed -z 's/\n/; /g' /path/file.txt
+```
+
+Buscar as linhas que dão *match* e retornar somente o *pattern* do grupo especificado (ex. `\1` para o primeiro grupo, `\2` para o segundo e assim por diante):
+
+```sh
+sed -nE 's/field: (.*)/\1/p' /path/file.txt
+```
+
+*OBSERVAÇÕES:*
+
+- É como se o `sed` buscasse a linha e a recortasse (equivalente a uma *pipeline* de `grep | cut | sed | tr`)
+
+Parar na primeira linha casada:
+
+```sh
+sed -nE '/<pattern>/{p;q}' /path/file.txt
+```
+
+*OBSERVAÇÕES:*
+
+- É como se o `sed` percorresse as linhas de entrada até encontrar o primeiro *pattern* descrito no exemplo, depois, executasse o que está dentro do bloco de condição (`{}`) que seria "printar" (`p`) e (`;`) sair (`q`)
+
+Substituição somente nas linhas que casam:
+
+```sh
+sed '/<pattern>/s/<pattern>/<replacement>/' /path/file.txt
+```
+
+Imprimir somente o *range* de linhas especificado:
+
+```sh
+sed -n '/<pattern>/,/<pattern>/p'
+```
+
+Remover todos caracteres de escape ANSI:
+
+```sh
+sed -nE 's/^.*\x1b\[([0-9]+;?)+m(.*)\x1b\[.*$/\2/p'
+```
+
+Cria backup na hora de efetivar as alterações & alterações em lote:
+
+```sh
+grep -rl '<pattern>' | xargs sed -Ei'.bak' '<pattern>'
+```
+
 ### `file`
 
 Mostra o tipo do arquivo e seu *path*:
