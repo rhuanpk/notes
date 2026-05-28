@@ -768,49 +768,6 @@ exec [<options>] [<command>]
 - Use quando quiser que logo depois do termino do comando o *shell* atual seja encerrado
 - Use para redirecionar a saída do próprio *shell* para controles de logs (no final, um script também executa num *shell*)
 
-### `column`
-
-*Parâmetros usados:*
-
-- `<delimiter>`: Caractere que define a separação de informações
-- `<header>`: Nome do cabeçalho
-- `<column>`: É o nome das colunas que foram renomeadas, caso não tenham sido, por padrão são numeradas a partir do índice `1`
-
-*Opções usadas:*
-
-- `-t`: Cria a tabela
-- `-L`: Mantem linhas vazia
-- `-J`: Saída formatada em JSON
-- `-s <delimiter>`: Delimitador de entrada
-- `-o <delimiter>`: Delimitador de saída
-- `-N <header>[,...]`: Nomeia as colunas
-- `-H <column>[,...]`: Esconde as colunas determinadas
-- `-R <column>[,...]`: Alinha as colunas à direita
-
-Exemplos base:
-
-```sh
-column -tL -s ':' -o '|' /etc/passwd
-```
-
-```sh
-column -tL -s ':' -o '|' -H 2,5 /etc/passwd
-```
-
-```sh
-column -tL -s ':' -o '|' -N 'USERNAME,PASSWORD,UID,GID,GECOS,HOME,SHELL' /etc/passwd
-```
-
-```sh
-column -tL -s ':' -o '|' -N 'USERNAME,PASSWORD,UID,GID,GECOS,HOME,SHELL' -H PASSWORD,GECOS /etc/passwd
-```
-
-Exemplo com `jq`:
-
-```sh
-column -J -tL -s ':' -o '|' -N 'USERNAME,PASSWORD,UID,GID,GECOS,HOME,SHELL' /etc/passwd | jq
-```
-
 ### `scp`
 
 Local > Remoto:
@@ -999,6 +956,49 @@ gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 
 - O tema que é escolhido (propriedade `gtk-name`) que deverá ser *dark* (caso queira que assim seja)
 - A propriedade `prefer-dark` serve para aplicativos que tem seu próprio tema e com uma versão *dark*
+
+### `column`
+
+*Parâmetros usados:*
+
+- `<delimiter>`: Caractere que define a separação de informações
+- `<header>`: Nome do cabeçalho
+- `<column>`: É o nome das colunas que foram renomeadas, caso não tenham sido, por padrão são numeradas a partir do índice `1`
+
+*Opções usadas:*
+
+- `-t`: Cria a tabela
+- `-L`: Mantem linhas vazia
+- `-J`: Saída formatada em JSON
+- `-s <delimiter>`: Delimitador de entrada
+- `-o <delimiter>`: Delimitador de saída
+- `-N <header>[,...]`: Nomeia as colunas
+- `-H <column>[,...]`: Esconde as colunas determinadas
+- `-R <column>[,...]`: Alinha as colunas à direita
+
+Exemplos base:
+
+```sh
+column -tL -s ':' -o '|' /etc/passwd
+```
+
+```sh
+column -tL -s ':' -o '|' -H 2,5 /etc/passwd
+```
+
+```sh
+column -tL -s ':' -o '|' -N 'USERNAME,PASSWORD,UID,GID,GECOS,HOME,SHELL' /etc/passwd
+```
+
+```sh
+column -tL -s ':' -o '|' -N 'USERNAME,PASSWORD,UID,GID,GECOS,HOME,SHELL' -H PASSWORD,GECOS /etc/passwd
+```
+
+Exemplo com `jq`:
+
+```sh
+column -J -tL -s ':' -o '|' -N 'USERNAME,PASSWORD,UID,GID,GECOS,HOME,SHELL' /etc/passwd | jq
+```
 
 ### `yt-dlp`
 
