@@ -749,6 +749,38 @@ Criar *link* simbólico:
 ln -s /path/original/file.txt /path/symlink
 ```
 
+### `history`
+
+Salvar os comandos da sessão no histórico (manualmente, antes de encerrar o *shell*):
+
+```sh
+history -a
+```
+
+Carregar comandos do histórico que ainda não estão na sessão atual (pois foram adicionados por outra sessão):
+
+```sh
+history -r
+```
+
+Limpar histórico do terminal:
+
+```sh
+history -c
+```
+
+Não gravar comando no histórico (dê um espaço antes do comando):
+
+```sh
+ ls /tmp
+```
+
+Pesquisar algum comando no histórico:
+
+```sh
+ctrl+r
+```
+
 ### `exec`
 
 *Parâmetros usados:*
