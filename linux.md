@@ -811,6 +811,150 @@ Exemplo com `jq`:
 column -J -tL -s ':' -o '|' -N 'USERNAME,PASSWORD,UID,GID,GECOS,HOME,SHELL' /etc/passwd | jq
 ```
 
+### `gpg`
+
+*Parâmetros usados:*
+
+- `<key>`: ID da chave privada
+- `<pubkey>`: ID da chave pública
+- `<path>`: Caminho para arquivo
+
+Gerar chave *gpg* (a geração é silenciosa e será guardada automáticamente no chaveiro *gpg*, para podermos vê-la, precisamos exporta-la):
+
+```sh
+gpg --full-gen-key
+```
+
+*OBSERVAÇÕES:*
+
+- Para mudar o "nível de segurança da chave":
+	- `gpg --edit-key <key>`
+	- `gpg> trust`
+	- *escolher*
+	- `gpg> save`
+
+Listar chaves públicas:
+
+```sh
+gpg -k
+```
+
+Listar chaves privadas:
+
+```sh
+gpg -K
+```
+
+*Fingerprint* das cahves (16 últimos caracteres da chave):
+
+```sh
+gpg --fingerprint
+```
+
+Gerar certificado de revogação:
+
+```sh
+gpg --gen-revoke <key> > /path/revocation.crt
+```
+
+Exportar chave pública (gerar o arquivo da chave pública):
+
+```sh
+gpg --export --armor <key> > /path/pubkey
+```
+
+Exportar chave privada (gerar o arquivo da chave privada):
+
+```sh
+gpg --export-secret-key --armor <key> > /path/key
+```
+
+Criptografar arquivo de forma simétrica (*passphrase*):
+
+```sh
+gpg --symmetric /path/file.txt
+```
+
+Descriptografar arquivo de forma simétrica (*passphrase*):
+
+```sh
+gpg [--no-symkey-cache] --decrypt /path/file.txt.gpg
+```
+
+Importar chave pública para o chaveiro:
+
+```sh
+gpg --import /path/pubkey
+```
+
+Assinar texto de entrada com chave de forma limpa (sem criptográfia):
+
+```sh
+gpg --clear-sign > /path/file.asc
+```
+
+Assinar texto de entrada com chave de forma "suja" (com criptográfia):
+
+```sh
+gpg --sign > /path/file.asc
+```
+
+Assinar arquivo com chave de forma limpa (sem criptográfia):
+
+```sh
+gpg --clear-sign /path/file.txt
+```
+
+Assinar arquivo com chave de forma "suja" (com criptográfia):
+
+```sh
+gpg --sign /path/file.txt
+```
+
+Validar a integridade do arquivo (verifica se a assinatura do arquivo condiz com o conteúdo):
+
+```sh
+gpg --verify /path/file.txt
+```
+
+Criptografar de forma assimétrica (*pair of keys*):
+
+```sh
+gpg --encrypt --recipient <pubkey> /path/file.txt
+```
+
+*OBSERVAÇÕES:*
+
+- Nesse caso você não precisa informar o recipiente privado (a chave privada) pois, em tese, ela já está em seu chaveiro privado
+
+Descriptografar já validando a integridade da mensagem ou arquivo:
+
+```sh
+gpg --output /path/file.txt --decrypt /path/file.txt.gpg
+```
+
+Desempacote blindagem ASCII e empacota blindando em OpenPGP (*output redirecting and pipe entring accepted*):
+
+```sh
+gpg --dearmor /path/key.asc
+```
+
+Tipos de entrada para senha:
+
+- Via *default setting*: *não passe nenhuma opção*
+- Via *hidden prompt*:
+	`--pinentry-mode loopback`
+- Via *plain text*:
+	`--batch --passphrase <password>`
+- Via *STDIN*:
+	`<password> | --batch --passphrase-fd 0` ou
+	`--batch --passphrase-fd 0 <<< <password>`
+
+*OBSERVAÇÕES:*
+
+- Todos os redirecionamentos de arquivos feitos podem ser substituídos pela opção do próprio comando (`--output <path>`), ou seja, isso implica que se não for especificado a saída, o STDOUT é o padrão (a tela)
+- Todos os parâmetros `<key>` podem ser substituídos pelos meio de identificação da chave, ex. *email* ou *fingerprint*
+
 ### `yt-dlp`
 
 Listar formatos disponíveis:
@@ -1179,6 +1323,32 @@ Caso não queira desabilita-lo:
 OBSERVAÇÕES:
 
 - Ao fazer o recarregamento e o reinício, `/usr/lib/systemd/system-generators/sshd-socket-generator` será executado, gerando o arquivo `/run/systemd/generator/ssh.socket.d/addresses.conf` contendo as configurações pro *sshd* funcionar como esperado
+
+### GPG
+
+Formas de resetar o agente:
+
+- `gpgconf --kill gpg-agent`
+- `gpgconf --reload gpg-agent`
+- `gpg-connect-agent reloadagent /bye`
+
+Caso precise trocar a interface de dialogo da senha do *gpg* (que usa o *pinentry*), execute:
+
+```
+update-alternatives --config pinentry
+```
+
+Ou para mudar a configuração apenas para o *gpg*:
+
+```
+pinentry-program /usr/bin/pinentry-{curses|tty} >> ~/.gnupg/gpg-agent.conf
+```
+
+Outra forma seria desinstalar o *pinentry* na qual NÃO deseja mais a utilizar:
+
+```
+[sudo] apt remove pinentry-gnome
+```
 
 ### Fonts
 
