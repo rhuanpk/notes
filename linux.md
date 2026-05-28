@@ -781,6 +781,20 @@ Pesquisar algum comando no histórico:
 ctrl+r
 ```
 
+### `yes`
+
+*Loop* infinito de "echo" no STDOUT:
+
+```sh
+yes
+```
+
+Especificando a *string*:
+
+```sh
+yes n
+```
+
 ### `exec`
 
 *Parâmetros usados:*
