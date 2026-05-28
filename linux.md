@@ -592,6 +592,26 @@ Busca o caminho de somente um arquivo:
 tree /path/folder --matchdirs --prune -P <pattern>
 ```
 
+### `cut`
+
+Pegar a coluna 1 e 7 do arquivo `/etc/passwd` pelo delimitador `:`:
+
+```sh
+cut -d ':' -f 1,7 /etc/passwd
+```
+
+Pegar do 1º até o 3º caractere de cada linha:
+
+```sh
+cut -c 1-3 /etc/passwd
+```
+
+Mudar o delimitador de saída padrão:
+
+```sh
+cut -d ' ' -f 3,4 --output-delimiter=',' /path/file.txt
+```
+
 ### `du`
 
 *Opções usadas:*
