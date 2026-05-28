@@ -224,6 +224,40 @@ O comando `shutdown` é um *handler* para todos esses comandos mas faz o "encerr
 shutdown [<options>] [<time>|now [wall]]
 ```
 
+### `dd`
+
+*Parâmetros usados:*
+
+- `X`: Letra do disco
+- `Y`: Número da partição
+
+Criar pendrive "bootavel":
+
+```sh
+[sudo] dd if=/path/image.iso of=/dev/sdX bs=32M conv=fsync status=progress
+```
+
+Criar pendrive "bootavel" (ISO compactada):
+
+```sh
+gzip -dc /path/image.iso.gz | [sudo] dd of=/dev/sdX bs=32M conv=fsync status=progress
+```
+
+Criar *backup* de partição/HD:
+
+```sh
+[sudo] dd if=/dev/sdX[Y] of=/tmp/backup.hd bs=32M
+```
+
+Criando um *virtual disk* (VD):
+
+1. `dd if=/dev/zero of=/tmp/vd.img bs=4M count=8`
+1. `mkfs.vfat -F 32 /tmp/vd.img`
+1. *`hexdump -C /tmp/vd.img | more`*
+1. `mount -o loop,rw [-t vfat] /tmp/vd.img /mnt/`
+1. `cd /mnt/ && touch file.txt; cd -`
+1. `umount /mnt/`
+
 ### `fdisk`
 
 *Parâmetros usados:*
