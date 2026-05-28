@@ -969,6 +969,37 @@ Tipos de entrada para senha:
 - Todos os redirecionamentos de arquivos feitos podem ser substituídos pela opção do próprio comando (`--output <path>`), ou seja, isso implica que se não for especificado a saída, o STDOUT é o padrão (a tela)
 - Todos os parâmetros `<key>` podem ser substituídos pelos meio de identificação da chave, ex. *email* ou *fingerprint*
 
+### `gsettings`
+
+Mudar tema via CLI:
+
+```sh
+gsettings set org.gnome.desktop.interface gtk-theme "Theme Name"
+```
+
+Mudar icone via CLI:
+
+```sh
+gsettings set org.gnome.desktop.interface icon-theme "Icon Name"
+```
+
+Habilitar/Desabilitar a o bloquei de tela (e a suspenção) quando escurecer a tela:
+
+```sh
+gsettings set org.gnome.desktop.screensaver lock-enabled {true|false}
+```
+
+Habilitar modo ***dark*** como padrão:
+
+```sh
+gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+```
+
+*OBSERVAÇÕES:*
+
+- O tema que é escolhido (propriedade `gtk-name`) que deverá ser *dark* (caso queira que assim seja)
+- A propriedade `prefer-dark` serve para aplicativos que tem seu próprio tema e com uma versão *dark*
+
 ### `yt-dlp`
 
 Listar formatos disponíveis:
