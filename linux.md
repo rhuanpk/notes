@@ -745,7 +745,7 @@ Mostra o tipo do arquivo e seu *path*:
 file /path/file.txt
 ```
 
-### Comando *stat*
+### `stat`
 
 Ver informações e metadados de arquivos:
 
@@ -1071,6 +1071,45 @@ gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 
 - O tema que é escolhido (propriedade `gtk-name`) que deverá ser *dark* (caso queira que assim seja)
 - A propriedade `prefer-dark` serve para aplicativos que tem seu próprio tema e com uma versão *dark*
+
+### `mktemp`
+
+Gerar arquivos com nomes aleatórios:
+
+```sh
+mktemp XXXXXXX.tmp
+```
+
+Gerar pastas com nomes aleatórios:
+
+```sh
+mktemp -d XXXXXXX.tmp
+```
+
+Gerar capturando o nome:
+
+```sh
+temp="$(mktemp XXXXXXX.tmp)"
+```
+
+Gerando validando a operação:
+
+```sh
+if temp="$(mktemp XXXXXXX.tmp [2>&-])"; then
+	# case created
+else
+	# case not created
+fi
+```
+
+Caso queira validar somente se houver erro:
+
+```sh
+if ! temp="$(mktemp XXXXXXX.tmp [2>&-])"; then
+	# case not created
+fi
+echo "temp: $temp"
+```
 
 ### `column`
 
