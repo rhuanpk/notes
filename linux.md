@@ -795,6 +795,39 @@ Especificando a *string*:
 yes n
 ```
 
+### `progress`
+
+*Parâmetros usados:*
+
+- `<pid>`: ID do processo
+- `<bin>`: Nome do executáve
+- `<command>`: Comando final completo
+
+*Opções usadas:*
+
+- `-m`: Monitora em *loop* até o comando morrer
+- `-M`: Monitor ativo mesmo sem comandos sendo monitorados
+- `-p <pid>`: Monitora o comando pelo PID
+- `-c <bin>`: Monitora o comando pelo nome, ex. `cp`, `mv`
+
+Exemplos base:
+
+```sh
+<command> & progress -mp "$!"
+```
+
+```sh
+<command>; progress -mc <bin>
+```
+
+```sh
+<command>; progress -Mc <bin>
+```
+
+```sh
+progress -M [-c <bin>]
+```
+
 ### `exec`
 
 *Parâmetros usados:*
@@ -1352,7 +1385,6 @@ Host *
 Exemplo de configuração via `keychain` (`~/.bash_profile`):
 
 ```sh
-
 /usr/bin/keychain --clear /path/key
 . ~/.keychain/$(hostname)-sh
 ```
