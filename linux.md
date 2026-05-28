@@ -745,6 +745,14 @@ Mostra o tipo do arquivo e seu *path*:
 file /path/file.txt
 ```
 
+### Comando *stat*
+
+Ver informações e metadados de arquivos:
+
+```sh
+stat /path/file.txt
+```
+
 ### `ln`
 
 *Hard Link* (Conexão Física):
