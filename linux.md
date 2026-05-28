@@ -811,6 +811,20 @@ Exemplo com `jq`:
 column -J -tL -s ':' -o '|' -N 'USERNAME,PASSWORD,UID,GID,GECOS,HOME,SHELL' /etc/passwd | jq
 ```
 
+### `scp`
+
+Local > Remoto:
+
+```sh
+scp [-r] [-P <port>] /local/path [<user>][@][<host>]:/remote/path
+```
+
+Remoto > Local:
+
+```sh
+scp [-r] [-P <port>] [<user>][@][<host>]:/remote/path /local/path
+```
+
 ### `gpg`
 
 *Parâmetros usados:*
