@@ -692,6 +692,38 @@ Gerenciar graficamente via terminal (TUI) arquivos por tamanho:
 ncdu [<folder>]
 ```
 
+### `ln`
+
+*Hard Link* (Conexão Física):
+
+- Não podem ser feitos por arquivos que estão em outros pontos de montagem
+- O *link* tem o mesmo *inode* do original
+- Se o original for corrompido o *link* fica independente
+
+Symbolic Link (Conexão Simbólica):
+
+- Tem que passar o *path* completo para este tipo de conexão
+- O *link* terá um *inode* diferente do arquivo original
+- Se arquivo original for corrompido o *link* quebrará
+
+*Opções usadas:*
+
+- `-s`: Cria um *link* simbólico
+- `-f`: Força a criação do *link*
+- `-v`: Deixa a saída verbosa
+
+Criar *link* físico:
+
+```sh
+ln /path/original/file.txt /path/hardlink
+```
+
+Criar *link* simbólico:
+
+```sh
+ln -s /path/original/file.txt /path/symlink
+```
+
 ### `shuf`
 
 Embaralhar linhas do arquivo:
@@ -878,38 +910,6 @@ Ver informações e metadados de arquivos:
 
 ```sh
 stat /path/file.txt
-```
-
-### `ln`
-
-*Hard Link* (Conexão Física):
-
-- Não podem ser feitos por arquivos que estão em outros pontos de montagem
-- O *link* tem o mesmo *inode* do original
-- Se o original for corrompido o *link* fica independente
-
-Symbolic Link (Conexão Simbólica):
-
-- Tem que passar o *path* completo para este tipo de conexão
-- O *link* terá um *inode* diferente do arquivo original
-- Se arquivo original for corrompido o *link* quebrará
-
-*Opções usadas:*
-
-- `-s`: Cria um *link* simbólico
-- `-f`: Força a criação do *link*
-- `-v`: Deixa a saída verbosa
-
-Criar *link* físico:
-
-```sh
-ln /path/original/file.txt /path/hardlink
-```
-
-Criar *link* simbólico:
-
-```sh
-ln -s /path/original/file.txt /path/symlink
 ```
 
 ### `history`
