@@ -2,14 +2,18 @@
 
 Anotações gerais sobre Debian: programas e configurações.
 
----
-
 ## `dpkg`
 
 *Parâmetros usados:*
 
 - `<package>`: Nome do pacote/programa
 - `<binary>`: Nome do binário/executável
+
+Instalar pacote `.deb`:
+
+```sh
+[sudo] dpkg -i package.deb
+```
 
 Listar programas instalados:
 
@@ -34,7 +38,29 @@ Saber a qual pacote perterce determinado binário (executável):
 	dpkg -S <binary> | grep -P '/usr(/local)?/bin/'
 	```
 
----
+Saber arquitetura do sistema:
+
+```sh
+dpkg --print-architecture
+```
+
+Saber se há outra arquitetura disponível para ser habilitada:
+
+```sh
+dpkg --print-foreign-architectures
+```
+
+Adicionar arquitetura:
+
+```sh
+[sudo] dpkg --add-architecture i386
+```
+
+Remover arquitetura:
+
+```sh
+[sudo] dpkg --remove-architecture i386
+```
 
 ## `apt`
 
@@ -146,12 +172,12 @@ Signed-By: [{/usr/share|/etc/apt}/keyrings/<package>.gpg]
 
 Programas necessários:
 
-```bash
+```sh
 [sudo] apt install wajig
 ```
 
 Saber o tamanho dos pacotes instalados:
 
-```bash
+```sh
 wajig sizes
 ```

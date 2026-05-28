@@ -820,7 +820,7 @@ yes n
 *Parâmetros usados:*
 
 - `<pid>`: ID do processo
-- `<bin>`: Nome do executáve
+- `<binary>`: Nome do executáve
 - `<command>`: Comando final completo
 
 *Opções usadas:*
@@ -828,7 +828,7 @@ yes n
 - `-m`: Monitora em *loop* até o comando morrer
 - `-M`: Monitor ativo mesmo sem comandos sendo monitorados
 - `-p <pid>`: Monitora o comando pelo PID
-- `-c <bin>`: Monitora o comando pelo nome, ex. `cp`, `mv`
+- `-c <binary>`: Monitora o comando pelo nome, ex. `cp`, `mv`
 
 Exemplos base:
 
@@ -837,15 +837,15 @@ Exemplos base:
 ```
 
 ```sh
-<command>; progress -mc <bin>
+<command>; progress -mc <binary>
 ```
 
 ```sh
-<command>; progress -Mc <bin>
+<command>; progress -Mc <binary>
 ```
 
 ```sh
-progress -M [-c <bin>]
+progress -M [-c <binary>]
 ```
 
 ### `exec`
