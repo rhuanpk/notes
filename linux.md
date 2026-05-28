@@ -846,6 +846,24 @@ Cria backup na hora de efetivar as alterações & alterações em lote:
 grep -rl '<pattern>' | xargs sed -Ei'.bak' '<pattern>'
 ```
 
+### `xargs`
+
+Pega a saida do pipe e concatena no final do comando que está a frente dele.
+
+Exemplos base:
+
+```sh
+cat file.txt | xargs [sudo] apt install -y
+```
+
+```sh
+xargs -a file.txt [sudo] apt install -y
+```
+
+```sh
+find ./ -iname '*.mp3' | xargs rm -fv
+```
+
 ### `file`
 
 Mostra o tipo do arquivo e seu *path*:
