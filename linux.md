@@ -658,6 +658,20 @@ Gerenciar graficamente via terminal (TUI) arquivos por tamanho:
 ncdu [<folder>]
 ```
 
+### `shuf`
+
+Embaralhar linhas do arquivo:
+
+```sh
+shuf /path/file.txt
+```
+
+Embaralhar, pegar a última linha e exclui-la:
+
+```sh
+line=$(shuf /path/file.txt | tail -1); echo $line; sed -ni "/$line/d" /path/file.txt
+```
+
 ### `ls`
 
 - `-a`: Exibe arquivos ocultos
