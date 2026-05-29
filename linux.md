@@ -518,6 +518,42 @@ Caso atualize o arquivos de configuração do usuário como `/etc/sysctl.d/99-sy
 [sudo] sysctl --system
 ```
 
+### `passwd`
+
+*Parâmetros usados:*
+
+- `<user>`: Nome de usuário no sistema
+
+Alterar a senha de um usuário:
+
+```sh
+[sudo] passwd <user>
+```
+
+Limpar a senha de um usuário:
+
+```sh
+[sudo] passwd -d <user>
+```
+
+Bloquear a senha de um usuário:
+
+```sh
+[sudo] passwd -l <user>
+```
+
+Desbloquear a senha de um usuário:
+
+```sh
+[sudo] passwd -u <user>
+```
+
+*OBSERVAÇÕES:*
+
+- Simplesmente limpar a senha do usuário o fara ficar sem senha, ou seja, ele ficará sem este meio de autenticação, ex. se tentar "logar" na conta do usuário, não pedirá a senha
+- Bloquear e desbloquear a senha de uma usuário implica somente na senha do mesmo, ou seja, caso bloqueamos a senha de um usuário, ele poderá fazer login por outro meio (algum tipo de chave por exemplo)
+- Caso queira bloquear/desativar a conta do usuário, poderá limpar a sua senha (`-d`) e depois bloquea-la (`-l`), após isso, só podera "logar" pelo usuário de forma direta criando uma nova senha para o mesmo
+
 ### *Runlevels*
 
 Runlevels são os níveis de execução do sistema criados no *System V* (*SysV*). Cada Runlevel diz ao sistema em qual "camada" o sistema deve operar (qual o seu estado atual).
