@@ -390,6 +390,29 @@ Formatar **ntfs**:
 [sudo] mkfs.ntfs [-Q] [-L <label>] /dev/sdXY
 ```
 
+### `losetup`
+
+Listar todos os *loop devices*:
+
+```sh
+[sudo] losetup -a
+```
+
+Desmontar e remover um *loop device*:
+
+1. Desmontar o *device*:
+	```sh
+	[sudo] umount /dev/loop9
+	```
+1. Desanexar os arquivos referentes a esse *device*:
+	```sh
+	[sudo] losetup -d /dev/loop9
+	```
+1. Remover o *device*:
+	```sh
+	[sudo] rm /dev/loop9
+	```
+
 ### `ss`
 
 Verificar portas sendo usadas no sistema:
