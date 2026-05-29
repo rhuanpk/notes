@@ -710,7 +710,7 @@ Symbolic Link (Conexão Simbólica):
 
 - `-s`: Cria um *link* simbólico
 - `-f`: Força a criação do *link*
-- `-v`: Deixa a saída verbosa
+- `-v`: Aumenta verbosidade da saída
 
 Criar *link* físico:
 
@@ -912,11 +912,18 @@ Ver informações e metadados de arquivos:
 stat /path/file.txt
 ```
 
-### Comando _curl_
+### `curl`
 
 *Parâmetros usados:*
 
+- `<url>`: Endereço do arquivo a ser baixado
 - `<path>`: Caminho para arquivo ou pasta
+- `<type>`: Tipo da requisição, ex. `GET`, `POST`
+- `<user>`: Nome de usuário de acesso
+- `<password>`: Senha de acesso do usuário
+- `<header>`: O cabeçalho da request é *case-insensitive* defino pela sintaxe `<chave>: <valor>`, ex. `Content-Type: application/json` ou `content-type: application/json`
+- `<field>`: Identificador da *tag* HTML no *site*
+- `<content>`: Qualquer valor possível para determinado tipo
 
 *Opções usadas:*
 
@@ -924,45 +931,50 @@ stat /path/file.txt
 - `-s`: Silencia o *curl*, suprime o progresso ou mensagens de erro, porém, mostra a *response* normalmente
 - `-S`: Mostra o erro, caso ele ocorra enquanto a saída está silênciada (`-s`)
 - `-L`: Tenta seguir redirecionamentos de URL
+- `-d`: Específica o *body* da requisição
 - `-k`: Desabilita verificações de segurança (*SSL* e etc)
-- `-v`: Modo verboso
-- `-i`: _printa_ o cabeçalho da requisição
+- `-v`: Aumenta verbosidade da saída
+- `-i`: Retorna o cabeçalho da requisição
 - `-X <type>`: Tipo da *request*
-- `-H <header>`: Define cabeçalhos da *request*
+- `-H <header>`: Define cabeçalho da *request* (aceita múltiplas `-H`)
+- `-u <user>[:<password>]`: Credenciais para autênticação única
 - `-o <path>`: Informa o nome e o local do arquivo de saída
-- `-u <user>:<password>`: Para fazer autênticação única
-- `-w '%{<variable>}\n'`: Retorna somente a [chave específica](https://curl.se/docs/manpage.html#:~:text=%2Dw%2C%20%2D%2Dwrite%2Dout%20%3Cformat%3E) do retorno da requisição
+- `-w '%{<variable>}\n[...]'`: Retorna somente a [chave específica](https://curl.se/docs/manpage.html#:~:text=The%20variables%20available%20are%3A) da *response*
 
 Sintaxe comum para download:
+
 ```sh
-curl -fsSLo /path/to/save.any <url>
+curl [-o /path/file.txt] -fsSL <url>
 ```
 
-Popular *field* no *html* de determinado endereço:
+Popular *field* no HTML de determinado endereço:
+
 ```sh
-curl -d "<field-name>=<content>" <url>
+curl -d "<field>=<content>" <url>
 ```
 
-#### Tipos de _Content-Type_
+#### *Content-Type*
 
 JSON:
+
 ```sh
 curl [-H 'content-type: application/json'] -d '{"param1":"value1","param2":"value2"}' <url>
 ```
 
-URL Encoded:
+URL Encoded (espaços em branco trocados por `+`):
+
 ```sh
 curl [-H 'content-type: application/x-www-form-urlencoded'] -d 'param1=value1&param2=value2' <url>
 ```
 
-- OBS: **Espaços em branco** trocados por "+".
-
 Form Data:
+
 ```sh
 curl [-H 'content-type: multipart/form-data'] -F 'param1=value1' -F 'file=@/path/to/file.any' <url>
 ```
 
 XML:
+
 ```sh
 curl [-H 'content-type: application/xml'] -d '<root><element>value</element></root>' <url>
 ```
