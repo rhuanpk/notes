@@ -712,6 +712,18 @@ Problemas com áudio usando `pulseauido` como driver:
 1. `cp -v /etc/pulse/client.conf ~/.config/pulse`
 1. `echo 'enable-shm = no' >> ~/.config/pulse/client.conf`
 
+Para executar Google Chrome:
+
+```sh
+firejail --private google-chrome --no-sandbox --no-first-run
+```
+
+Caso ainda tenha problemas com Google Chrome e esteja no Wayland:
+
+```sh
+firejail --noprofile --private --env=MOZ_ENABLE_WAYLAND=1 --dns=1.1.1.1 google-chrome --no-sandbox --ozone-platform=wayland --disable-vulkan --no-first-run
+```
+
 ### *Runlevels*
 
 Runlevels são os níveis de execução do sistema criados no *System V* (*SysV*). Cada Runlevel diz ao sistema em qual "camada" o sistema deve operar (qual o seu estado atual).
