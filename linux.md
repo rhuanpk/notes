@@ -1333,6 +1333,74 @@ XML:
 curl [-H 'content-type: application/xml'] -d '<root><element>value</element></root>' <url>
 ```
 
+### `nslookup`
+
+*Parâmetros usados:*
+
+- `<host>`: Domínio ou IP
+
+Resolver *hostnames*/domínios:
+
+```sh
+nslookup [-type=PTR] <host>
+```
+
+### `arp-scan`
+
+Programas necessários:
+
+```sh
+[sudo] apt install arp-scan
+```
+
+Descobrir *ips* conectados na rede local:
+
+```sh
+[sudo] arp-scan --localnet
+```
+
+### Comando _dig_
+
+*Parâmetros usados:*
+
+- `<dns>`: IP do DNS (ex. `8.8.8.8`, `1.1.1.1`)
+- `<domain>`: IP do servidor (ex. `123.456.789.10`)
+- `<domain>`: Nome de domínio (ex. `kernel.org`)
+- `<type>`: Tipo de domínio (ex. `A`, `MX`)
+
+Programas necessários:
+
+```sh
+[sudo] apt install dnsutils
+```
+
+Resolver domínio:
+
+```sh
+dig [+short] [@<dns>] <domain> [<type>]
+```
+
+Verificar *nameservers* do domínio:
+
+```sh
+dig +trace [@<dns>] <domain>
+```
+
+Encontrar domínio pelo IP:
+
+```sh
+dig [+short] [@<dns>] -x <ip>
+```
+
+*OBSERVAÇÕES:*
+
+- O comando `dig` aceita os tipos de domínio `A`, `MX` e `SOA`.
+
+*LINKS:*
+
+- [Content Base](https://www.certificacaolinux.com.br/comando-linux-dig/)
+- [Record Types](https://www.cloudflare.com/pt-br/learning/dns/dns-records/)
+
 ### `history`
 
 Salvar os comandos da sessão no histórico (manualmente, antes de encerrar o *shell*):
