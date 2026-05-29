@@ -49,7 +49,7 @@ sudo -k <command>
 
 *Parâmetros usados:*
 
-- `<shell>`: Nome do *shell*, ex. `sh`, `bash`
+- `<shell>`: Nome do *shell* (*e.g.* `sh`, `bash`)
 - `<user>`: Nome do usuário para *login*
 - `<command>`: Comando final completo
 - `<args>`: Parâmetros de opções
@@ -58,7 +58,7 @@ sudo -k <command>
 
 - `-c <command>`: Executa o comando no usuário especificado
 - `-s <shell>`: Especifica o *shell* de login
-- `-p`: Preserva o ambiente, ex. variáveis (não usado com `--login`)
+- `-p`: Preserva o ambiente, como variáveis (não usado com `--login`)
 - `-`, `-l`: Faz o *full login* no usuário, resetando todo o ambiente (recomendado)
 
 "Logar" num *shell* interativo de outro usuário; Diretório de origem é preservado; Somente a variável `$HOME` é trocada (também `$USER` e `$LOGNAME` se usuário não for ***root***); Caso não especifique usuário, `root` é o padrão; Pode haver conflitos de ambiente por não ser um *full login*:
@@ -139,8 +139,8 @@ Faça o setup pelo guia do [Flatpak](https://flatpak.org/setup) ou do [Flathub](
 
 *Parâmetros usados:*
 
-- `<remote>`: Repositório remoto, ex. `flathub`
-- `<app>`: *ID* do aplicativo remota ou localmente, ex. `org.mozilla.firefox`
+- `<remote>`: Repositório remoto (*e.g.* `flathub`)
+- `<app>`: *ID* do aplicativo remota ou localmente (*e.g.* `org.mozilla.firefox`)
 - `<commit>`: *Hash* do *commit*
 
 Instalar app flatpak:
@@ -259,7 +259,7 @@ O comando `shutdown` é um *handler* para todos esses comandos mas faz o "encerr
 
 *Parâmetros usados:*
 
-- `<time>`: `hh:mm` no padrão 24h ou `+m` onde "m" é a quantidade de minutos a partir de agora, ex. `+5` se refere daqui a 5 minutos (*default*: `+1`)
+- `<time>`: `hh:mm` no padrão 24h ou `+m` onde "m" é a quantidade de minutos a partir de agora, *e.g.* `+5` se refere daqui a 5 minutos (*default*: `+1`)
 - `<wall>`: Mensagem de aviso de desligamento do sistema para os usuário "logados"
 
 *Opções usadas:*
@@ -623,7 +623,7 @@ Desbloquear a senha de um usuário:
 
 *OBSERVAÇÕES:*
 
-- Simplesmente limpar a senha do usuário o fara ficar sem senha, ou seja, ele ficará sem este meio de autenticação, ex. se tentar "logar" na conta do usuário, não pedirá a senha
+- Simplesmente limpar a senha do usuário o fara ficar sem senha, ou seja, ele ficará sem este meio de autenticação, *e.g.* se tentar "logar" na conta do usuário, não pedirá a senha
 - Bloquear e desbloquear a senha de uma usuário implica somente na senha do mesmo, ou seja, caso bloqueamos a senha de um usuário, ele poderá fazer login por outro meio (algum tipo de chave por exemplo)
 - Caso queira bloquear/desativar a conta do usuário, poderá limpar a sua senha (`-d`) e depois bloquea-la (`-l`), após isso, só podera "logar" pelo usuário de forma direta criando uma nova senha para o mesmo
 
@@ -1160,7 +1160,7 @@ Substituir nova linha por algum caracter:
 sed -z 's/\n/; /g' /path/file.txt
 ```
 
-Buscar as linhas que dão *match* e retornar somente o *pattern* do grupo especificado (ex. `\1` para o primeiro grupo, `\2` para o segundo e assim por diante):
+Buscar as linhas que dão *match* e retornar somente o *pattern* do grupo especificado (*e.g.* `\1` para o primeiro grupo, `\2` para o segundo e assim por diante):
 
 ```sh
 sed -nE 's/field: (.*)/\1/p' /path/file.txt
@@ -1272,10 +1272,10 @@ wget -O - <url>
 
 - `<url>`: Endereço do arquivo a ser baixado
 - `<path>`: Caminho para arquivo ou pasta
-- `<type>`: Tipo da requisição, ex. `GET`, `POST`
+- `<type>`: Tipo da requisição (*e.g.* `GET`, `POST`)
 - `<user>`: Nome de usuário de acesso
 - `<password>`: Senha de acesso do usuário
-- `<header>`: O cabeçalho da request é *case-insensitive* defino pela sintaxe `<chave>: <valor>`, ex. `Content-Type: application/json` ou `content-type: application/json`
+- `<header>`: O cabeçalho da request é *case-insensitive* defino pela sintaxe `<chave>: <valor>` (*e.g.* `Content-Type: application/json` ou `content-type: application/json`)
 - `<field>`: Identificador da *tag* HTML no *site*
 - `<content>`: Qualquer valor possível para determinado tipo
 
@@ -1363,10 +1363,10 @@ Descobrir *ips* conectados na rede local:
 
 *Parâmetros usados:*
 
-- `<dns>`: IP do DNS (ex. `8.8.8.8`, `1.1.1.1`)
-- `<domain>`: IP do servidor (ex. `123.456.789.10`)
-- `<domain>`: Nome de domínio (ex. `kernel.org`)
-- `<type>`: Tipo de domínio (ex. `A`, `MX`)
+- `<dns>`: IP do DNS (*e.g.* `8.8.8.8`, `1.1.1.1`)
+- `<domain>`: IP do servidor (*e.g.* `123.456.789.10`)
+- `<domain>`: Nome de domínio (*e.g.* `kernel.org`)
+- `<type>`: Tipo de domínio (*e.g.* `A`, `MX`)
 
 Programas necessários:
 
@@ -1492,7 +1492,7 @@ yes n
 - `-m`: Monitora em *loop* até o comando morrer
 - `-M`: Monitor ativo mesmo sem comandos sendo monitorados
 - `-p <pid>`: Monitora o comando pelo PID
-- `-c <binary>`: Monitora o comando pelo nome, ex. `cp`, `mv`
+- `-c <binary>`: Monitora o comando pelo nome (*e.g.* `cp`, `mv`)
 
 Exemplos base:
 
@@ -1687,7 +1687,7 @@ Tipos de entrada para senha:
 *OBSERVAÇÕES:*
 
 - Todos os redirecionamentos de arquivos feitos podem ser substituídos pela opção do próprio comando (`--output <path>`), ou seja, isso implica que se não for especificado a saída, o STDOUT é o padrão (a tela)
-- Todos os parâmetros `<key>` podem ser substituídos pelos meio de identificação da chave, ex. *email* ou *fingerprint*
+- Todos os parâmetros `<key>` podem ser substituídos pelos meio de identificação da chave, *e.g.* *email* ou *fingerprint*
 
 ### `gsettings`
 
@@ -2279,7 +2279,7 @@ Configuração de fontes no sistema.
 - `opentype` ou `otf`
 - `webfonts` ou `woff`
 
-Colocar as pastas de fontes dentro das pastas dos seus respectivos tipos, ex. `<path>/truetype/Monospace`.
+Colocar as pastas de fontes dentro das pastas dos seus respectivos tipos, *e.g.* `<path>/truetype/Monospace`.
 
 #### Diretórios
 
