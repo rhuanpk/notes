@@ -1377,7 +1377,7 @@ Descobrir *ips* conectados na rede local:
 [sudo] arp-scan --localnet
 ```
 
-### Comando _dig_
+### `dig`
 
 *Parâmetros usados:*
 
@@ -1768,6 +1768,14 @@ Imprime o caminho de um *path* sem o último membro:
 
 ```sh
 dirname /path/file.txt
+```
+
+### `readlink`
+
+Retorna o caminho original de um *link* simbólico (*symlink*):
+
+```sh
+readlink -f /path/symlink
 ```
 
 ### `mktemp`
