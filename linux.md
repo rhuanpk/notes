@@ -230,7 +230,21 @@ Mapear teclas e eventos do ambiente:
 Listar dispositivos USB:
 
 ```sh
-lsusb
+[sudo] lsusb
+```
+
+### `lsof`
+
+Listar portas abertas no sistema:
+
+```sh
+[sudo] lsof -nPi | grep -F LISTEN
+```
+
+Listar porta específica:
+
+```sh
+[sudo] lsof -i :<port>
 ```
 
 ### `shutdown`
