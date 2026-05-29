@@ -627,6 +627,91 @@ Desbloquear a senha de um usuário:
 - Bloquear e desbloquear a senha de uma usuário implica somente na senha do mesmo, ou seja, caso bloqueamos a senha de um usuário, ele poderá fazer login por outro meio (algum tipo de chave por exemplo)
 - Caso queira bloquear/desativar a conta do usuário, poderá limpar a sua senha (`-d`) e depois bloquea-la (`-l`), após isso, só podera "logar" pelo usuário de forma direta criando uma nova senha para o mesmo
 
+### `firejail`
+
+*Parâmetros usados:*
+
+- `<binary>`: Nome do executáve
+- `<sandbox>`: Nome dado ao *sandbox*
+- `<command>`: Comando final completo
+
+Programas necessários:
+
+```sh
+[sudo] apt install firejail
+```
+
+Executar o *shell* padrão em *sandbox*:
+
+```sh
+firejail
+```
+
+Executar a aplicação em *sandbox*:
+
+```sh
+firejail [--noprofile] [--nodbus] [--private] <binary>
+```
+
+Lista os processos executando sob *firejail*:
+
+```sh
+firejail --list
+```
+
+Executar o programa o impedindo de se conectar com a *internet* (o aplicativo não vê interfaces de rede):
+
+```sh
+firejail --protocol=unix <binary>
+```
+
+Executa o firejail criando uma nova e vazia pasta pessoal para o ***root*** e para o **usuário regular**:
+
+```sh
+firejail [--name=<sandbox>] --private
+```
+
+Listagem de diretórios dentro do *sandbox*:
+
+```sh
+firejail --ls=<sandbox> /path/[file.txt]
+```
+
+Copiar arquivo de dentro do *sandbox*:
+
+```sh
+firejail --get=<sandbox> /path/[file.txt]
+```
+
+Entrar no *sandbox* ou executar algum comando nela:
+
+```sh
+firejail --join=<sandbox> [<command>]
+```
+
+Copiar algo do *host* para o *sandbox*:
+
+```sh
+firejail --put=<sandbox> /path/host/file.txt /path/sandbox/file.txt
+```
+
+*OBSERVAÇÕES:*
+
+- O *firejail* isola a aplicação da sua *home*, porém, não do restante do sistema de arquivos (porque em tese já pertence ao *root*)
+- Por padrão, caso o *firejail* não tenha um perfil específico para a aplicação que executará, ele usurá um perfil genérico (o que pode causar problemas)
+
+*LINKS:*
+
+- <https://easylinuxtipsproject.blogspot.com/p/sandbox.html>
+
+#### Troubleshooting
+
+Problemas com áudio usando `pulseauido` como driver:
+
+1. `mkdir -pv ~/.config/pulse`
+1. `cp -v /etc/pulse/client.conf ~/.config/pulse`
+1. `echo 'enable-shm = no' >> ~/.config/pulse/client.conf`
+
 ### *Runlevels*
 
 Runlevels são os níveis de execução do sistema criados no *System V* (*SysV*). Cada Runlevel diz ao sistema em qual "camada" o sistema deve operar (qual o seu estado atual).
@@ -1669,7 +1754,7 @@ Exemplo com `jq`:
 column -J -tL -s ':' -o '|' -N 'USERNAME,PASSWORD,UID,GID,GECOS,HOME,SHELL' /etc/passwd | jq
 ```
 
-### Comando *rsync*
+### `rsync`
 
 *Parâmetros usados:*
 
