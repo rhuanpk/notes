@@ -490,6 +490,34 @@ Remover/Limpar os *logs*:
 [sudo] journalctl --rotate --vacuum-size <size> [--unit <unit>.service]
 ```
 
+### `sysctl`
+
+Trocar a porcentagem de uso (que está sobrando) para que a *swap* seja ativada:
+
+```sh
+[sudo] sysctl vm.swappiness=90
+```
+
+*OBSERVAÇÕES:*
+
+- 60 é o padrão, quanto maior, "menos" *swap* será usado. No caso, se quiser que a *swap* seja ativa com 90% de uso, defina o valor para 10
+
+Aumentar o "desejo" de manter o *cache* da RAM:
+
+```sh
+[sudo] sysctl vm.vfs_cache_pressure=75
+```
+
+*OBSERVAÇÕES:*
+
+- 100 é o padrão, quanto menor o valor, mais tempo mantem o cache
+
+Caso atualize o arquivos de configuração do usuário como `/etc/sysctl.d/99-sysctl.conf`, utilize o comando para aplicar de imediato os parâmetros ao invés de esperar reiniciar o SO:
+
+```sh
+[sudo] sysctl --system
+```
+
 ### *Runlevels*
 
 Runlevels são os níveis de execução do sistema criados no *System V* (*SysV*). Cada Runlevel diz ao sistema em qual "camada" o sistema deve operar (qual o seu estado atual).
