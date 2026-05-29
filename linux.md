@@ -1655,6 +1655,47 @@ Exemplo com `jq`:
 column -J -tL -s ':' -o '|' -N 'USERNAME,PASSWORD,UID,GID,GECOS,HOME,SHELL' /etc/passwd | jq
 ```
 
+### Comando *rsync*
+
+*Parâmetros usados:*
+
+- `<port>`: Porta da conexão SSH
+- `<pattern>`: *String* de RegEx
+
+*Opções usadas:*
+
+- `-r`: Modo recursivo
+- `-v`: Modo verboso
+- `-h`: Aumenta a legibilidade
+- `-a`: Aplica recursividade, preserva permissões, usuários, grupos e *timestamp* (*inode*)
+- `-u`: Pula arquivos no qual o destino é mais novo
+- `-z`: Comprime os dados trafegados deixando o tamanho do *payload* menor (consumindo mais processamento)
+- `-P`: Mostra o progresso
+- `-e 'ssh -p <port>'`: Muda a porta padrão (`22`) de conexão
+- `--delete`: Caso algum arquivo da fonte não exista mais no destino, no destino também é excluído
+- `--exclude=<pattern>`: Exclui arquivos ou diretórios, aceitando *glob* ou caminho absoluto
+- `--include=<pattern>`: Inclui arquivos ou diretórios (que foram excluídos), aceitando *glob* ou caminho absoluto
+
+Sintaxe base:
+
+```sh
+rsync [<options>] /path/folder1/ /path/folder2/ /path/file3.txt /path/backup/
+```
+
+Exemplo base:
+
+```sh
+rsync -auhv --include=.files-* --exclude={file1,folder2,.*} --exclude=*.bak /absolute/src/file1.txt relative/src/folder2/ /tmp/dst/backup/
+```
+
+*OBSERVAÇÕES:*
+
+- O destino ou origem aceita o modo de *login* de protocolo `ssh` (`user@host:/path`)
+- Caso a pasta de destino não exista o *rsync* criará automáticamente
+- No *rsync* `/path/folder` representa o próprio arquivo, ou seja, na hora de fazer a cópia, copiará a pasta ***folder*** com os arquivos dentro, porém, se passar `/path/folder/` não está pegando o *basename* mas somente os arquivos dentro de ***folder***
+- Por *default*, caso utilize o *rsync* com os mesmos *paths* de origem e destino, ele simplesmente faz a sincronia dos arquivos (copia somente oque foi alterado, ou seja, o que há de novo) e preserva do destino os que já foram excluídos da fonte (ver opção `--delete`)
+- Opção `--exclude` é única para cada arquivo que deseja não sincronizar?
+
 ### `yt-dlp`
 
 Listar formatos disponíveis:
