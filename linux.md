@@ -398,7 +398,37 @@ Verificar portas sendo usadas no sistema:
 [sudo] ss -ntpl
 ```
 
-### Comando _journalctl_
+### `systemctl`
+
+*Parâmetros usados:*
+
+- `<unit>`: Nome do serviço/*daemon*
+
+*Opções usadas:*
+
+- `--type`: Filtra pelo tipo de unidade
+- `--state`: Filtra pelo estado da unidade
+- `--reverse`: Mostra as dependências reversas (quais serviços dependem deste)
+
+Listar todas as unidades do sistema:
+
+```sh
+systemctl list-units [--type service] [--state running]
+```
+
+Listar todas as dependências de uma unidade:
+
+```sh
+systemctl list-dependencies [--reverse] <unit>.service
+```
+
+Caso o sistema não tenha voltado do congelamento:
+
+```sh
+systemctl thaw '*'
+```
+
+### `journalctl`
 
 *Parâmetros usados:*
 
