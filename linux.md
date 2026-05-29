@@ -398,6 +398,68 @@ Verificar portas sendo usadas no sistema:
 [sudo] ss -ntpl
 ```
 
+### Comando _journalctl_
+
+*Parâmetros usados:*
+
+- `<unit>`: Nome do serviço/*daemon*
+- `<boot>`: Número sequêncial do *boot* (decrescente)
+
+*Opções usadas:*
+
+- `-x`: Deixa a saída visualmente mais legível (*pretty*)
+- `-f`: Fica seguindo/escutando o *log* (equivalente ao `tail -f`)
+- `-u <unit>`: Especifique o nome do serviço (aceita múltiplos `-u`)
+- `-b [<boot>]`: Nulo ou `-0` = *boot* atual, `-1` = último *boot* e etc
+- `-n <lines>`: Imprime as última *n* linhas
+- `--no-pager`: Não use um paginador e imprime tudo diretamente no terminal
+- `--list-boots`: List o histórico de *boots*
+- `--disk-usage`: Mostra quanto de disco os *logs* estão consumindo
+
+*Opções usadas:*
+
+- <details>
+    <summary><code>-p {&lt;priority&gt;|&lt;code&gt;}</code>: Filtra por prioridade</summary>
+
+    - `emerg` (`0`): O sistema está inutilizável
+    - `alert` (`1`): Medidas devem ser tomadas imediatamente
+    - `crit` (`2`): Condições críticas
+    - `error` (`3`): Condições de erro
+    - `warning` (`4`): Condições de aviso
+    - `notice` (`5`): Condição normal, mas significativa
+    - `info` (`6`): Mensagem informativa
+    - `debug` (`7`): Mensagens que são úteis para depuração
+- <details>
+    <summary><code>-o &lt;format&gt;</code>: Formata a saída</summary>
+
+    - `cat`: Inclua apenas mensagens dos *logs*
+    - `short`: Forma padrão
+    - `json`: JSON *raw*
+    - `json-pretty`: JSON indentado
+    - `verbose`: *Log* completo
+- <details>
+    <summary><code>--since &lt;time&gt; [--until &lt;time&gt;]</code>: Filtra desde alguma data ou por um <i>range</i> de data</summary>
+
+    - `2021-11-23 23:02:15`
+    - `2021-05-04`
+    - `12:00`
+    - `5 hour ago, or 32 min ago`
+    - `yesterday`, `today`, `now`
+</details>
+</details>
+</details>
+
+Seguir os *logs* de um serviço:
+
+```sh
+[sudo] journalctl -xfeu <unit>[.service]
+```
+
+Remover/Limpar os *logs*:
+```sh
+[sudo] journalctl --rotate --vacuum-size <size> [--unit <unit>.service]
+```
+
 ### *Runlevels*
 
 Runlevels são os níveis de execução do sistema criados no *System V* (*SysV*). Cada Runlevel diz ao sistema em qual "camada" o sistema deve operar (qual o seu estado atual).
@@ -964,7 +1026,7 @@ wget -O - <url>
 - `-v`: Aumenta verbosidade da saída
 - `-i`: Retorna o cabeçalho da requisição
 - `-X <type>`: Tipo da *request*
-- `-H <header>`: Define cabeçalho da *request* (aceita múltiplas `-H`)
+- `-H <header>`: Define cabeçalho da *request* (aceita múltiplos `-H`)
 - `-u <user>[:<password>]`: Credenciais para autênticação única
 - `-o <path>`: Informa o nome e o local do arquivo de saída
 - `-w '%{<variable>}\n[...]'`: Retorna somente a [chave específica](https://curl.se/docs/manpage.html#:~:text=The%20variables%20available%20are%3A) da *response*
