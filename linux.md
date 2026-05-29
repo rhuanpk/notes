@@ -119,6 +119,24 @@ Retorna o nome do usuário pelo UID passado:
 id -un <uid>
 ```
 
+### `ip`
+
+Verificar as interfaces de redes com saida formatada e "highlightada" (*pretty*):
+
+```sh
+ip -br -c a
+```
+
+Verificar qual interface de rede está se comunicando com a *internet*:
+
+```sh
+ip route
+```
+
+*OBSERVAÇÕES:*
+
+- Caso esteja conectado a *internet* em mais de uma interface de rede ao mesmo tempo, pode ser que tenha mais de uma definida como `default`, nesse caso, a interface com **menor** valor de `metric` é a saída real
+
 ### `hostname`
 
 Saber hostname:
