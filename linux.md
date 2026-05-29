@@ -1101,6 +1101,38 @@ Pesquisar algum comando no histórico:
 ctrl+r
 ```
 
+### `trap`
+
+Comando *builtin* para interceptação de *SIGNALS*:
+
+```sh
+#!/bin/bash
+
+# record new command to trap
+trap "echo 'captured'" SIGTSTP EXIT
+
+read -p 'Input: '
+echo "$REPLY"
+
+# reset signals to default
+trap - SIGTSTP EXIT
+```
+
+Sinais to próprio comando `trap`:
+
+- `EXIT`: Enviado no final do *script* e também quando capturado
+	- `02`: **SIGINT** (`ctrl+c`)
+	- `15`: **SIGTERM** (*kill*)
+- `DEBUG`: Enviado antes de cada comando simples
+- `RETURN`: Enviado no final do *script* quando for chamado com `.` ou `source`. Caso você defina o *trap* com esse sinal e depois o remova, terá que resetar o *shell* para que seu efeito passe
+- `ERR`: Enviado depois de cada erro
+- `WINCH`: Eviado quando a janela tem suas dimensões alteradas (diminuida ou aumentada)
+
+*OBSERVAÇÕES:*
+
+- Defina `set -o pipefail` para `ERR` conseguir capturar *pipelines*
+- Defina `set -E` para `ERR` conseguir "exergar" os erros dentro de funções e *subshells*
+
 ### `yes`
 
 *Loop* infinito de "echo" no STDOUT:
