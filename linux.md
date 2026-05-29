@@ -83,6 +83,42 @@ su [-] <user> [<args>]
 
 - Caso queira executar comandos em múltiplas linhas (*heredoc*), não é possível, utilize *line breaks* (`\` no final da linha)
 
+### `id`
+
+*Parâmetros usados:*
+
+- `<uid>`: ID do usuário no sistema
+
+Lista UID, GID e os grupos do usuário corrente:
+
+```sh
+id
+```
+
+Retorna somente o UID do usuário corrente:
+
+```sh
+id -u
+```
+
+Retorna somente o GID do usuário corrente:
+
+```sh
+id -g
+```
+
+Retorna o nome do usuário corrente:
+
+```sh
+id -un
+```
+
+Retorna o nome do usuário pelo UID passado:
+
+```sh
+id -un <uid>
+```
+
 ### `hostname`
 
 Saber hostname:
@@ -1504,6 +1540,38 @@ gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 
 - O tema que é escolhido (propriedade `gtk-name`) que deverá ser *dark* (caso queira que assim seja)
 - A propriedade `prefer-dark` serve para aplicativos que tem seu próprio tema e com uma versão *dark*
+
+### `basename`
+
+Listar somente o nome do arquivo passando o *path* completo:
+
+```sh
+basename /path/file.txt
+```
+
+Listar com múltiplos *paths*:
+
+```sh
+basename -a /first/path/file.txt /second/path/file.txt
+```
+
+*OBSERVAÇÕES:*
+
+- Com a opção `-a` do comando é possível usa-lo com `xargs`
+
+Cortar a extensão do arquivo na saída:
+
+```sh
+basename -s .txt /path/file.txt
+```
+
+### `dirname`
+
+Imprime o caminho de um *path* sem o último membro:
+
+```sh
+dirname /path/file.txt
+```
 
 ### `mktemp`
 
