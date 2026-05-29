@@ -912,6 +912,34 @@ Ver informações e metadados de arquivos:
 stat /path/file.txt
 ```
 
+### `wget`
+
+*Opções usadas:*
+
+- `-P`: Diretório alternativo para salvar o arquivo
+- `-O`: Mudar o nome de saida do arquivo
+- `-c`: Continua um *download* que foi interrompido
+- `-r`: Baixa pastas de forma recursiva
+- `-np`: Se especificar uma pasta de *download*, não baixa o conteúdo das pastas pai (superiores)
+- `--backups 0`: Sobrescrever o arquivo caso ele já exista
+
+Sintaxe base:
+
+```sh
+wget [-P /path/save/|-O file.txt] <url>
+```
+
+Ao invés de salvar, envia para STDOUT:
+
+```sh
+wget -O - <url>
+```
+
+*OBSERVAÇÕES:*
+
+- As opções `-P` e `-O` não podem ser usadas juntas
+- Use a opção `-c` estando na pasta aonde está o arquivo de *download* interminado
+
 ### `curl`
 
 *Parâmetros usados:*
@@ -941,7 +969,7 @@ stat /path/file.txt
 - `-o <path>`: Informa o nome e o local do arquivo de saída
 - `-w '%{<variable>}\n[...]'`: Retorna somente a [chave específica](https://curl.se/docs/manpage.html#:~:text=The%20variables%20available%20are%3A) da *response*
 
-Sintaxe comum para download:
+Sintaxe base:
 
 ```sh
 curl [-o /path/file.txt] -fsSL <url>
@@ -970,7 +998,7 @@ curl [-H 'content-type: application/x-www-form-urlencoded'] -d 'param1=value1&pa
 Form Data:
 
 ```sh
-curl [-H 'content-type: multipart/form-data'] -F 'param1=value1' -F 'file=@/path/to/file.any' <url>
+curl [-H 'content-type: multipart/form-data'] -F 'param1=value1' -F 'file=@/path/file.txt' <url>
 ```
 
 XML:
