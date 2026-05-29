@@ -292,6 +292,44 @@ O comando `shutdown` é um *handler* para todos esses comandos mas faz o "encerr
 shutdown [<options>] [<time>|now [wall]]
 ```
 
+### `efibootmgr`
+
+*Parâmetros usados:*
+
+- `X`: Letra do disco
+- `Y`: Número da partição
+- `<boot>`: ID da entrada de *boot*
+- `<shim>`: Nome do binário de inicialização
+- `<label>`: Nome da *label* da entrada de *boot*
+
+*Opções usadas:*
+
+- `-v`: Aumenta verbosidade da saída
+
+Programas necessários:
+
+```sh
+[sudo] apt install efibootmgr
+```
+
+Listagem das entradas de *boot*:
+
+```sh
+efibootmgr [-v]
+```
+
+Remover entrada de *boot*:
+
+```sh
+efibootmgr -b <boot> -B
+```
+
+Adicionar nova entrada de *boot*:
+
+```sh
+efibootmgr -c -d /dev/sdX -p Y -l '\path\<shim>x64.efi' -L '<label>'
+```
+
 ### `dd`
 
 *Parâmetros usados:*
@@ -1112,6 +1150,21 @@ Voltar para o diretorio anterior:
 	```sh
 	cd $OLDPWD
 	```
+
+### `less`
+
+*Parâmetros usados:*
+
+- `<mark>`: Nome da marca, geralmente uma letra (*e.g.* `a`, `b`, `c`)
+- `<line>`: Número da linha designada
+
+*Comandos usados:*
+
+- `:-i`: *Case insensitive* para buscas simples
+- `:-I`: *Case insensitive* para buscas também com padrões
+- `:m`: Define uma marca para a página atual
+- `'<mark>`: Vai para a marca
+- `<line>g`: Vai para a linha
 
 ### `grep`
 
