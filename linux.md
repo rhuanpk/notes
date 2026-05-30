@@ -2103,6 +2103,38 @@ Calendário CLI:
 ncal -b [-{B|A}<count>] [-3] [-jyw] [-m <month>] [<year>]
 ```
 
+### `slop`
+
+*Opções usadas:*
+
+- `-q`: Silencia a saída
+- `-f`: Formata a saída
+
+Programas necessários:
+
+```sh
+[sudo] apt install slop
+```
+
+Retorna a área selecionada no estilo `x,y+width+height` (`left,top+right+bottom`):
+
+```sh
+slop
+```
+
+Formatando a saída:
+
+```sh
+# %x: x axis
+# %y: y axis
+# %w: width
+# %h: height
+# %g: geometry (%wx%h+%x+%y)
+# %i: window id
+# %%: literal '%'
+slop -f '%x %y %w %h %g %i'
+```
+
 ### `ffmpeg`
 
 *Parâmetros usados:*
