@@ -558,6 +558,18 @@ Verificar portas sendo usadas no sistema:
 [sudo] ss -ntpl
 ```
 
+### `modprobe`
+
+*Parâmetros usados:*
+
+- `<module>`: Nome do módulo
+
+Verificar se um módolo já está carregado:
+
+```sh
+modprobe --dry-run --first-time <module> && echo "not loaded" || echo "loaded"
+```
+
 ### `systemctl`
 
 *Parâmetros usados:*
