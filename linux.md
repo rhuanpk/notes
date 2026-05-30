@@ -987,6 +987,48 @@ ssh-keyscan [-p <port>] [-t {rsa|dsa|ecdsa|ed25519}[,...]] <host> >> ~/.ssh/know
 
 - Este comando lista as chaves pública do próprio servidor SSH (**sshd**) que são as credenciais validadas na hora de se conectar em um novo *host* e que precisamos responder se confiamos ou não (*yes/no*)
 
+### `date`
+
+Imprime o formato padrão de hora com o *timezone* definido pelo seu sistema:
+
+```sh
+date
+```
+
+Imprime saida formatada (`yyyy-mm-dd hh:mm:ss`):
+
+```sh
+date '+%Y-%m-%d %H:%M:%S'
+```
+
+Imprime os segundos desde a **Época** (`1970-01-01 00:00:00 UTC`)
+
+```sh
+date '+%s'
+```
+
+Converter segundos (desde a **Época**) em data:
+
+```sh
+date --date='@<seconds>' '+%F %T'
+```
+
+Retorna a data adiantada:
+
+```sh
+date --date="TZ=\"$(date +%Z)\" +1 hour"
+```
+
+Passar fuso horário específico:
+
+```sh
+# timezone
+TZ='Asia/Tokyo' date
+
+# abbreviation
+TZ='EST' date
+```
+
 ### `tree`
 
 *Parâmetros usados:*
