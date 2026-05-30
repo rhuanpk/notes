@@ -2024,7 +2024,31 @@ rsync -auhv --include=.files-* --exclude={file1,folder2,.*} --exclude=*.bak /abs
 - Por *default*, caso utilize o *rsync* com os mesmos *paths* de origem e destino, ele simplesmente faz a sincronia dos arquivos (copia somente oque foi alterado, ou seja, o que há de novo) e preserva do destino os que já foram excluídos da fonte (ver opção `--delete`)
 - Opção `--exclude` é única para cada arquivo que deseja não sincronizar?
 
-### Comando _ffmpeg_
+### `ncal`
+
+*Parâmetros usados:*
+
+- `<count>`: Quantidade de itens a serem mostrados
+- `<month>`: Índice do mês a ser exibido (`1-12`)
+- `<year>`: Ano a ser exibido (*e.g.* `2042`)
+
+*Opções usadas:*
+
+- `-B`: Mostra os meses **antes** desse (incluindo o atual)
+- `-A`: Mostra os meses **depois** desse (incluindo o atual)
+- `-3`: Mostra junto do atual o mês anterior e posterior
+- `-j`: Mostra o número do dia (em relação ao ano)
+- `-y`: Mostra todos os meses do ano
+- `-w`: Mostra junto a contagem das semanas
+- `-m`: Mostra um mês específico
+
+Calendário CLI:
+
+```sh
+ncal -b [-{B|A}<count>] [-3] [-jyw] [-m <month>] [<year>]
+```
+
+### `ffmpeg`
 
 *Parâmetros usados:*
 
