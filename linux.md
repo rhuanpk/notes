@@ -1982,6 +1982,22 @@ rsync -auhv --include=.files-* --exclude={file1,folder2,.*} --exclude=*.bak /abs
 - Por *default*, caso utilize o *rsync* com os mesmos *paths* de origem e destino, ele simplesmente faz a sincronia dos arquivos (copia somente oque foi alterado, ou seja, o que há de novo) e preserva do destino os que já foram excluídos da fonte (ver opção `--delete`)
 - Opção `--exclude` é única para cada arquivo que deseja não sincronizar?
 
+### Comando _ffmpeg_
+
+*Parâmetros usados:*
+
+- `<value>`: Pode variar de `0` até `1`, sendo que 1 é a velocidade normal, logo, **0.75** é **25%** mais rápido, **0.5** é **50%** e assim sucessivamente
+
+Aumentar a velocidade de um vídeo:
+
+```sh
+ffmpeg -i /path/video.mp4 -filter:v "setpts=<value>*PTS" -an /path/output.mp4
+```
+
+*LINKS:*
+
+- [Blog Viva o Linux](https://www.vivaolinux.com.br/dica/Como-aumentar-ou-reduzir-a-velocidade-de-um-video-via-linha-de-comando)
+
 ### `yt-dlp`
 
 Listar formatos disponíveis:
