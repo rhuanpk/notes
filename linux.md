@@ -137,6 +137,14 @@ ip route
 
 - Caso esteja conectado a *internet* em mais de uma interface de rede ao mesmo tempo, pode ser que tenha mais de uma definida como `default`, nesse caso, a interface com **menor** valor de `metric` é a saída real
 
+### `ss`
+
+Verificar portas sendo usadas no sistema:
+
+```sh
+[sudo] ss -ntpl
+```
+
 ### `hostname`
 
 Saber hostname:
@@ -549,14 +557,6 @@ chown -Rv `id -un`:`id -gn` /media/disk
 - **FAT32** e **EXFAT** não armazenam permissões POSIX nem proprietário/grupo. O Linux **simula** essas informações via opções de montagem (`uid`, `gid`, `umask`, `fmask`, `dmask`), fazendo todos os arquivos aparecerem com os mesmos atributos, sem essas opções, o padrão costuma ser `root`
 - **EXT4** armazena *uid*, *gid* e permissões POSIX diretamente no *inode* de cada arquivo/diretório. Por isso opções de montagem como `uid` e `gid` não são suportadas ou necessárias, o dono real já está gravado no disco
 - **NTFS** usa ACLs do Windows, não o modelo POSIX. No Linux, o driver `ntfs-3g` traduz ou simula proprietário e permissões via opções de montagem (`uid`, `gid`, `umask`), portanto o resultado depende da configuração de montagem e das ACLs originais do arquivo
-
-### `ss`
-
-Verificar portas sendo usadas no sistema:
-
-```sh
-[sudo] ss -ntpl
-```
 
 ### `modprobe`
 
@@ -2124,6 +2124,18 @@ Calendário CLI:
 
 ```sh
 ncal -b [-{B|A}<count>] [-3] [-jyw] [-m <month>] [<year>]
+```
+
+### `apropos`
+
+*Parâmetros usados:*
+
+- `<about>`: Assunto a ser pesquisado
+
+Pesquisar manpages para determinado assunto que case:
+
+```sh
+apropos <about>
 ```
 
 ### `slop`
