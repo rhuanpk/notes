@@ -494,6 +494,25 @@ Verificar se um módolo já está carregado:
 modprobe --dry-run --first-time <module> && echo "not loaded" || echo "loaded"
 ```
 
+### `dmesg`
+
+*Opções usadas:*
+
+- `-w`: Modo *tail* (fica escutando a saída)
+- `-H`: Mais legível para humanos
+- `-C`: Limpa o cache do **dmesg**
+- `-c`: Limpa o cache do **dmesg** depois de "printar" na tela
+
+Sintaxe base:
+
+```sh
+[sudo] dmesg [<options>]
+```
+
+*OBSERVAÇÕES:*
+
+- Antes de limpar o histórico, salve ele com `dmesg -H > /tmp/dmesg_$(date '+%F_%T').log`
+
 ### `systemctl`
 
 *Parâmetros usados:*
