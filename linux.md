@@ -519,6 +519,37 @@ Desmontar e remover um *loop device*:
 	[sudo] rm /dev/loop9
 	```
 
+### `mount`
+
+*Parâmetros usados:*
+
+- `X`: Letra do disco
+- `Y`: Número da partição
+
+Montar arquivo *iso*:
+
+```sh
+[sudo] mount -o ro -t iso9660 /path/img.iso /mnt
+```
+
+Montar partição *ext4* e manipular com usuário regular:
+
+```sh
+[sudo] mount -o user /dev/sdXY /mnt
+bindfs -u `id -u` -g `id -g` /mnt /media/disk
+
+# or
+
+[sudo] mount /dev/sdXY /media/disk
+chown -Rv `id -un`:`id -gn` /media/disk
+```
+
+*OBSERVAÇÕES:*
+
+- **FAT32** e **EXFAT** não armazenam permissões POSIX nem proprietário/grupo. O Linux **simula** essas informações via opções de montagem (`uid`, `gid`, `umask`, `fmask`, `dmask`), fazendo todos os arquivos aparecerem com os mesmos atributos, sem essas opções, o padrão costuma ser `root`
+- **EXT4** armazena *uid*, *gid* e permissões POSIX diretamente no *inode* de cada arquivo/diretório. Por isso opções de montagem como `uid` e `gid` não são suportadas ou necessárias, o dono real já está gravado no disco
+- **NTFS** usa ACLs do Windows, não o modelo POSIX. No Linux, o driver `ntfs-3g` traduz ou simula proprietário e permissões via opções de montagem (`uid`, `gid`, `umask`), portanto o resultado depende da configuração de montagem e das ACLs originais do arquivo
+
 ### `ss`
 
 Verificar portas sendo usadas no sistema:
@@ -1983,7 +2014,7 @@ Exemplo com `jq`:
 column -J -tL -s ':' -o '|' -N 'USERNAME,PASSWORD,UID,GID,GECOS,HOME,SHELL' /etc/passwd | jq
 ```
 
-### Comando _paste_
+### `paste`
 
 *Parâmetros usados:*
 
