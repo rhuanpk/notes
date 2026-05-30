@@ -1936,6 +1936,29 @@ Imprime o caminho de um *path* sem o último membro:
 dirname /path/file.txt
 ```
 
+### `realpath`
+
+*Parâmetros usados:*
+
+- `<path>`: Caminho para arquivo ou pasta
+- `<folder>`: Caminho para pasta
+
+*Opções usadas:*
+
+- `-s`: *Links* simbólicos não são expandidos
+- `-z`: Troca nova linha por nulo
+- `--relative-to=<folder>`: Retorna o caminho relativo para chegar no arquivo por dentro da pasta passada
+
+Retorna o caminho absoluto dos arquivos passados como argumento:
+
+```sh
+realpath [<options>] <path>[ ...]
+```
+
+*OBSERVAÇÕES:*
+
+- Por padrão se o arquivo for um *link* simbólico, será expandido
+
 ### `readlink`
 
 Retorna o caminho original de um *link* simbólico (*symlink*):
