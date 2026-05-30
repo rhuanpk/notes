@@ -159,82 +159,6 @@ IP interno:
 hostname -I
 ```
 
-### `flatpak`
-
-Faça o setup pelo guia do [Flatpak](https://flatpak.org/setup) ou do [Flathub](https://flathub.org/setup).
-
-*Parâmetros usados:*
-
-- `<remote>`: Repositório remoto (*e.g.* `flathub`)
-- `<app>`: *ID* do aplicativo remota ou localmente (*e.g.* `org.mozilla.firefox`)
-- `<commit>`: *Hash* do *commit*
-
-Instalar app flatpak:
-
-```sh
-flatpak install <remote> <app>
-```
-
-Listar apps flatpak:
-
-```sh
-flatpak list
-```
-
-Executar app flatpak:
-
-```sh
-flatpak run <app>
-```
-
-Informações app flatpak:
-
-```sh
-flatpak infos <app>
-```
-
-Desinstalar app flatpak:
-
-```sh
-flatpak uninstall <app>
-```
-
-Listar flatpak *remotes*:
-
-```sh
-flatpak remotes
-```
-
-Impedir/Liberar app flatpak de receber atualizações:
-
-```sh
-flatpak mask [--remove] <app>
-```
-
-#### *Rollback*
-
-Listar as versões do app flatpak:
-
-```sh
-flatpak remote-info --log flathub <app>
-```
-
-Executa o *rollback* no app flatpak:
-
-```sh
-flatpak update --commit=<commit> <app>
-```
-
-#### *Games*
-
-Por sugestão do [Eddie](https://github.com/eddiecsilva/debian-post-install?tab=readme-ov-file#configura%C3%A7%C3%B5es-extras-para-jogos), instalação dos pacotes necessários para **Steam** e **Heroic Games Launcher**:
-
-```sh
-flatpak install com.valvesoftware.Steam com.valvesoftware.Steam.Utility.MangoHud com.valvesoftware.Steam.Utility.vkBasalt com.valvesoftware.Steam.VulkanLayer.MangoHud com.heroicgameslauncher.hgl
-```
-
-> Se for necessário, utilizando o FlatSeal libere as permissões do pacote flatpak do Steam para acessar outras unidades de disco.
-
 ### `acpi`
 
 Ver porcentagem da bateria (*notebooks*):
@@ -822,213 +746,6 @@ Caso ainda tenha problemas com Google Chrome e esteja no Wayland:
 ```sh
 firejail --noprofile --private --env=MOZ_ENABLE_WAYLAND=1 --dns=1.1.1.1 google-chrome --no-sandbox --ozone-platform=wayland --disable-vulkan --no-first-run
 ```
-
-### *Runlevels*
-
-Runlevels são os níveis de execução do sistema criados no *System V* (*SysV*). Cada Runlevel diz ao sistema em qual "camada" o sistema deve operar (qual o seu estado atual).
-
-> Como também é um recurso de segurança do Linux, um dos critérios para saber se um devido processo deve ser executado ou não são os *Runlevels*?
-
-Eles variam de `0-6`:
-
-| Runlevel | Mode               | Action                                                     |
-| :------- | :----------------- | :--------------------------------------------------------- |
-| 0        | *Halt*             | Poweroff the system.                                       |
-| 1        | *Mono-User*        | Recovery mode, does not configure network, only root user. |
-| 2        | -                  | -                                                          |
-| 3        | *Multi-User*       | Start the system without GUI.                              |
-| 4        | -                  | -                                                          |
-| 5        | *Graphical Server* | Start the system with GUI.                                 |
-| 6        | *Reboot*           | Reboot the system.                                         |
-
-Verificar o *runlevel* atual:
-
-```sh
-runlevel
-```
-
-Chamar (mudar para) *runlevel*:
-
-```sh
-telinit <runlevel>
-```
-
-*LINKS:*
-
-- [Runlevels & Targets](https://access.redhat.com/articles/754933)
-
-### *Targets*
-
-Targets são equivalentes aos Runlevels, porém, foram criados no *Systemd*, com o mesmo conceito e com outra conveção.
-
-Num sistema com `systemd` os Runlevels são convertidos para Targets:
-
-| Traditional Runlevel | New Target Name    | Symbolic Link       |
-| :------------------- | :----------------- | :------------------ |
-| Runlevel 0           | *runlevel0.target* | `poweroff.target`   |
-| Runlevel 1           | *runlevel1.target* | `rescue.target`     |
-| Runlevel 2           | *runlevel2.target* | `multi-user.target` |
-| Runlevel 3           | *runlevel3.target* | `multi-user.target` |
-| Runlevel 4           | *runlevel4.target* | `multi-user.target` |
-| Runlevel 5           | *runlevel5.target* | `graphical.target`  |
-| Runlevel 6           | *runlevel6.target* | `reboot.target`     |
-
-O diretório dos *targets* está localizado em `/lib/systemd/system/`.
-
-Verificar qual *target* padrão está definido para o `systemd`:
-
-```sh
-systemctl get-default
-```
-
-Listar todos os *targets* disponíveis no sistema:
-
-```sh
-systemctl list-units --type=target --all
-```
-
-Mudar o *target* padrão:
-
-```sh
-systemctl set-default <target>.target
-```
-
-Mudar o *target* somente para o próximo *boot*:
-
-```sh
-systemctl isolate <target>.target
-```
-
-*LINKS:*
-
-- [Runlevels & Targets](https://access.redhat.com/articles/754933)
-
-### SSH
-
-*Parâmetros usados:*
-
-- `<user>`: Usuário para conexão (*default*: usuário atual)
-- `<host>`: Domínio ou IP para conexão (*default*: *host* atual)
-- `<port>`: Porta do serviço SSH
-- `<key>`: Caminho da chave privada
-- `<comment>`: Geralmente algo que identifique o proprietário da chave
-
-#### `ssh`
-
-*Opções usadas:*
-
-- `-p <port>`: Especifica a porta de conexão (*default*: `22`)
-- `-i <key>`: Especifica a privada para conexão
-
-Realizar conexão:
-
-```sh
-ssh [<options>] [-p <port>] [<user>][@][<host>]
-```
-
-#### `ssh-keygen`
-
-Criar ssh key:
-
-```sh
-ssh-keygen [-t rsa [-b 4096]] [-t ed25519 [-a 32]] [/path/key]
-```
-
-Trocar senha da chave:
-
-```sh
-ssh-keygen -pf /path/key
-```
-
-Trocar comentário da chave:
-
-```sh
-ssh-keygen -cC "<comment>" -f /path/key
-```
-
-Gerar chave pública a partir da privada:
-
-```sh
-ssh-keygen -yf /path/key > /path/key.pub
-```
-
-Saber *fingerprint* da chave:
-
-```sh
-ssh-keygen -lf /path/key[.pub]
-```
-
-Remover *fingerprint* depreciado:
-
-```sh
-ssh-keygen [-f ~/.ssh/known_hosts] -R <host>
-```
-
-#### `ssh-agent`
-
-Iniciar um agente *ssh* (quando algo buscar por uma chave é o *ssh-agent* que irá fornecer):
-
-```sh
-eval `ssh-agent -s`
-```
-
-*OBSERVAÇÕES:*
-
-- Essa é a forma oficial descrita no manual do *ssh*
-- Outra forma de iniciar o *ssh-agent* seria:
-	`exec ssh-agent bash`
-- Para ver o *pid* e o *socket* do agente:
-	`printenv SSH_AGENT_PID SSH_AUTH_SOCK`
-
-#### `ssh-add`
-
-*Opções usadas:*
-
-- `-k`: Processa chaves em validar certificados
-
-Adicionar chave ao agente:
-
-```sh
-ssh-add /path/key
-```
-
-Verificar as chaves publicas adicionadas no agente:
-
-```sh
-ssh-add -l
-```
-
-Remover todas as chave do agente:
-
-```sh
-ssh-add -D
-```
-
-Remover chave específica do agente:
-
-```sh
-ssh-add -d /path/key
-```
-
-#### `ssh-copy-id`
-
-Adicionar sua chave num servidor:
-
-```sh
-ssh-copy-id -i <key> [-p <port>] [<user>][@][<host>]
-```
-
-#### `ssh-keyscan`
-
-Pegar a chave pública de um servidor:
-
-```sh
-ssh-keyscan [-p <port>] [-t {rsa|dsa|ecdsa|ed25519}[,...]] <host> >> ~/.ssh/know_hosts
-```
-
-*OBSERVAÇÕES:*
-
-- Este comando lista as chaves pública do próprio servidor SSH (**sshd**) que são as credenciais validadas na hora de se conectar em um novo *host* e que precisamos responder se confiamos ou não (*yes/no*)
 
 ### `date`
 
@@ -2258,6 +1975,289 @@ Baixar áudio e vídeo na melhor qualidade em conjunto, ou seja, a melhor qualid
 ```sh
 yt-dlp -f mp4 <url>
 ```
+
+### `flatpak`
+
+Faça o setup pelo guia do [Flatpak](https://flatpak.org/setup) ou do [Flathub](https://flathub.org/setup).
+
+*Parâmetros usados:*
+
+- `<remote>`: Repositório remoto (*e.g.* `flathub`)
+- `<app>`: *ID* do aplicativo remota ou localmente (*e.g.* `org.mozilla.firefox`)
+- `<commit>`: *Hash* do *commit*
+
+Instalar app flatpak:
+
+```sh
+flatpak install <remote> <app>
+```
+
+Listar apps flatpak:
+
+```sh
+flatpak list
+```
+
+Executar app flatpak:
+
+```sh
+flatpak run <app>
+```
+
+Informações app flatpak:
+
+```sh
+flatpak infos <app>
+```
+
+Desinstalar app flatpak:
+
+```sh
+flatpak uninstall <app>
+```
+
+Listar flatpak *remotes*:
+
+```sh
+flatpak remotes
+```
+
+Impedir/Liberar app flatpak de receber atualizações:
+
+```sh
+flatpak mask [--remove] <app>
+```
+
+#### *Rollback*
+
+Listar as versões do app flatpak:
+
+```sh
+flatpak remote-info --log flathub <app>
+```
+
+Executa o *rollback* no app flatpak:
+
+```sh
+flatpak update --commit=<commit> <app>
+```
+
+#### *Games*
+
+Por sugestão do [Eddie](https://github.com/eddiecsilva/debian-post-install?tab=readme-ov-file#configura%C3%A7%C3%B5es-extras-para-jogos), instalação dos pacotes necessários para **Steam** e **Heroic Games Launcher**:
+
+```sh
+flatpak install com.valvesoftware.Steam com.valvesoftware.Steam.Utility.MangoHud com.valvesoftware.Steam.Utility.vkBasalt com.valvesoftware.Steam.VulkanLayer.MangoHud com.heroicgameslauncher.hgl
+```
+
+> Se for necessário, utilizando o FlatSeal libere as permissões do pacote flatpak do Steam para acessar outras unidades de disco.
+
+### *Runlevels*
+
+Runlevels são os níveis de execução do sistema criados no *System V* (*SysV*). Cada Runlevel diz ao sistema em qual "camada" o sistema deve operar (qual o seu estado atual).
+
+> Como também é um recurso de segurança do Linux, um dos critérios para saber se um devido processo deve ser executado ou não são os *Runlevels*?
+
+Eles variam de `0-6`:
+
+| Runlevel | Mode               | Action                                                     |
+| :------- | :----------------- | :--------------------------------------------------------- |
+| 0        | *Halt*             | Poweroff the system.                                       |
+| 1        | *Mono-User*        | Recovery mode, does not configure network, only root user. |
+| 2        | -                  | -                                                          |
+| 3        | *Multi-User*       | Start the system without GUI.                              |
+| 4        | -                  | -                                                          |
+| 5        | *Graphical Server* | Start the system with GUI.                                 |
+| 6        | *Reboot*           | Reboot the system.                                         |
+
+Verificar o *runlevel* atual:
+
+```sh
+runlevel
+```
+
+Chamar (mudar para) *runlevel*:
+
+```sh
+telinit <runlevel>
+```
+
+*LINKS:*
+
+- [Runlevels & Targets](https://access.redhat.com/articles/754933)
+
+### *Targets*
+
+Targets são equivalentes aos Runlevels, porém, foram criados no *Systemd*, com o mesmo conceito e com outra conveção.
+
+Num sistema com `systemd` os Runlevels são convertidos para Targets:
+
+| Traditional Runlevel | New Target Name    | Symbolic Link       |
+| :------------------- | :----------------- | :------------------ |
+| Runlevel 0           | *runlevel0.target* | `poweroff.target`   |
+| Runlevel 1           | *runlevel1.target* | `rescue.target`     |
+| Runlevel 2           | *runlevel2.target* | `multi-user.target` |
+| Runlevel 3           | *runlevel3.target* | `multi-user.target` |
+| Runlevel 4           | *runlevel4.target* | `multi-user.target` |
+| Runlevel 5           | *runlevel5.target* | `graphical.target`  |
+| Runlevel 6           | *runlevel6.target* | `reboot.target`     |
+
+O diretório dos *targets* está localizado em `/lib/systemd/system/`.
+
+Verificar qual *target* padrão está definido para o `systemd`:
+
+```sh
+systemctl get-default
+```
+
+Listar todos os *targets* disponíveis no sistema:
+
+```sh
+systemctl list-units --type=target --all
+```
+
+Mudar o *target* padrão:
+
+```sh
+systemctl set-default <target>.target
+```
+
+Mudar o *target* somente para o próximo *boot*:
+
+```sh
+systemctl isolate <target>.target
+```
+
+*LINKS:*
+
+- [Runlevels & Targets](https://access.redhat.com/articles/754933)
+
+### SSH
+
+*Parâmetros usados:*
+
+- `<user>`: Usuário para conexão (*default*: usuário atual)
+- `<host>`: Domínio ou IP para conexão (*default*: *host* atual)
+- `<port>`: Porta do serviço SSH
+- `<key>`: Caminho da chave privada
+- `<comment>`: Geralmente algo que identifique o proprietário da chave
+
+#### `ssh`
+
+*Opções usadas:*
+
+- `-p <port>`: Especifica a porta de conexão (*default*: `22`)
+- `-i <key>`: Especifica a privada para conexão
+
+Realizar conexão:
+
+```sh
+ssh [<options>] [-p <port>] [<user>][@][<host>]
+```
+
+#### `ssh-keygen`
+
+Criar ssh key:
+
+```sh
+ssh-keygen [-t rsa [-b 4096]] [-t ed25519 [-a 32]] [/path/key]
+```
+
+Trocar senha da chave:
+
+```sh
+ssh-keygen -pf /path/key
+```
+
+Trocar comentário da chave:
+
+```sh
+ssh-keygen -cC "<comment>" -f /path/key
+```
+
+Gerar chave pública a partir da privada:
+
+```sh
+ssh-keygen -yf /path/key > /path/key.pub
+```
+
+Saber *fingerprint* da chave:
+
+```sh
+ssh-keygen -lf /path/key[.pub]
+```
+
+Remover *fingerprint* depreciado:
+
+```sh
+ssh-keygen [-f ~/.ssh/known_hosts] -R <host>
+```
+
+#### `ssh-agent`
+
+Iniciar um agente *ssh* (quando algo buscar por uma chave é o *ssh-agent* que irá fornecer):
+
+```sh
+eval `ssh-agent -s`
+```
+
+*OBSERVAÇÕES:*
+
+- Essa é a forma oficial descrita no manual do *ssh*
+- Outra forma de iniciar o *ssh-agent* seria:
+	`exec ssh-agent bash`
+- Para ver o *pid* e o *socket* do agente:
+	`printenv SSH_AGENT_PID SSH_AUTH_SOCK`
+
+#### `ssh-add`
+
+*Opções usadas:*
+
+- `-k`: Processa chaves em validar certificados
+
+Adicionar chave ao agente:
+
+```sh
+ssh-add /path/key
+```
+
+Verificar as chaves publicas adicionadas no agente:
+
+```sh
+ssh-add -l
+```
+
+Remover todas as chave do agente:
+
+```sh
+ssh-add -D
+```
+
+Remover chave específica do agente:
+
+```sh
+ssh-add -d /path/key
+```
+
+#### `ssh-copy-id`
+
+Adicionar sua chave num servidor:
+
+```sh
+ssh-copy-id -i <key> [-p <port>] [<user>][@][<host>]
+```
+
+#### `ssh-keyscan`
+
+Pegar a chave pública de um servidor:
+
+```sh
+ssh-keyscan [-p <port>] [-t {rsa|dsa|ecdsa|ed25519}[,...]] <host> >> ~/.ssh/know_hosts
+```
+
+*OBSERVAÇÕES:*
+
+- Este comando lista as chaves pública do próprio servidor SSH (**sshd**) que são as credenciais validadas na hora de se conectar em um novo *host* e que precisamos responder se confiamos ou não (*yes/no*)
 
 ## Configurações
 
