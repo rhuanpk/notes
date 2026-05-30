@@ -1983,6 +1983,18 @@ Exemplo com `jq`:
 column -J -tL -s ':' -o '|' -N 'USERNAME,PASSWORD,UID,GID,GECOS,HOME,SHELL' /etc/passwd | jq
 ```
 
+### Comando _paste_
+
+*Parâmetros usados:*
+
+- `<command>`: Comando fina completo
+
+Coloca linhas lado a lado:
+
+```sh
+paste <(<command>) <(<command>)
+```
+
 ### `rsync`
 
 *Parâmetros usados:*
