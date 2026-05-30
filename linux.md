@@ -1191,6 +1191,25 @@ Criar *link* simbólico:
 ln -s /path/original/file.txt /path/symlink
 ```
 
+### `sort`
+
+*Parâmetros usados:*
+
+- `<char>`: Qualquer caractere
+- `<field>`: Identificador do campo
+
+*Opções usadas:*
+
+- `-m`: Mescla os arquvios antes de organizar
+- `-t`: Especifica o delimitador
+- `-k`: Especifica por campo
+
+Organizar arquivos por ordenação:
+
+```sh
+sort [-m] [-t <char>] [-k <field>] /path/file.txt[ ...] [> /path/save.txt]
+```
+
 ### `shuf`
 
 Embaralhar linhas do arquivo:
@@ -1206,6 +1225,8 @@ line=$(shuf /path/file.txt | tail -1); echo $line; sed -ni "/$line/d" /path/file
 ```
 
 ### `ls`
+
+*Opções usadas:*
 
 - `-a`: Exibe arquivos ocultos
 - `-A`: Exibe arquivos ocultos exceto `.` e `..`
