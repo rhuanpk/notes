@@ -2119,6 +2119,18 @@ ffmpeg -i /path/video.mp4 -filter:v "setpts=<value>*PTS" -an /path/output.mp4
 
 - [Blog Viva o Linux](https://www.vivaolinux.com.br/dica/Como-aumentar-ou-reduzir-a-velocidade-de-um-video-via-linha-de-comando)
 
+### `gifwrap`
+
+Ver *gifs* pelo terminal:
+
+```sh
+gifwrap -f /path/image.gif
+```
+
+*OBSERVAÇÕES:*
+
+- Deixe o menor *zoom* possível do terminal
+
 ### `yt-dlp`
 
 Listar formatos disponíveis:
