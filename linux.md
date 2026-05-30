@@ -1151,6 +1151,34 @@ Voltar para o diretorio anterior:
 	cd $OLDPWD
 	```
 
+### `read`
+
+*Parâmetros usados:*
+
+- `<text>`: *String* qualquer conforme necessidade
+- `<chars>`: Contagem de quantidade de caracteres
+
+*Opções usadas:*
+
+- `-r`: Retorna o texto *raw*, não interpreta caracteres de escape (*e.g.* `\n`)
+- `-e`: Na prática, não interpreta teclas de movimentação, ou seja, consegue andar pelo texto com as setas (consequentemente, estes não são capturas pelo *read*)
+- `-t`: Define um *timeout* para cancelamento do comando
+- `-a`: A entrada será um *array*, ou seja, a cada espaço, um novo índice
+- `-p`: Imprime uma mensagem antes do cursor
+- `-i <text>`: Caso utilizando *ReadLine* (opção `-e`), define um *input* padrão
+- `-n <chars>`: Retorna depois de *n* caracteres e, caso receba o delemitador de linha (tecla *return*) antes, não o inclui no *input*
+- `-N <chars>`: Igual ao `-n`, porém, inclui o delimitador de linha caso retorne antes
+
+Exemplo base:
+
+```sh
+read -re -t 5 -a ARRAY -p 'Your name: ' -i 'Tux'
+```
+
+*OBSERVAÇÕES:*
+
+- Caso você precise "printar" algum caracter de escape ou algum tipo de formatação de texto para pedir a entrada do usuário e queira utilizar a técnica `echo -ne "\nInput: "; read -e`, pode ter comportamento inesperado pois, o texto "printado" (na mesma linha) antes da execução do `read`, será literalemente apagado caso você use o `backspace` até o final. Para contornar isso, é necessário a presença da opção `-p` do `read`, nem que seja para simplesmente printar o ": " final: `echo -ne "\nInput"; read -e -p ': '`
+
 ### `less`
 
 *Parâmetros usados:*
