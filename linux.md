@@ -1037,6 +1037,26 @@ Embaralhar, pegar a última linha e exclui-la:
 line=$(shuf /path/file.txt | tail -1); echo $line; sed -ni "/$line/d" /path/file.txt
 ```
 
+### `sleep`
+
+Sintaxe base:
+
+```sh
+sleep <time>[s|m|h|d][ ...]
+```
+
+Comando:
+```sh
+# sleep 1 minute and 30 seconds
+sleep 1m 30s
+```
+
+*OBSERVAÇÕES:*
+
+- Cada valor de tempo passado para o *sleep* será somado
+- Caso não especificado unidade de tempo,`s` (segundos) é o padrão
+- Segundos "quebrados" são permitidos (*e.g.* `0.5`, `.5`)
+
 ### `ls`
 
 *Opções usadas:*
