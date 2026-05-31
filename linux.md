@@ -2156,6 +2156,20 @@ gifwrap -f /path/image.gif
 
 - Deixe o menor *zoom* possível do terminal
 
+### Comando _gocr_
+
+Programas necessários:
+
+```sh
+[sudo] apt install gocr
+```
+
+Extrair textos de imagens:
+
+```sh
+gocr /path/image.png
+```
+
 ### `yt-dlp`
 
 Listar formatos disponíveis:
