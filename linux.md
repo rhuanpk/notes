@@ -119,6 +119,14 @@ Retorna o nome do usuário pelo UID passado:
 id -un <uid>
 ```
 
+### `newgrp`
+
+Caso tenha feito a adição de um usuário a um grupo e não possa reiniciar a sessão para que a modiciação seja aplicada, o comando `newgrp` irá recarregar a sessão atual do *shell* do usuário corrente com o grupo específicado:
+
+```sh
+newgrp <group>
+```
+
 ### `ip`
 
 Verificar as interfaces de redes com saida formatada e "highlightada" (*pretty*):
