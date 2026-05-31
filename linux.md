@@ -281,6 +281,34 @@ Monitorar tráfego de rede:
 [sudo] tcpdump -i <interface> -G <seconds> -W <count> -w 'tcpdump_%F-%T.pcap' host <host> or host <host>
 ```
 
+### `mtr`
+
+*Parâmetros usados:*
+
+- `<cycles>`: Quantidade de repetição
+- `<seconds>`: Quantidade de segundos
+- `<size>`: Tamanho em *bytes*
+
+*Opções usadas:*
+
+- `-4`: Somente IPv4
+- `-6`: Somente IPv6
+- `-w`: Não resume os nomes de domínios
+- `-t`: Ao invés de chamar GUI ou TUI, reporta diretamente no console
+- `-g`: Força usar GTK
+- `-C`: Saída como CSV
+- `-j`: Saída como JSON
+- `-r`: Entra em *report mode* (não mostra *output* e no final dos ciclos mostra o resumo) em conjunto de `-c`
+- `-c <cycles>`: Contagem de ciclos
+- `-i <seconds>`: *Delay* entre cada *ICMP Echo*
+- `-s <size>`: Tamanho do pacote
+
+Monitorar o TTR de todos os *hopes*:
+
+```sh
+mtr [<options>] example.com
+```
+
 ### `shutdown`
 
 Em geral, os comandos puros são:
