@@ -2559,6 +2559,52 @@ Variável PS1:
 - `\W`: Diretório de trabalho atual com o nome base (último segmento) apenas
 - `$(__git_ps1 ["%s"])`: Branch atual caso esteja em um repositório Git, se não, não exibe nada
 
+### Usuários
+
+*Parâmetros usados:*
+
+- `<user>`: Nome do usuário
+- `<group>`: Nome do grupo
+
+Adicionar **usuário** (*mod*):
+
+```sh
+adduser [<options>] <user>
+```
+
+Adicionar **usuário** (*vanilla*):
+
+1. Cria o usuário (e seus grupos):
+	```
+	useradd -m [-G <group>[,...]] <user>
+	```
+1. Define a senha do novo usuário
+	```
+	passwd <user>
+	```
+
+Remover usuário (*mod*):
+
+```sh
+deluser [<options>] <user>
+```
+
+Adicionar usuário à um ou muitos grupos:
+
+```sh
+usermod -aG <group>[,...] <user>
+```
+
+*OBSERVAÇÕES:*
+
+- Omitindo a flag `-a`, você deixará o usuário somente com os grupos especificados e todos os outros grupos serão removidos
+
+Remover usuário de um grupo:
+
+```sh
+gpasswd -d <user> <group>
+```
+
 ### Partições
 
 > If you are growing a partition, you have to first resize the partition and then resize the filesystem on it, while for shrinking the filesystem must be resized before the partition to avoid data loss.
