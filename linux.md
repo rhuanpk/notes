@@ -718,6 +718,14 @@ Caso atualize o arquivos de configuração do usuário como `/etc/sysctl.d/99-sy
 [sudo] sysctl --system
 ```
 
+### `last`
+
+Lista o histórico de *logins* no *host*:
+
+```sh
+last [--fulltimes] [--ip] [--limit <count>] [--system]
+```
+
 ### `passwd`
 
 *Parâmetros usados:*
