@@ -197,6 +197,35 @@ Listar porta específica:
 [sudo] lsof -i :<port>
 ```
 
+### `tcpdump`
+
+*Parâmetros usados:*
+
+- `<interface>`: Nome da interface de rede
+- `<seconds>`: Valor em segundos
+- `<count>`: Quantidade de iterações
+- `<host>`: Domínio ou IP
+
+*Opções usadas:*
+
+- `-i <interface>`: Interface de rede a ser monitorada
+- `-G <seconds>`: Quanto tempo ficará capturando
+- `-W <count>`: Quantas vezes capturará
+- `-w /path/tcpdump-%F_%T.pcap`: Arquivo de saída do tipo *packet capture*
+- `host <host> [or <host>...]`: IP ou domínio a ser monitorado
+
+Programas necessários:
+
+```sh
+[sudo] apt install tcpdump
+```
+
+Monitorar tráfego de rede:
+
+```sh
+[sudo] tcpdump -i <interface> -G <seconds> -W <count> -w 'tcpdump_%F-%T.pcap' host <host> or host <host>
+```
+
 ### `shutdown`
 
 Em geral, os comandos puros são:
