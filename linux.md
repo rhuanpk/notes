@@ -566,6 +566,44 @@ Lista informações de pontos de montagem:
 findmnt -T /mnt
 ```
 
+### `lsblk`
+
+*Parâmetros usados:*
+
+- `X`: Letra do disco
+- `Y`: Número da partição
+- `<column>`: Nome da coluna (*header*)
+
+Pegar informação de *device* específico:
+
+```sh
+lsblk -n [-o <column>[,...]] /dev/sdXY
+```
+
+Saber o nome dos *devices*:
+
+```sh
+lsblk -do NAME,MODEL
+```
+
+Saber se o disco é **HDD** ou **SSD** (`0` para SSD e `1` para HDD):
+
+```sh
+lsblk -do NAME,ROTA
+```
+
+Saber o tipo de conexão do disco:
+
+```sh
+lsblk -do NAME,TRAN
+```
+
+Informações gerais e úteis:
+
+```sh
+lsblk -o NAME,MODEL,TRAN,SIZE,ROTA,TYPE
+```
+
 ### `modprobe`
 
 *Parâmetros usados:*
@@ -2072,12 +2110,12 @@ base64 [-w <cols>] [-d] <<< <data>
 
 *Parâmetros usados:*
 
-- `<value>`: Pode variar de `0` até `1`, sendo que 1 é a velocidade normal, logo, **0.75** é **25%** mais rápido, **0.5** é **50%** e assim sucessivamente
+- `<speed>`: Pode variar de `0` até `1`, sendo que 1 é a velocidade normal, logo, **0.75** é **25%** mais rápido, **0.5** é **50%** e assim sucessivamente
 
 Aumentar a velocidade de um vídeo:
 
 ```sh
-ffmpeg -i /path/video.mp4 -filter:v "setpts=<value>*PTS" -an /path/output.mp4
+ffmpeg -i /path/video.mp4 -filter:v "setpts=<speed>*PTS" -an /path/output.mp4
 ```
 
 *LINKS:*
