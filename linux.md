@@ -2521,6 +2521,48 @@ ssh-keyscan [-p <port>] [-t {rsa|dsa|ecdsa|ed25519}[,...]] <host> >> ~/.ssh/know
 
 - Este comando lista as chaves pública do próprio servidor SSH (**sshd**) que são as credenciais validadas na hora de se conectar em um novo *host* e que precisamos responder se confiamos ou não (*yes/no*)
 
+### *Signals*
+
+*Parâmetros usados:*
+
+- `<siginal>`: ID, nome ou abreviação do *signal*
+- `<pid>`: ID do processo
+- `<user>`: Nome do usuário no sistema
+- `<pattern>`: *String* de RegEx
+
+#### `kill`
+
+*Opções usadas:*
+
+- `-0`: Verifica se o processo está vivo
+
+Envia *signal* ao processo:
+
+```sh
+kill [[-s] <siginal>] [-0] <pid>
+```
+
+#### `killall`
+
+Envia *signal* a todos os processos com o nome:
+
+```sh
+killall [[-s] <siginal>] <name>
+```
+
+#### `pkill`
+
+*Opções usadas:*
+
+- `-u`: Faz o *match* para processos de um usuário específico
+- `-f`: Faz o *match* do *pattern* não somente com o nome do comando mas também com toda a sua linha de argumentos
+
+Envia *signal* a todos os processos que casam com o _RegEx_:
+
+```sh
+pkill [-f] [-u <user>] '<pattern>'
+```
+
 ## Configurações
 
 Anotações gerais sobre procedimentos (tutoriais).
