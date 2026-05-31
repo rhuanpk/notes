@@ -159,6 +159,53 @@ IP interno:
 hostname -I
 ```
 
+### `timedatectl`
+
+*Parâmetros usados:*
+
+- `<timezone>`: *Timezone* completo ou sua abreviação
+
+Verificar informações de data e hora e se tudo esta *ok*:
+
+```sh
+timedatectl status
+```
+
+Sincronizar RTC com UTC (de onde a informação é buscada, não altera fuso horário):
+
+```sh
+timedatectl set-local-rtc 0
+```
+
+*OBSERVAÇÕES:*
+
+- Para reverter faça:
+	`timedatectl set-local-rtc 1`
+
+Listar os *timezones*:
+
+```sh
+timedatectl list-timezones
+```
+
+Definir *timezone* no sistema:
+
+```sh
+timedatectl set-timezone <timezone>
+```
+
+*Timezones* com abreviações:
+
+```sh
+for timezone in `timedatectl list-timezones`; do echo "$timezone (`env TZ="$timezone" date '+%Z'`)"; done
+```
+
+Listar todas as abreviações de *timezones*:
+
+```sh
+timedatectl list-timezones | xargs -I '{}' env TZ='{}' date +'%Z' | sort -u
+```
+
 ### `acpi`
 
 Ver porcentagem da bateria (*notebooks*):
@@ -540,7 +587,8 @@ Sintaxe base:
 
 *OBSERVAÇÕES:*
 
-- Antes de limpar o histórico, salve ele com `dmesg -H > /tmp/dmesg_$(date '+%F_%T').log`
+- Antes de limpar o histórico, salve ele:
+	`dmesg -H > /tmp/dmesg_$(date '+%F_%T').log`
 
 ### `systemctl`
 
@@ -1364,7 +1412,7 @@ dig [+short] [@<dns>] -x <ip>
 
 *OBSERVAÇÕES:*
 
-- O comando `dig` aceita os tipos de domínio `A`, `MX` e `SOA`.
+- O comando `dig` aceita os tipos de domínio `A`, `MX` e `SOA`
 
 *LINKS:*
 
