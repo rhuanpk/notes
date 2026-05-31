@@ -338,6 +338,14 @@ Adicionar nova entrada de *boot*:
 efibootmgr -c -d /dev/sdX -p Y -l '\path\<shim>x64.efi' -L '<label>'
 ```
 
+### `mokutil`
+
+Checar se *secure boot* está ativo:
+
+```sh
+mokutil --sb-state
+```
+
 ### `dd`
 
 *Parâmetros usados:*
