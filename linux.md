@@ -844,6 +844,32 @@ Desbloquear a senha de um usuário:
 - Bloquear e desbloquear a senha de uma usuário implica somente na senha do mesmo, ou seja, caso bloqueamos a senha de um usuário, ele poderá fazer login por outro meio (algum tipo de chave por exemplo)
 - Caso queira bloquear/desativar a conta do usuário, poderá limpar a sua senha (`-d`) e depois bloquea-la (`-l`), após isso, só podera "logar" pelo usuário de forma direta criando uma nova senha para o mesmo
 
+### `pwgen`
+
+*Parâmetros usados:*
+
+- `<chars>`: Quantidade de caracteres por senha
+- `<passwords>`: Quantidade de senhas a serem geradas
+
+*Opções usadas:*
+
+- `-s`: Senha completamente randômica
+- `-c`: Garante letras maúsculas e minúsculas
+- `-n`: Garante números
+- `-y`: Inclui caracteres especiais
+
+Programas necessários:
+
+```sh
+[sudo] apt install pwgen
+```
+
+Gerar senha aleatória (**$**):
+
+```sh
+pwgen [-scny] [<chars>] [<passwords>]
+```
+
 ### `firejail`
 
 *Parâmetros usados:*
