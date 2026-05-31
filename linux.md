@@ -947,7 +947,7 @@ firejail --put=<sandbox> /path/host/file.txt /path/sandbox/file.txt
 
 - <https://easylinuxtipsproject.blogspot.com/p/sandbox.html>
 
-#### Troubleshooting
+#### *Troubleshooting*
 
 Problemas com áudio usando `pulseauido` como driver:
 
@@ -2146,34 +2146,6 @@ Formatando a saída:
 # %i: window id
 # %%: literal '%'
 slop -f '%x %y %w %h %g %i'
-```
-
-### `base64`
-
-Tanto para codificar quanto para decodificar é necessário passar o dado via **arquivo** ou **STDIN**.
-
-*Parâmetros usados:*
-
-- `<cols>`: Quantidade de colunas
-- `<data>`: Dado, seja ele puro ou retorno de alguma execução
-
-*Opções usadas:*
-
-- `-d`: Decodifica *base64* para o original
-- `-w <cols>`: Número de colunas na saída, `0` para uma única linha
-
-Exemplos base:
-
-```sh
-base64 [-w <cols>] [-d] /path/file.txt
-```
-
-```sh
-base64 [-w <cols>] [-d] <<< <data>
-```
-
-```sh
-<data> | base64 [-w <cols>] [-d]
 ```
 
 ### `ffmpeg`
