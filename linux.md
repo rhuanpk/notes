@@ -244,6 +244,14 @@ Listar porta específica:
 [sudo] lsof -i :<port>
 ```
 
+### `dmidecode`
+
+Saber o número de série do dispositivo:
+
+```sh
+[sudo] dmidecode -s system-serial-number
+```
+
 ### `tcpdump`
 
 *Parâmetros usados:*
@@ -2156,7 +2164,7 @@ gifwrap -f /path/image.gif
 
 - Deixe o menor *zoom* possível do terminal
 
-### Comando _gocr_
+### `gocr`
 
 Programas necessários:
 
