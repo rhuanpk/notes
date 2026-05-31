@@ -368,9 +368,9 @@ Criando um *virtual disk* (VD):
 1. `dd if=/dev/zero of=/tmp/vd.img bs=4M count=8`
 1. `mkfs.vfat -F 32 /tmp/vd.img`
 1. *`hexdump -C /tmp/vd.img | more`*
-1. `mount -o loop,rw [-t vfat] /tmp/vd.img /mnt/`
+1. `mount -o loop,rw [-t vfat] /tmp/vd.img /mnt`
 1. `cd /mnt/ && touch file.txt; cd -`
-1. `umount /mnt/`
+1. `umount /mnt`
 
 ### `fdisk`
 
@@ -557,6 +557,14 @@ chown -Rv `id -un`:`id -gn` /media/disk
 - **FAT32** e **EXFAT** não armazenam permissões POSIX nem proprietário/grupo. O Linux **simula** essas informações via opções de montagem (`uid`, `gid`, `umask`, `fmask`, `dmask`), fazendo todos os arquivos aparecerem com os mesmos atributos, sem essas opções, o padrão costuma ser `root`
 - **EXT4** armazena *uid*, *gid* e permissões POSIX diretamente no *inode* de cada arquivo/diretório. Por isso opções de montagem como `uid` e `gid` não são suportadas ou necessárias, o dono real já está gravado no disco
 - **NTFS** usa ACLs do Windows, não o modelo POSIX. No Linux, o driver `ntfs-3g` traduz ou simula proprietário e permissões via opções de montagem (`uid`, `gid`, `umask`), portanto o resultado depende da configuração de montagem e das ACLs originais do arquivo
+
+### `findmnt`
+
+Lista informações de pontos de montagem:
+
+```sh
+findmnt -T /mnt
+```
 
 ### `modprobe`
 
