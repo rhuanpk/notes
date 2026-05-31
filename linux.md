@@ -882,7 +882,7 @@ pwgen [-scny] [<chars>] [<passwords>]
 
 *Parâmetros usados:*
 
-- `<binary>`: Nome do executáve
+- `<binary>`: Nome do executável
 - `<sandbox>`: Nome dado ao *sandbox*
 - `<command>`: Comando final completo
 
@@ -1654,7 +1654,7 @@ yes n
 *Parâmetros usados:*
 
 - `<pid>`: ID do processo
-- `<binary>`: Nome do executáve
+- `<binary>`: Nome do executável
 - `<command>`: Comando final completo
 
 *Opções usadas:*
@@ -2562,6 +2562,73 @@ Envia *signal* a todos os processos que casam com o _RegEx_:
 ```sh
 pkill [-f] [-u <user>] '<pattern>'
 ```
+
+### *Processes*
+
+*Parâmetros usados:*
+
+- `<user>`: Nome do usuário no sistema
+- `<pid>`: ID do processo no sistema
+- `<binary>`: Nome do programa/executável
+- `<delimiter>`: Caractere que define a separação de informações
+- `<pattern>`: *String* de RegEx
+
+#### `ps`
+
+*Opções usadas:*
+
+- `-a`: Lista todos os processos
+- `-f`: Lista o comando completo
+- `-u <user>`: Lista os processos do usuário especificado
+- `-p <pid>`: Lista um único processo pelo seu PID
+- `-C <binary>`: Lista os processos correspondentes ao nome
+- `-o <output>`: Especifica as colunas de saída
+- `--no-headers`: Não mostra os cabeçalhos na saída
+
+Lista os PIDs e informações dos processos:
+
+```sh
+ps [-aux] [-f] [-p <pid>] [-C <binary>]
+```
+
+#### `pgrep`
+
+*Opções usadas:*
+
+- `-c`: Retorna somente a contagem de resultados encontrados
+- `-l`: Mostra também o nome do processo
+- `-a`: Mostra toda a linha de argumentos do comando
+- `-n`: Retorna somente o PID mais novo da árvore
+- `-o`: Retorna somente o PID mais velho da árvore
+- `-v`: Nega o padrão (*invert match*)
+- `-x`: Casa exatamente com o padrão (*exact match*)
+- `-d <delimiter>`: Troca o delimitador de saída
+
+Lista os PIDs dos processos que casam com o RegEx:
+
+```sh
+pgrep [-clanovx] [-d <delimiter>] <pattern>
+```
+
+#### `pstree`
+
+Exibe os processos em forma de árvore:
+
+```sh
+pstree [-psa] [<pid>]
+```
+
+*OBSERVAÇÕES:*
+
+- Buscar por somente um processo:
+	- Da forma padrão com `grep`:
+		`ps -aux | grep <pattern>`
+	- Via *proc file*:
+		`cat /proc/<pid>/cmdline`
+	- Com `pgrep`:
+		`ps -fp $(pgrep <pattern>) [--width $(($(tput cols)*$(tput lines)))]`
+	- Com `pgrep`:
+		`pgrep <pattern> | xargs pstree -psa`
 
 ## Configurações
 
