@@ -127,6 +127,14 @@ Caso tenha feito a adição de um usuário a um grupo e não possa reiniciar a s
 newgrp <group>
 ```
 
+### `env`
+
+Iniciar sessão `bash` completamente zerada:
+
+```sh
+env -i bash --norc --noprofile
+```
+
 ### `ip`
 
 Verificar as interfaces de redes com saida formatada e "highlightada" (*pretty*):
