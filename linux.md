@@ -2673,6 +2673,13 @@ Liberar apenas comandos específicos (via *sudoers*):
 <user> ALL=[NOPASSWD:]/absolute/path/command[,...]
 ```
 
+### IP
+
+Saber IP externo:
+
+- `curl -L https://ipecho.net/plain`
+- `curl -L https://ipinfo.io/json`
+
 ### Bash
 
 Variável PS1:
