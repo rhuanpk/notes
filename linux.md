@@ -1382,6 +1382,68 @@ Cria backup na hora de efetivar as alterações & alterações em lote:
 grep -rl '<pattern>' | xargs sed -Ei'.bak' '<pattern>'
 ```
 
+### `find`
+
+Sintaxe base:
+
+```sh
+find /path/folder -name file.txt
+```
+
+Limitando a recursividade:
+
+```sh
+find /path/folder -maxdepth 3 -name file.txt
+```
+
+Excluir determinado path da busca:
+
+```sh
+find /path/folder -path /path/folder/exclude -prune -o -name '*file*'
+```
+
+Excluir vários paths da busca:
+
+```sh
+find /path/folder \( -path /path/folder/first -o -path /path/folder/second \) -prune -o -name '*file*'
+```
+
+Excluir vários paths da busca e limitar a recursivedade:
+
+```sh
+find /path/folder -maxdepth 2 \( -path /path/folder/first -o -path /path/folder/second \) -prune -o -name '*file*'
+```
+
+Buscar por arquivos e excluílos:
+
+```sh
+find ~/ -not \( -path '*/.*' -prune -o -path '*/folder' -prune \) -iname '*confli*' -exec rm -i '{}' \; 2>&-
+```
+
+Buscar por links simbólicos quebrados e excluílos:
+
+```sh
+find ~/ -xtype l -exec rm -fv '{}' \;
+```
+
+Find `printf`:
+
+```sh
+find ~/ -printf '%C+\t%p\n'
+```
+
+Sair na primeira ocorrência:
+
+```sh
+find ~/ -name file.txt -print -quit
+```
+
+*OBSERVAÇÕES:*
+
+- Pastas para a opção `-path` não pode contem `/` no final
+- Para qualquer tipo de *match pattern* (inclusive para diretórios), é aceito *wildcards* (*e.g.* `find ~/ \( -path '*/folder' -o -path '*/.folder' \) -prune -o -name '*f?le*'`)
+- Utilizando `\;` para finalizar o `find`, fará com que cada ocorrência seja um novo comando, porém, com `\+`, fará a concatenação (*e.g.* `<command> <arg1> <arg2> ...`)
+
 ### `xargs`
 
 Pega a saida do pipe e concatena no final do comando que está a frente dele.
