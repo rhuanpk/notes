@@ -1444,6 +1444,20 @@ find ~/ -name file.txt -print -quit
 - Para qualquer tipo de *match pattern* (inclusive para diretórios), é aceito *wildcards* (*e.g.* `find ~/ \( -path '*/folder' -o -path '*/.folder' \) -prune -o -name '*f?le*'`)
 - Utilizando `\;` para finalizar o `find`, fará com que cada ocorrência seja um novo comando, porém, com `\+`, fará a concatenação (*e.g.* `<command> <arg1> <arg2> ...`)
 
+### `locate`
+
+Sintaxe base:
+
+```sh
+locate file
+```
+
+Buscar por nome exato:
+
+```sh
+locate -b '\file.txt'
+```
+
 ### `xargs`
 
 Pega a saida do pipe e concatena no final do comando que está a frente dele.
