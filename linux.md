@@ -1172,7 +1172,7 @@ tar -zcvf archive.tar.gz /path/file.txt /path/folder/
 Descompactar de `.tar.gz`:
 
 ```sh
-tar [-C /path/decompress/] -zxvf /path/to/compressed/folder.tar.gz
+tar [-C /path/decompress/] -zxvf /path/archive.tar.gz
 ```
 
 #### `.tar.xz`
@@ -1186,7 +1186,7 @@ tar -cvf archive.tar.gz /path/file.txt /path/folder/
 Descompactar de `.(tar|tbz2).(xz|bz2)`:
 
 ```sh
-tar [-C /path/decompress/] -xvf /path/to/compressed/folder.tar.xz
+tar [-C /path/decompress/] -xvf /path/archive.tar.xz
 ```
 
 #### `.tar.\*`
@@ -1195,6 +1195,65 @@ Ver conteúdo de `.tar.*`:
 
 ```sh
 tar -tf /path/archive.tar.gz
+```
+
+### `zip`
+
+*Parâmetros usados:*
+
+- `<folder>`: Caminho para pasta
+- `<pattern>`: *String* de RegEx
+
+*Opções usadas:*
+
+- `-r`: Faz a compressão ser recursiva
+- `-y`: Segue o *symlink* e compacta o arquivo original
+- `-e`: Criptografar o arquivo compactado
+- `-@`: A lista de arquivos/diretórios a serem compactados vem via STDIN
+- `-FS`: Caso o arquivo não exista mais no *filesystem*, exclui do arquivo compactado
+- `-b <folder>`: Especifica o diretório para o arquivo temporario (de cache) do *zip*
+- `-i <pattern>[ ...]`: Inclue arquivos pelo padrão
+- `-x <pattern>[ ...]`: Exclui arquivos pelo padrão
+
+Compactar:
+
+```sh
+zip [-b /tmp] [-ry] archive[.zip] /path/file.txt /path/folder/ /path/folder/*
+```
+
+*OBSERVAÇÕES:*
+
+- O primeiro argumento do comando é o *path* do arquivo compactado final e colocar a extensão `.zip` é opcional uma vez que o próprio comando coloca automáticamente caso não passado
+- Caso não específicado, o **local padrão** do **arquivo temporário** é no **mesmo lugar** aonde será criado o **arquivo "zippado"**
+
+Exemplos de padrões de inclusão/exclusão:
+
+- Exclua todos os arquivos que terminam com ".txt" de todas as pastas em todos os níveis: `\*.txt`
+- Exclua todos os arquivos que terminam com ".txt" de todas as pastas que tenham o nome em todos os níveis: `\*/folder/\*.txt`
+- Exclua todas as pastas com o(s) nome(s) em todos os níveis: `\*/folder/\*` ou `\*/folder-{a,b}/\*`
+- Exclua a pasta com o nome a partir da sua raiz (pastas a serem compactadas): `/depth0/folder/*`
+
+### `unzip`
+
+*Parâmetros usados:*
+
+- `<folder>`: Caminho para pasta
+
+*Opções usadas:*
+
+- `-l`: Listar o conteúdo do arquivo compactado
+- `-d <folder>`: Especifica a pasta para ser descompactado
+
+Descompactar:
+
+```sh
+unzip [-d /path/decompress/] /path/archive.zip
+```
+
+Ver o conteúdo:
+
+```sh
+unzip -l /path/archive.zip
 ```
 
 ### `sort`
