@@ -1256,6 +1256,27 @@ Ver o conteúdo:
 unzip -l /path/archive.zip
 ```
 
+#### `xz`
+
+*Opções usadas:*
+
+- `-z`: Para criar arquivos compactados
+- `-d`: Para descompactar arquivos
+- `-k`: Descompacta o arquivo mantendo o compactado original
+- `-v`: Modo verboso (imprime o processamento)
+
+Compactar:
+
+```sh
+xz -z [-v] /path/file.txt
+```
+
+Descompactar:
+
+```sh
+xz -d [-kv] /path/file.txt.xz
+```
+
 ### `sort`
 
 *Parâmetros usados:*
