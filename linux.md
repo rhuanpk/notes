@@ -2893,6 +2893,28 @@ pstree [-psa] [<pid>]
 	- Com `pgrep`:
 		`pgrep <pattern> | xargs pstree -psa`
 
+### *Memory*
+
+Comando relacionados a Memória RAM no sistema.
+
+#### *Cache*
+
+Limpar *cache* da RAM:
+
+```sh
+sync && echo {1|2|3} | sudo tee /proc/sys/vm/drop_caches
+```
+
+Valores possíveis:
+
+- Valor `1`: Limpa apenas as páginas de *cache*, dados de arquivos
+- Valor `2`: Limpa apenas entradas de diretório e *inodes*, metadados de arquivos
+- Valor `3`: Limpa os recursos dos valores `1` e `2`
+
+*OBSERVAÇÕES:*
+
+- Não é recomendado para manutenção regular do sistema o uso recorrente desse comando
+
 ## Configurações
 
 Anotações gerais sobre procedimentos (tutoriais).
