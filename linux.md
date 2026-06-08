@@ -1144,6 +1144,59 @@ Criar *link* simbólico:
 ln -s /path/original/file.txt /path/symlink
 ```
 
+### `tar`
+
+*Parâmetros usados:*
+
+- `<path>`: Caminho para arquivo ou pasta
+- `<folder>`: Caminho para pasta
+
+*Opções usadas:*
+
+- `-z`: Para manipulação de arquivos `.gz`
+- `-c`: Para criar arquivos compactados
+- `-v`: Modo verboso (imprime o processamento)
+- `-x`: Para fazer extração de arquivos `.tar`
+- `-t`: Para fazer listagem de arquivos compactados
+- `-f <path>`: Informa o arquivo compactado daquela operação
+- `-C <folder>`: Para descompactar em outra pasta
+
+#### `.tar.gz`
+
+Compactar em `.tar.gz`:
+
+```sh
+tar -zcvf archive.tar.gz /path/file.txt /path/folder/
+```
+
+Descompactar de `.tar.gz`:
+
+```sh
+tar [-C /path/decompress/] -zxvf /path/to/compressed/folder.tar.gz
+```
+
+#### `.tar.xz`
+
+Compactar em `.(tar|tbz2).(xz|bz2)`:
+
+```sh
+tar -cvf archive.tar.gz /path/file.txt /path/folder/
+```
+
+Descompactar de `.(tar|tbz2).(xz|bz2)`:
+
+```sh
+tar [-C /path/decompress/] -xvf /path/to/compressed/folder.tar.xz
+```
+
+#### `.tar.\*`
+
+Ver conteúdo de `.tar.*`:
+
+```sh
+tar -tf /path/archive.tar.gz
+```
+
 ### `sort`
 
 *Parâmetros usados:*
