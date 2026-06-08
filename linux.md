@@ -1256,6 +1256,24 @@ Ver o conteúdo:
 unzip -l /path/archive.zip
 ```
 
+### `gzip`
+
+- `-d`: Para descompactar arquivo
+- `-k`: Descompacta o arquivo mantendo o compactado original
+- `-v`: Modo verboso (imprime o processamento)
+
+Compactar:
+
+```sh
+gzip /path/file.txt
+```
+
+Descompactar:
+
+```sh
+gzip -d [-kv] /path/file.txt.gz
+```
+
 ### `xz`
 
 *Opções usadas:*
