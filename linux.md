@@ -1256,7 +1256,7 @@ Ver o conteúdo:
 unzip -l /path/archive.zip
 ```
 
-#### `xz`
+### `xz`
 
 *Opções usadas:*
 
@@ -1275,6 +1275,18 @@ Descompactar:
 
 ```sh
 xz -d [-kv] /path/file.txt.xz
+```
+
+### `7z`
+
+*Opções usadas:*
+
+- `x`: Para descompactar arquivos
+
+Descompactar:
+
+```sh
+7z x /path/archive.*
 ```
 
 ### `sort`
