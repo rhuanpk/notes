@@ -2893,6 +2893,36 @@ pstree [-psa] [<pid>]
 	- Com `pgrep`:
 		`pgrep <pattern> | xargs pstree -psa`
 
+#### *Background*
+
+*Parâmetros usados:*
+
+- `<command>`: Comando fina completo
+- `<job>`: É a identificação do processo em *background* (*job*) que pode ser o ID sequêncial gerado pelos próprios comandos (*e.g.* `%1`, `%42`) ou toda a linha de argumentos do comando (*e.g.* `"%sleep 3"`)
+
+Rodar programas ou comandos em segundo plano:
+
+- Rodar o programa com `<command> &`
+- Dar `bg [<job>]` com o programa em execução
+- Dar `ctrl+z` com o programa em execução
+
+Mostrar programas em segundo plano:
+
+```sh
+jobs [-l]
+```
+
+Para trazer um programa para primeiro plano:
+
+```sh
+fg <job>
+```
+
+*OBSERVAÇÕES:*
+
+- `ctrl+z` também **pausa a execução**, execute `bg` em seguida para que o programa despause, e continue em segundo plano
+- `bg` sem argumento coloca em segundo plano o último *job* em execução (mesmo que pausado)
+
 ### *Memory*
 
 Comando relacionados a Memória RAM no sistema.
