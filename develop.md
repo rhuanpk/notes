@@ -69,3 +69,36 @@ Verifique se retorna `yes`:
 ```sh
 loginctl user-status | grep -m1 'Linger'
 ```
+
+### `webfsd`
+
+Servidor *web* estático leve.
+
+*Parâmetros usados:*
+
+- `<port>`: Porta do servidor *web*
+- `<folder>`: Caminho da pasta raiz do projeto
+
+*Opções usadas:*
+
+- `-d`: Modo *debug* (verboso)
+- `-F`: Roda em *foreground* (não desatacha o processo, consegue parar com `ctrl+c`)
+- `-4`: Sobe como IPv4
+- `-p <port>`: Troca a porta padrão do serviço (*default:* `8000`)
+- `-r <folder>`: Troca a pasta padrão do serviço (*default:* `.`)
+
+Programas necessários:
+
+```sh
+[sudo] apt install webfs
+```
+
+Exemplo base:
+
+```sh
+webfsd -dF [-4] [-p <port>] [-r <folder>]
+```
+
+*OBSERVAÇÕES:*
+
+- Quando instalado, cria um *daemon* no sistema que pode ser desabilitado com `[sudo] systemctl disable --now webfs.service` se for desejado

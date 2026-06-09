@@ -337,7 +337,7 @@ O comando `shutdown` é um *handler* para todos esses comandos mas faz o "encerr
 
 *Parâmetros usados:*
 
-- `<time>`: `hh:mm` no padrão 24h ou `+m` onde "m" é a quantidade de minutos a partir de agora, *e.g.* `+5` se refere daqui a 5 minutos (*default*: `+1`)
+- `<time>`: `hh:mm` no padrão 24h ou `+m` onde "m" é a quantidade de minutos a partir de agora, *e.g.* `+5` se refere daqui a 5 minutos (*default:* `+1`)
 - `<wall>`: Mensagem de aviso de desligamento do sistema para os usuário "logados"
 
 *Opções usadas:*
@@ -1120,7 +1120,7 @@ df -h
 
 *Parâmetros usados:*
 
-- `<folder>`: Caminho do diretórios raiz a ser analisa (*default*: diretório atual)
+- `<folder>`: Caminho do diretórios raiz a ser analisa (*default:* diretório atual)
 
 Gerenciar graficamente via terminal (TUI) arquivos por tamanho:
 
@@ -1388,7 +1388,7 @@ sleep 1m 30s
 - `-t`: Ordena por `mtime`
 - `-d`: Não expande diretórios (quando usando *globs*)
 - `-F`: Sufixa diretórios com `/`
-- `--color={auto|never|always}`: Definir modo de cor da saída (*default*: `auto`)
+- `--color={auto|never|always}`: Definir modo de cor da saída (*default:* `auto`)
 
 Sintaxe base:
 
@@ -2661,8 +2661,8 @@ systemctl isolate <target>.target
 
 *Parâmetros usados:*
 
-- `<user>`: Usuário para conexão (*default*: usuário atual)
-- `<host>`: Domínio ou IP para conexão (*default*: *host* atual)
+- `<user>`: Usuário para conexão (*default:* usuário atual)
+- `<host>`: Domínio ou IP para conexão (*default:* *host* atual)
 - `<port>`: Porta do serviço SSH
 - `<key>`: Caminho da chave privada
 - `<comment>`: Geralmente algo que identifique o proprietário da chave
@@ -2671,7 +2671,7 @@ systemctl isolate <target>.target
 
 *Opções usadas:*
 
-- `-p <port>`: Especifica a porta de conexão (*default*: `22`)
+- `-p <port>`: Especifica a porta de conexão (*default:* `22`)
 - `-i <key>`: Especifica a privada para conexão
 
 Realizar conexão:
@@ -3176,8 +3176,8 @@ Configurações do SSH (*client & sever*) no sistema.
 
 *Parâmetros usados:*
 
-- `<user>`: Usuário para conexão (*default*: usuário atual)
-- `<host>`: Domínio ou IP para conexão (*default*: *host* atual)
+- `<user>`: Usuário para conexão (*default:* usuário atual)
+- `<host>`: Domínio ou IP para conexão (*default:* *host* atual)
 - `<port>`: Porta do serviço SSH
 - `<seconds>`: Quantidade de segundos
 - `<count>`: Inteiro de quantidade de vezes
