@@ -153,14 +153,6 @@ ip route
 
 - Caso esteja conectado a *internet* em mais de uma interface de rede ao mesmo tempo, pode ser que tenha mais de uma definida como `default`, nesse caso, a interface com **menor** valor de `metric` é a saída real
 
-### `ss`
-
-Verificar portas sendo usadas no sistema:
-
-```sh
-[sudo] ss -ntpl
-```
-
 ### `hostname`
 
 Saber hostname:
@@ -258,6 +250,14 @@ Listar porta específica:
 
 ```sh
 [sudo] lsof -i :<port>
+```
+
+### `ss`
+
+Verificar portas sendo usadas no sistema:
+
+```sh
+[sudo] ss -ntpl
 ```
 
 ### `dmidecode`
