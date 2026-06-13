@@ -672,6 +672,26 @@ Listar atributos do arquivo:
 lsattr
 ```
 
+### `chattr`
+
+Adicionar atributo de imutabilidade:
+
+```sh
+[sudo] chattr +i /path/file.txt
+```
+
+Removendo atributo de imutabilidade:
+
+```sh
+[sudo] chattr -i /path/file.txt
+```
+
+Adicionar ou remover atributos recusivamente:
+
+```sh
+[sudo] chattr -R +i /path/folder/
+```
+
 ### `modprobe`
 
 *Parâmetros usados:*
