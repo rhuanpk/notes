@@ -3080,6 +3080,11 @@ Valores possíveis:
 - `Y`: Número da partição
 - `<cpu>`: Tipo do CPU no QEMU
 - `<tag>`: Nome escolhida para *tag*
+- `<bus>`: *Bus* do dispositivo
+- `<port>`: Porta do dispositivo
+- `<addr>`: Endereço do dispositivo
+- `<vendor>`: Fornecedor do dispositivo
+- `<product>`: Produto do dispositivo
 
 *Opções usadas:*
 
@@ -3092,10 +3097,18 @@ Programas necessários:
 [sudo] apt install qemu-system-x86 qemu-utils ovmf
 ```
 
-Criar Disco Virtual (*VD*):
+#### `qemu-img`
+
+Criar VD:
 
 ```sh
 qemu-img create -f qcow2 /path/disk.qcow2 32G
+```
+
+Clonar VD:
+
+```sh
+qemu-img convert -pO qcow2 /path/disk.qcow2 /path/cloned.qcow2
 ```
 
 #### BIOS (Legacy)
@@ -3201,14 +3214,6 @@ Passar USB Para VM:
 	```sh
 	qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX} -usb [-device usb-{xhci|ehci},id={xhci|ehci}] -device usb-host,vendorid=0x<vendor>,productid=0x<product>
 	```
-
-#### Clonagem
-
-Clonar VD:
-
-```sh
-qemu-img convert -pO qcow2 /path/disk.qcow2 /path/cloned.qcow2
-```
 
 ## Configurações
 
