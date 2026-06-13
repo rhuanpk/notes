@@ -699,6 +699,36 @@ Desmontar:
 [sudo] fusermount -u /mount/point
 ```
 
+### `gio`
+
+*Parâmetros usados:*
+
+- `<path>`: Caminho do dispositivo
+
+Programas necessários:
+
+```sh
+[sudo] apt install gvfs-fuse gvfs-backends
+```
+
+Pegar informação do nome do *path* do *device*:
+
+```sh
+gio mount -li | grep -iF activation_root
+```
+
+Montar:
+
+```sh
+gio mount '<path>'
+```
+
+Desmontar:
+
+```sh
+gio mount -u '<path>'
+```
+
 ### `lsattr`
 
 Listar atributos do arquivo:
