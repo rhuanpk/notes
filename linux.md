@@ -3197,23 +3197,20 @@ mount -o trans=virtio -t 9p <tag> /mnt
 
 Passar USB Para VM:
 
-- Listar dispositivos (*e.g.* ![lsusb-tv](./assets/lsusb-tv.png)):
-
+- Listar dispositivos:
 	```sh
 	lsusb -tv
 	```
-
 - BUS e Porta ou Endereço:
-
 	```sh
 	qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX} -usb [-device usb-{xhci|ehci},id={xhci|ehci}] -device usb-host,hostbus=<bus>,{hostport=<port>|hostaddr=<addr>}
 	```
-
 - Fornecedor e Produto:
-
 	```sh
 	qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX} -usb [-device usb-{xhci|ehci},id={xhci|ehci}] -device usb-host,vendorid=0x<vendor>,productid=0x<product>
 	```
+- Exemplo de parâmetros:
+	![lsusb-tv](./assets/lsusb-tv.png)
 
 ## Configurações
 
