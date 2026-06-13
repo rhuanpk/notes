@@ -664,6 +664,14 @@ Informações gerais e úteis:
 lsblk -o NAME,MODEL,TRAN,SIZE,ROTA,TYPE
 ```
 
+### `lsattr`
+
+Listar atributos do arquivo:
+
+```sh
+lsattr
+```
+
 ### `modprobe`
 
 *Parâmetros usados:*
