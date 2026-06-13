@@ -1404,6 +1404,20 @@ sleep 1m 30s
 - Caso não especificado unidade de tempo,`s` (segundos) é o padrão
 - Segundos "quebrados" são permitidos (*e.g.* `0.5`, `.5`)
 
+### `head`
+
+Recortar primeira linha de um novo arquivo:
+
+```sh
+head -1 /path/file.txt > /path/new.txt
+```
+
+Recortar primeira linha de um arquivo (para o mesmo arquivo):
+
+```sh
+echo $(head -1 /path/file.txt) > /path/file.txt
+```
+
 ### `ls`
 
 *Opções usadas:*
