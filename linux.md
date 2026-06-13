@@ -1412,10 +1412,24 @@ Recortar primeira linha de um novo arquivo:
 head -1 /path/file.txt > /path/new.txt
 ```
 
-Recortar primeira linha de um arquivo (para o mesmo arquivo):
+Recortar primeira linha de um arquivo para o mesmo arquivo:
 
 ```sh
 echo $(head -1 /path/file.txt) > /path/file.txt
+```
+
+### `tail`
+
+Recortar última linha de um novo arquivo:
+
+```sh
+tail -n 1 /path/file.txt > /path/new.txt
+```
+
+Recortar última linha de um arquivo para o mesmo arquivo:
+
+```sh
+echo $(tail -n 1 /path/file.txt) > /path/file.txt
 ```
 
 ### `ls`
