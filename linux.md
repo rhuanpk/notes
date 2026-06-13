@@ -664,6 +664,41 @@ Informações gerais e úteis:
 lsblk -o NAME,MODEL,TRAN,SIZE,ROTA,TYPE
 ```
 
+### `jmtpfs`
+
+*Parâmetros usados:*
+
+- `<bus>`: Número do *bus*
+- `<device>`: Número do *device*
+
+Programas necessários:
+
+```sh
+[sudo] apt install jmtpfs
+```
+
+Saber informação do *device*:
+
+```sh
+[sudo] jmtpfs -l
+```
+
+Montar:
+
+```sh
+[sudo] jmtpfs /mount/point -device=<bus>,<device> -o allow_other
+# or
+[sudo] jmtpfs /mount/point -o allow_other,auto_unmount
+```
+
+Desmontar:
+
+```sh
+[sudo] umount /mount/point
+# or
+[sudo] fusermount -u /mount/point
+```
+
 ### `lsattr`
 
 Listar atributos do arquivo:
