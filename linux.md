@@ -1589,6 +1589,12 @@ Cria backup na hora de efetivar as alterações & alterações em lote:
 grep -rl '<pattern>' | xargs sed -Ei'.bak' '<pattern>'
 ```
 
+Excluir a última linha de um arquivo:
+
+```sh
+sed "$(wc -l < file.txt)d" /path/file.txt
+```
+
 ### `find`
 
 Sintaxe base:
