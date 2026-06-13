@@ -3072,6 +3072,144 @@ Valores possíveis:
 
 - Não é recomendado para manutenção regular do sistema o uso recorrente desse comando
 
+### QEMU
+
+*Parâmetros usados:*
+
+- `X`: Letra do disco
+- `Y`: Número da partição
+- `<cpu>`: Tipo do CPU no QEMU
+- `<tag>`: Nome escolhida para *tag*
+
+*Opções usadas:*
+
+- `-cpu {host|<cpu>}`: Tipo do processador
+- `-nographic`: Executa em *background*
+
+Programas necessários:
+
+```sh
+[sudo] apt install qemu-system-x86 qemu-utils ovmf
+```
+
+Criar Disco Virtual (*VD*):
+
+```sh
+qemu-img create -f qcow2 /path/disk.qcow2 32G
+```
+
+#### BIOS (Legacy)
+
+Subir VM:
+
+```sh
+qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX} -boot d -cdrom /path/to/system.iso
+```
+
+Iniciar VM:
+
+```sh
+qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX}
+```
+
+#### UEFI
+
+<details>
+<summary>Recursos OVMF!</summary>
+
+- CODE: Firmware (RO)
+    - `OVMF_CODE_4M.fd`: Padrão
+    - `OVMF_CODE_4M.secboot.fd`: _Secure Boot_
+    - `OVMF_CODE_4M.secboot.strictnx.fd`: _Secure Boot_ com _Strict NX (No-Execute)_
+    - `OVMF_CODE_4M.ms.fd`: _Alias_ para `OVMF_CODE_4M.secboot.fd`
+    - `OVMF_CODE_4M.snakeoil.fd`: _Alias_ para `OVMF_CODE_4M.secboot.fd`
+- VARS: Variáveis persistentes NVRAM (RW)
+    - `OVMF_VARS_4M.fd`: Padrão (NVRAM vazia)
+    - `OVMF_VARS_4M.ms.fd`: Variáveis da Microsoft (_Secure Boot_)
+    - `OVMF_VARS_4M.snakeoil.fd`: Variáveis de teste auto-assinadas
+</details>
+
+Subir VM:
+
+```sh
+qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -drive file={/path/disk.qcow2|/dev/sdX},if=virtio -machine q35 -drive if=pflash,format=raw,readonly=on,file=/usr/share/OVMF/OVMF_CODE_4M[.secboot].fd -drive if=pflash,format=raw,readonly=off,file=$HOME/Desktop/OVMF_VARS_4M[.ms].fd
+```
+
+Iniciar VM:
+
+```sh
+qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -drive file={/path/disk.qcow2|/dev/sdX},if=virtio -machine q35 -drive if=pflash,format=raw,readonly=on,file=/usr/share/OVMF/OVMF_CODE_4M[.secboot].fd -drive if=pflash,format=raw,readonly=off,file=$HOME/Desktop/OVMF_VARS_4M[.ms].fd -boot d -cdrom /path/to/system.iso
+```
+
+*OBSERVAÇÕES:*
+
+- Crie cópias do arquivo de variáiveis para cada VM que subir
+
+#### Conexão SSH
+
+Configurar *network* entre *host* e *guest*:
+
+```sh
+qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX} -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::2222-:22
+```
+
+#### *Virtual Disk*
+
+Conectar outro VD ou um HD real:
+
+```sh
+# for qcow2 VD
+qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX} -drive file=/path/disk.qcow2,format=qcow2,if=virtio
+# for VD created by dd
+qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX} -drive file=/path/to/disk.img,format=raw,if=virtio
+# for partitions (HDD or pendrives)
+qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX} -drive file=/dev/sdXY,format=raw,if=virtio
+```
+
+#### *Sharing*
+
+Compartilhar pasta entre *host* e *guest*:
+
+```sh
+qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX} -virtfs local,path=/path/folder,mount_tag=<tag>,security_model=passthrough
+```
+
+Monte a pasta dentro da VM:
+
+```sh
+mount -o trans=virtio -t 9p <tag> /mnt
+```
+
+#### *Passthrough*
+
+Passar USB Para VM:
+
+- Listar dispositivos (*e.g.* ![lsusb-tv](./assets/lsusb-tv.png)):
+
+	```sh
+	lsusb -tv
+	```
+
+- BUS e Porta ou Endereço:
+
+	```sh
+	qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX} -usb [-device usb-{xhci|ehci},id={xhci|ehci}] -device usb-host,hostbus=<bus>,{hostport=<port>|hostaddr=<addr>}
+	```
+
+- Fornecedor e Produto:
+
+	```sh
+	qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX} -usb [-device usb-{xhci|ehci},id={xhci|ehci}] -device usb-host,vendorid=0x<vendor>,productid=0x<product>
+	```
+
+#### Clonagem
+
+Clonar VD:
+
+```sh
+qemu-img convert -pO qcow2 /path/disk.qcow2 /path/cloned.qcow2
+```
+
 ## Configurações
 
 Anotações gerais sobre procedimentos (tutoriais).
