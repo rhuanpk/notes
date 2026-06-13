@@ -3212,6 +3212,15 @@ Passar USB Para VM:
 - Exemplo de parâmetros:
 	![lsusb-tv](./assets/lsusb-tv.png)
 
+### VirtManager
+
+Instalação e configuração:
+
+1. `[sudo] apt install qemu-system bridge-utils`
+1. `[sudo] apt install --install-recommends virt-manager`
+1. `[sudo] usermod -aG libvirt rhuanpk`
+1. *Reinicie a sessão gráfica*
+
 ## Configurações
 
 Anotações gerais sobre procedimentos (tutoriais).
