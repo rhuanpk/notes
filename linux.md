@@ -3099,6 +3099,12 @@ Programas necessários:
 
 #### `qemu-img`
 
+Programas necessários:
+
+```sh
+[sudo] apt install libguestfs-tools
+```
+
 Criar VD:
 
 ```sh
@@ -3111,11 +3117,20 @@ Clonar VD:
 qemu-img convert -pO qcow2 /path/disk.qcow2 /path/cloned.qcow2
 ```
 
-Redimensionar VD:
+Redimensionamento:
 
-```sh
-qemu-img resize /path/disk.qcow2 {+|-}32G
-```
+1. Redimensionar VD (*out*):
+    ```sh
+    qemu-img resize /path/disk.qcow2 {+|-}32G
+    ```
+2. Redimensionar partição (*in*):
+    ```sh
+    growpart /dev/sdX Y
+    ```
+3. Redimensionar *filesystem* (*in*):
+    ```sh
+    resize2fs /dev/sdXY
+    ```
 
 #### BIOS (Legacy)
 
