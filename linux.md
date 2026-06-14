@@ -3099,12 +3099,6 @@ Programas necessários:
 
 #### `qemu-img`
 
-Programas necessários:
-
-```sh
-[sudo] apt install libguestfs-tools
-```
-
 Criar VD:
 
 ```sh
