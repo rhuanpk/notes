@@ -3111,6 +3111,12 @@ Clonar VD:
 qemu-img convert -pO qcow2 /path/disk.qcow2 /path/cloned.qcow2
 ```
 
+Redimensionar VD:
+
+```sh
+qemu-img resize /path/disk.qcow2 {+|-}32G
+```
+
 #### BIOS (Legacy)
 
 Subir VM:
