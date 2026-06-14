@@ -3126,6 +3126,10 @@ Redimensionamento:
     resize2fs /dev/sdXY
     ```
 
+*OBSERVAÇÕES:*
+
+- Isso só funcionará (`growpart`) se há espaços vagos depois da partição alvo, *e.g.* se for a última partição do disco
+
 #### BIOS (Legacy)
 
 Subir VM:
