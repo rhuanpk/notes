@@ -135,6 +135,57 @@ Iniciar sessão `bash` completamente zerada:
 env -i bash --norc --noprofile
 ```
 
+### `nmcli`
+
+*Parâmetros usados:*
+
+- `<ifname>`: Nome da interface de rede (*e.g.* `eth0`, `wlan0`)
+- `<ssid>`: Nome da rede WiFi (SSID/ESSID)
+- `<usernam>`: Usuário da rede WiFi
+- `<password>`: Senha da rede WiFi
+- `<connection>`: Nome da conexão (geralmente mesmo nome do `<ssid>` para *wireless* ou qualquer outro nome que faça sentido para *wired*)
+- `<certificate>`: Certificado da conexão (se aplicável)
+- `<anonymous>`: Identificação anônima da conexão (se aplicável)
+
+Listar redes WiFi dispníveis:
+
+```sh
+nmcli device wifi list [ifname <ifname>]
+```
+
+Conectar em rede simples (`WPA*`):
+
+```sh
+nmcli device wifi connect <ssid> password <password> [ifname <ifname>]
+```
+
+Conectar em rede empresarial (*enterprise* `WPA*-EAP`):
+
+```sh
+nmcli connection add type wifi connection-name <connection> ssid <ssid> [ifname <ifname>]
+nmcli connection edit id <connection>
+nmcli> set ipv4.method auto
+nmcli> set wifi-sec.key-mgmt wpa-eap
+nmcli> set 802-1x.eap peap
+nmcli> set 802-1x.phase2-auth mschapv2
+nmcli> set 802-1x.identity <username>
+nmcli> set 802-1x.password <password>
+nmcli> set 802-1x.ca-cert <certificate>
+nmcli> set 802-1x.anonymous-identity <anonymous>
+nmcli> save
+nmcli> activate
+```
+
+*OBSERVAÇÕES:*
+
+- `<connection>` pode ser literalmente qualquer nome e serve somente para referenciar a configuração de alguma conexão. Acontece que os gerenciadores de rede geralmente definir esse valor o mesmo nome do **SSID** (que é o nome da rede *WiFi*) de forma automática, porém, `<connection>` pode ser qualquer coisa
+
+Simplesmente trocar de rede:
+
+```sh
+nmcli device wifi connect <ssid>
+```
+
 ### `ip`
 
 Verificar as interfaces de redes com saida formatada e "highlightada" (*pretty*):
