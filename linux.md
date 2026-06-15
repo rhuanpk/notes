@@ -146,6 +146,7 @@ env -i bash --norc --noprofile
 - `<connection>`: Nome da conexão (geralmente mesmo nome do `<ssid>` para *wireless* ou qualquer outro nome que faça sentido para *wired*)
 - `<certificate>`: Certificado da conexão (se aplicável)
 - `<anonymous>`: Identificação anônima da conexão (se aplicável)
+- `<vpn>`: Tipo da VPN
 
 Listar redes WiFi dispníveis:
 
@@ -185,6 +186,19 @@ Simplesmente trocar de rede:
 ```sh
 nmcli device wifi connect <ssid>
 ```
+
+#### VPN
+
+Adicionar (configurar) conexão VPN:
+
+```sh
+nmcli connection import type <vpn> file /path/vpn.conf
+```
+
+*OBSERVAÇÕES:*
+
+- Depois de configurado, basta se conectar com `nmtui-connect`
+- Para algumas VPNs será necessário instaler pacote eespecíficos (`network-manager-*`)
 
 ### `ip`
 
