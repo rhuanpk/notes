@@ -135,89 +135,6 @@ Iniciar sessão `bash` completamente zerada:
 env -i bash --norc --noprofile
 ```
 
-### `nmcli`
-
-*Parâmetros usados:*
-
-- `<ifname>`: Nome da interface de rede (*e.g.* `eth0`, `wlan0`)
-- `<ssid>`: Nome da rede WiFi (SSID/ESSID)
-- `<usernam>`: Usuário da rede WiFi
-- `<password>`: Senha da rede WiFi
-- `<connection>`: Nome da conexão (geralmente mesmo nome do `<ssid>` para *wireless* ou qualquer outro nome que faça sentido para *wired*)
-- `<certificate>`: Certificado da conexão (se aplicável)
-- `<anonymous>`: Identificação anônima da conexão (se aplicável)
-- `<vpn>`: Tipo da VPN
-
-Listar redes WiFi dispníveis:
-
-```sh
-nmcli device wifi list [ifname <ifname>]
-```
-
-Conectar em rede simples (`WPA*`):
-
-```sh
-nmcli device wifi connect <ssid> password <password> [ifname <ifname>]
-```
-
-Conectar em rede empresarial (*enterprise* `WPA*-EAP`):
-
-```sh
-nmcli connection add type wifi connection-name <connection> ssid <ssid> [ifname <ifname>]
-nmcli connection edit id <connection>
-nmcli> set ipv4.method auto
-nmcli> set wifi-sec.key-mgmt wpa-eap
-nmcli> set 802-1x.eap peap
-nmcli> set 802-1x.phase2-auth mschapv2
-nmcli> set 802-1x.identity <username>
-nmcli> set 802-1x.password <password>
-nmcli> set 802-1x.ca-cert <certificate>
-nmcli> set 802-1x.anonymous-identity <anonymous>
-nmcli> save
-nmcli> activate
-```
-
-*OBSERVAÇÕES:*
-
-- `<connection>` pode ser literalmente qualquer nome e serve somente para referenciar a configuração de alguma conexão. Acontece que os gerenciadores de rede geralmente definir esse valor o mesmo nome do **SSID** (que é o nome da rede *WiFi*) de forma automática, porém, `<connection>` pode ser qualquer coisa
-
-Simplesmente trocar de rede:
-
-```sh
-nmcli device wifi connect <ssid>
-```
-
-#### VPN
-
-Adicionar (configurar) conexão VPN:
-
-```sh
-nmcli connection import type <vpn> file /path/vpn.conf
-```
-
-*OBSERVAÇÕES:*
-
-- Depois de configurado, basta se conectar com `nmtui-connect`
-- Para algumas VPNs será necessário instaler pacote eespecíficos (`network-manager-*`)
-
-### `ip`
-
-Verificar as interfaces de redes com saida formatada e "highlightada" (*pretty*):
-
-```sh
-ip -br -c a
-```
-
-Verificar qual interface de rede está se comunicando com a *internet*:
-
-```sh
-ip route
-```
-
-*OBSERVAÇÕES:*
-
-- Caso esteja conectado a *internet* em mais de uma interface de rede ao mesmo tempo, pode ser que tenha mais de uma definida como `default`, nesse caso, a interface com **menor** valor de `metric` é a saída real
-
 ### `hostname`
 
 Saber hostname:
@@ -1958,6 +1875,24 @@ XML:
 curl [-H 'content-type: application/xml'] -d '<root><element>value</element></root>' <url>
 ```
 
+### `ip`
+
+Verificar as interfaces de redes com saida formatada e "highlightada" (*pretty*):
+
+```sh
+ip -br -c a
+```
+
+Verificar qual interface de rede está se comunicando com a *internet*:
+
+```sh
+ip route
+```
+
+*OBSERVAÇÕES:*
+
+- Caso esteja conectado a *internet* em mais de uma interface de rede ao mesmo tempo, pode ser que tenha mais de uma definida como `default`, nesse caso, a interface com **menor** valor de `metric` é a saída real
+
 ### `nslookup`
 
 *Parâmetros usados:*
@@ -1968,20 +1903,6 @@ Resolver *hostnames*/domínios:
 
 ```sh
 nslookup [-type=PTR] <host>
-```
-
-### `arp-scan`
-
-Programas necessários:
-
-```sh
-[sudo] apt install arp-scan
-```
-
-Descobrir *ips* conectados na rede local:
-
-```sh
-[sudo] arp-scan --localnet
 ```
 
 ### `dig`
@@ -2025,6 +1946,85 @@ dig [+short] [@<dns>] -x <ip>
 
 - [Content Base](https://www.certificacaolinux.com.br/comando-linux-dig/)
 - [Record Types](https://www.cloudflare.com/pt-br/learning/dns/dns-records/)
+
+### `arp-scan`
+
+Programas necessários:
+
+```sh
+[sudo] apt install arp-scan
+```
+
+Descobrir *ips* conectados na rede local:
+
+```sh
+[sudo] arp-scan --localnet
+```
+
+### `nmcli`
+
+*Parâmetros usados:*
+
+- `<ifname>`: Nome da interface de rede (*e.g.* `eth0`, `wlan0`)
+- `<ssid>`: Nome da rede WiFi (SSID/ESSID)
+- `<usernam>`: Usuário da rede WiFi
+- `<password>`: Senha da rede WiFi
+- `<connection>`: Nome da conexão (geralmente mesmo nome do `<ssid>` para *wireless* ou qualquer outro nome que faça sentido para *wired*)
+- `<certificate>`: Certificado da conexão (se aplicável)
+- `<anonymous>`: Identificação anônima da conexão (se aplicável)
+- `<vpn>`: Tipo da VPN
+
+Listar redes WiFi dispníveis:
+
+```sh
+nmcli device wifi list [ifname <ifname>]
+```
+
+Conectar em rede simples (`WPA*`):
+
+```sh
+nmcli device wifi connect <ssid> password <password> [ifname <ifname>]
+```
+
+Conectar em rede empresarial (*enterprise* `WPA*-EAP`):
+
+```sh
+nmcli connection add type wifi connection-name <connection> ssid <ssid> [ifname <ifname>]
+nmcli connection edit id <connection>
+nmcli> set ipv4.method auto
+nmcli> set wifi-sec.key-mgmt wpa-eap
+nmcli> set 802-1x.eap peap
+nmcli> set 802-1x.phase2-auth mschapv2
+nmcli> set 802-1x.identity <username>
+nmcli> set 802-1x.password <password>
+nmcli> set 802-1x.ca-cert <certificate>
+nmcli> set 802-1x.anonymous-identity <anonymous>
+nmcli> save
+nmcli> activate
+```
+
+*OBSERVAÇÕES:*
+
+- `<connection>` pode ser literalmente qualquer nome e serve somente para referenciar a configuração de alguma conexão. Acontece que os gerenciadores de rede geralmente definir esse valor o mesmo nome do **SSID** (que é o nome da rede *WiFi*) de forma automática, porém, `<connection>` pode ser qualquer coisa
+
+Simplesmente trocar de rede:
+
+```sh
+nmcli device wifi connect <ssid>
+```
+
+#### VPN
+
+Adicionar (configurar) conexão VPN:
+
+```sh
+nmcli connection import type <vpn> file /path/vpn.conf
+```
+
+*OBSERVAÇÕES:*
+
+- Depois de configurado, basta se conectar com `nmtui-connect`
+- Para algumas VPNs será necessário instaler pacote eespecíficos (`network-manager-*`)
 
 ### `history`
 
