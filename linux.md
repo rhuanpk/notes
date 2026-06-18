@@ -1947,6 +1947,31 @@ dig [+short] [@<dns>] -x <ip>
 - [Content Base](https://www.certificacaolinux.com.br/comando-linux-dig/)
 - [Record Types](https://www.cloudflare.com/pt-br/learning/dns/dns-records/)
 
+### `nmap`
+
+*Parâmetros usados:*
+
+- `<ip>`: Endereço IP do dispositivo (local ou externo)
+
+Programas necessários:
+
+```sh
+[sudo] apt install nmap
+```
+
+Descobrir IPs conectados na minha rede:
+
+1. Saiba primeiro meu próprio ID:
+	`ip address`
+1. Coloque no `nmap`:
+	`[sudo] nmap -sA <ip>/24`
+
+Descobrir quais portas estão sendo usadas por qual serviço no *host*:
+
+```sh
+[sudo] nmap -sV <ip>
+```
+
 ### `arp-scan`
 
 Programas necessários:
