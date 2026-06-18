@@ -2637,6 +2637,14 @@ Recuperar os arquivos:
 [sudo] icat -o <start> /dev/sdX <inode> > /tmp/recover.txt
 ```
 
+### `sha256sum`
+
+Descobrir o *hash* de algum arquivo:
+
+```sh
+sha256sum /path/file.txt
+```
+
 ### `ncal`
 
 *Parâmetros usados:*
