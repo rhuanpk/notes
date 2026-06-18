@@ -3324,7 +3324,7 @@ Redimensionamento:
 Subir VM:
 
 ```sh
-qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX} -boot d -cdrom /path/to/system.iso
+qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX} -boot d -cdrom /path/system.iso
 ```
 
 Iniciar VM:
@@ -3359,7 +3359,7 @@ qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -drive file={/path/disk.qcow2|/dev
 Iniciar VM:
 
 ```sh
-qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -drive file={/path/disk.qcow2|/dev/sdX},if=virtio -machine q35 -drive if=pflash,format=raw,readonly=on,file=/usr/share/OVMF/OVMF_CODE_4M[.secboot].fd -drive if=pflash,format=raw,readonly=off,file=$HOME/Desktop/OVMF_VARS_4M[.ms].fd -boot d -cdrom /path/to/system.iso
+qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -drive file={/path/disk.qcow2|/dev/sdX},if=virtio -machine q35 -drive if=pflash,format=raw,readonly=on,file=/usr/share/OVMF/OVMF_CODE_4M[.secboot].fd -drive if=pflash,format=raw,readonly=off,file=$HOME/Desktop/OVMF_VARS_4M[.ms].fd -boot d -cdrom /path/system.iso
 ```
 
 *OBSERVAÇÕES:*
@@ -3382,7 +3382,7 @@ Conectar outro VD ou um HD real:
 # for qcow2 VD
 qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX} -drive file=/path/disk.qcow2,format=qcow2,if=virtio
 # for VD created by dd
-qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX} -drive file=/path/to/disk.img,format=raw,if=virtio
+qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX} -drive file=/path/disk.img,format=raw,if=virtio
 # for partitions (HDD or pendrives)
 qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX} -drive file=/dev/sdXY,format=raw,if=virtio
 ```
