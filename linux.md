@@ -2572,6 +2572,35 @@ rsync -auhv --include=.files-* --exclude={file1,folder2,.*} --exclude=*.bak /abs
 - Por *default*, caso utilize o *rsync* com os mesmos *paths* de origem e destino, ele simplesmente faz a sincronia dos arquivos (copia somente oque foi alterado, ou seja, o que há de novo) e preserva do destino os que já foram excluídos da fonte (ver opção `--delete`)
 - Opção `--exclude` é única para cada arquivo que deseja não sincronizar?
 
+### `shred`
+
+*Parâmetros usados:*
+
+- `<count>`: Quantidade de vezes de execução
+
+*Opções usadas:*
+
+- `-v`: Mais verbosidade na saída
+- `-n`: Número de vezes que passará sobrescrevendo com conteúdo randômico
+- `-z`: Sobrescrever com zeros no final do procedimento
+- `-u`: Remove o arquivo no final do procedimento
+
+Sobrescrever o bloco (apagar o arquivo):
+
+```sh
+shred [-v|-z|-u|-n <count>] /path/file.txt
+```
+
+Alias de exemplo:
+
+```sh
+alias rms='shred -zuvn 10'
+```
+
+*OBSERVAÇÕES:*
+
+- Por padrão o comando `shred` sobrescreve o conteúdo do blocl 3x com conteúdo randômico
+
 ### `ncal`
 
 *Parâmetros usados:*
@@ -3380,13 +3409,13 @@ renice +5 [-p] <pid>[ ...]
 
 Alterar o valor de *nice* de todos os procesos de um usuário:
 
-```bash
+```sh
 renice +9 -u <user>[ ...]
 ```
 
 Alterar o valor de *nice* de todos os procesos de um grupo:
 
-```bash
+```sh
 renice +9 -g <group>[ ...]
 ```
 
