@@ -2645,6 +2645,14 @@ Descobrir o *hash* de algum arquivo:
 sha256sum /path/file.txt
 ```
 
+#### `md5sum`
+
+Descobrir o *hash* de algum arquivo:
+
+```sh
+md5sum /path/file.txt
+```
+
 ### `ncal`
 
 *Parâmetros usados:*
