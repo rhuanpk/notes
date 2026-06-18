@@ -3726,6 +3726,22 @@ Outra forma seria desinstalar o *pinentry* na qual NÃO deseja mais a utilizar:
 [sudo] apt remove pinentry-gnome
 ```
 
+### NetworkManager
+
+Configurações do NetworkManager no sistema.
+
+#### Troubleshooting
+
+Se o `dmesg` estiver acusando `firmware failed to leave lps state` e/ou `failed to send h2c command`, desabilite o *power save*:
+
+```sh
+echo $'[connection]\nwifi.powersave = 2' | [sudo] tee /etc/NetworkManager/conf.d/powersaver.conf && [sudo] systemctl restart NetworkManager.service
+```
+
+*OBSERVAÇÕES:*
+
+- Caso já exista algum arquivo de configuração dentro de `/etc/NetworkManager/conf.d/`, apenas troque o parâmetro da configuração `wifi.powersave` para `2`
+
 ### Fonts
 
 Configuração de fontes no sistema.
