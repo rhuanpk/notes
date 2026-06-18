@@ -3535,6 +3535,26 @@ Remover metadados de imagens:
 mogrify -strip /path/folder/*.png
 ```
 
+#### *Poppler*
+
+Programas necessários:
+
+```sh
+[sudo] apt install poppler-utils
+```
+
+##### `pdftoppm`
+
+*PDF to IMAGE*:
+
+```sh
+# one to one
+pdftoppm -png /path/file.pdf /path/file.pdf
+
+# multiples, one to one
+find /path/folder -maxdepth 1 -type f -name -name '*.pdf' -exec pdftoppm -png '{}' '{}' \;
+```
+
 ## Configurações
 
 Anotações gerais sobre procedimentos (tutoriais).
