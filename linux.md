@@ -3628,6 +3628,20 @@ ffmpeg -i /path/video.mkv -codec copy /path/video.mp4
 ffmpeg -i /path/video.mp4 /path/image.gif
 ```
 
+#### *MKVToolNix*
+
+Programas necessários:
+
+```sh
+[sudo] apt install mkvtoolnix
+```
+
+Mesclar arquivos MP4 (depois é necessário converter de volta para MP4):
+
+```sh
+mkvmerge -o final.mp4 video0.mp4 \+ video1.mp4
+```
+
 ## Configurações
 
 Anotações gerais sobre procedimentos (tutoriais).
