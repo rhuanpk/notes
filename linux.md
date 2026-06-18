@@ -2601,6 +2601,42 @@ alias rms='shred -zuvn 10'
 
 - Por padrão o comando `shred` sobrescreve o conteúdo do blocl 3x com conteúdo randômico
 
+### `sleuthkit`
+
+*Parâmetros usados:*
+
+- `X`: Letra do disco
+- `<start>`: Número do bloco de *bits* inicial
+- `<inode>`: *Inode* do arquivo no sistema
+
+Verificar partições e seus blocos:
+
+```sh
+[sudo] mmls /dev/sdX
+```
+
+Verificar tipo de tabela de partição:
+
+```sh
+[sudo] mmstat /dev/sdX
+```
+
+Verificar todos os arquivo de determinado disco a partir do bloco:
+
+```sh
+[sudo] fls -o <start> /dev/sdX
+```
+
+*OBSERVAÇÕES:*
+
+- Os marcados com "**\***" são arquivos a serem recuperados
+
+Recuperar os arquivos:
+
+```sh
+[sudo] icat -o <start> /dev/sdX <inode> > /tmp/recover.txt
+```
+
 ### `ncal`
 
 *Parâmetros usados:*
