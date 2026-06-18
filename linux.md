@@ -3555,6 +3555,26 @@ pdftoppm -png /path/file.pdf /path/file.pdf
 find /path/folder -maxdepth 1 -type f -name -name '*.pdf' -exec pdftoppm -png '{}' '{}' \;
 ```
 
+#### *FFmpeg*
+
+Programas necessários:
+
+```sh
+[sudo] apt install ffmpeg
+```
+
+*MKV to MP4*:
+
+```sh
+ffmpeg -i /path/video.mkv -codec copy /path/video.mp4
+```
+
+*VIDEO to GIF*:
+
+```sh
+ffmpeg -i /path/video.mp4 /path/image.gif
+```
+
 ## Configurações
 
 Anotações gerais sobre procedimentos (tutoriais).
