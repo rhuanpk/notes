@@ -2735,6 +2735,20 @@ Verificar metadados de imagens:
 identify -verbose /path/image.png | grep exif
 ```
 
+### `mogrify`
+
+Programas necessários:
+
+```sh
+[sudo] apt install imagemagick
+```
+
+Remover metadados de imagens:
+
+```sh
+mogrify -strip /path/folder/*.png
+```
+
 ### `ffmpeg`
 
 *Parâmetros usados:*
@@ -2750,6 +2764,51 @@ ffmpeg -i /path/video.mp4 -filter:v "setpts=<speed>*PTS" -an /path/output.mp4
 *LINKS:*
 
 - [Blog Viva o Linux](https://www.vivaolinux.com.br/dica/Como-aumentar-ou-reduzir-a-velocidade-de-um-video-via-linha-de-comando)
+
+### `imgp`
+
+Nomenclatura de `HxV`:
+
+- *Horizontal x Vertical*
+- *X Axis x Y Axis*
+- *Width x Height*
+
+*Parâmetros usados:*
+
+- `<resolution>`: Representação de resolução em `HxV` ou `%`
+- `<quality>`: Valor da `%` de qualidade da imagem
+
+*Opções usadas:*
+
+- `-w`: Sobrescreve a imagem original
+- `-r`: Aplica recursividade
+- `-n`: Permite a imagem ser escala para dimensões maiores que 100%
+- `-x <resolution>`: Adapta a imagem para a resolução especificada
+- `-q <quality>`: Especifica a qualidade final da imagem (para imagens JPEG)
+
+Programas necessários:
+
+```sh
+[sudo] apt install imgp
+```
+
+Adapta a imagem para a resolução preservando a altura:
+
+```sh
+imgp [-w] -rnx 1366x768 -q 95 /path/folder/ image.png
+```
+
+Adapta a imagem apenas na largura e especifica a alatura:
+
+```sh
+imgp [-w] -rnx 0x250 -q 95 /path/folder/ image.png
+```
+
+Escala a imagem para 150%:
+
+```sh
+imgp [-w] -rnx 150 -q 95 /path/folder/ image.png
+```
 
 ### `tiv`
 
@@ -3527,12 +3586,6 @@ mogrify -format pdf /path/image.png
 
 # multiples, one to one
 mogrify -format pdf /path/folder/*.png
-```
-
-Remover metadados de imagens:
-
-```sh
-mogrify -strip /path/folder/*.png
 ```
 
 #### *Poppler*
