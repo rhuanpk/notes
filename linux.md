@@ -3475,6 +3475,56 @@ renice +9 -g <group>[ ...]
 
 - As opções de PID, usuário e grupo podem ser combinadas
 
+### *ImageMagick*
+
+As converções funcionaram entre tipos de imagem: *JPG to PNG*, *PNG to JPG* e também *PDF to IMAGE*.
+
+Programas necessários:
+
+```sh
+[sudo] apt install imagemagick
+```
+
+#### `convert`
+
+*IMAGE to PDF*:
+
+```sh
+# one to one
+convert /path/image.png /path/out.pdf
+
+# many to one
+convert /path/folder/*.png /path/out.pdf
+
+# multiples, one to one
+for file in /path/folder/*.png; do convert "$file" "${file%.*}.pdf"; done
+```
+#### `mogrify`
+
+*IMAGE to PDF*:
+
+```sh
+# one to one
+mogrify -format pdf /path/image.png
+
+# multiples, one to one
+mogrify -format pdf /path/folder/*.png
+```
+
+Remover metadados de imagens:
+
+```sh
+mogrify -strip /path/folder/*.png
+```
+
+#### `identify`
+
+Verificar metadados de imagens:
+
+```sh
+identify -verbose /path/image.png | grep exif
+```
+
 ## Configurações
 
 Anotações gerais sobre procedimentos (tutoriais).
@@ -3900,7 +3950,7 @@ Outra forma seria desinstalar o *pinentry* na qual NÃO deseja mais a utilizar:
 
 Configurações do NetworkManager no sistema.
 
-#### Troubleshooting
+#### *Troubleshooting*
 
 Se o `dmesg` estiver acusando `firmware failed to leave lps state` e/ou `failed to send h2c command`, desabilite o *power save*:
 
@@ -3911,6 +3961,18 @@ echo $'[connection]\nwifi.powersave = 2' | [sudo] tee /etc/NetworkManager/conf.d
 *OBSERVAÇÕES:*
 
 - Caso já exista algum arquivo de configuração dentro de `/etc/NetworkManager/conf.d/`, apenas troque o parâmetro da configuração `wifi.powersave` para `2`
+
+### *ImageMagick*
+
+Configurações do ImageMagick no sistema.
+
+#### *Troubleshooting*
+
+Se houver erro de não permissão devido a policitas para PDFs:
+
+```sh
+sed -Ei 's,(<policy domain="coder" rights=").*(" pattern="PDF" />),\1read|write\2,' /etc/ImageMagick-?/policy.xml
+```
 
 ### Fonts
 
