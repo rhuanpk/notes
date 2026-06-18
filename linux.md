@@ -1962,9 +1962,13 @@ Programas necessários:
 Descobrir IPs conectados na minha rede:
 
 1. Saiba primeiro meu próprio ID:
-	`ip address`
+	```sh
+	ip address
+	```
 1. Coloque no `nmap`:
-	`[sudo] nmap -sA <ip>/24`
+	```sh
+	[sudo] nmap -sA <ip>/24
+	```
 
 Descobrir quais portas estão sendo usadas por qual serviço no *host*:
 
