@@ -3334,6 +3334,66 @@ Instalação e configuração:
 1. `[sudo] usermod -aG libvirt rhuanpk`
 1. *Reinicie a sessão gráfica*
 
+### *Nice*
+
+Toda a prioridade de tempo de CPU é feito com base em valor de *nice* (legal)... quanto mais "legal" um processo é, mais ele disponibiliza tempo de CPU para outros processos, ou seja, menos prioritário é este processo (e o contrário também é verdadeiro).
+
+Os valores de *nice* vareiam de:
+
+- `-20` (processo com **MAIOR prioridade**)
+
+até
+
+- `+19` (processo com **MENOR prioridade**)
+
+*Parâmetros usados:*
+
+- `<pid>`: ID do processo no sistema
+- `<user>`: Nome do usuário no sistema
+- `<group>`: Nome do grupo no sistema
+
+#### `nice`
+
+Comando *nice* especifica o valor de *nice* de um processo no seu lançamento.
+
+Sem valor de *nice* especificado, por padrão é atribuido `+10`:
+
+```sh
+nice [sudo] apt update &
+```
+
+Especifique o valor de *nice* com a *flag* `-n`:
+
+```sh
+nice -n -15 yes | docker system prune
+```
+
+#### `renice`
+
+Comando *renice* altera o valor de *nice* de um processo já em execução.
+
+Alterar o valor de *nice* de um ou vários processos:
+
+```sh
+renice +5 [-p] <pid>[ ...]
+```
+
+Alterar o valor de *nice* de todos os procesos de um usuário:
+
+```bash
+renice +9 -u <user>[ ...]
+```
+
+Alterar o valor de *nice* de todos os procesos de um grupo:
+
+```bash
+renice +9 -g <group>[ ...]
+```
+
+*OBSERVAÇÕES:*
+
+- As opções de PID, usuário e grupo podem ser combinadas
+
 ## Configurações
 
 Anotações gerais sobre procedimentos (tutoriais).
