@@ -2721,6 +2721,20 @@ Formatando a saída:
 slop -f '%x %y %w %h %g %i'
 ```
 
+### `identify`
+
+Programas necessários:
+
+```sh
+[sudo] apt install imagemagick
+```
+
+Verificar metadados de imagens:
+
+```sh
+identify -verbose /path/image.png | grep exif
+```
+
 ### `ffmpeg`
 
 *Parâmetros usados:*
@@ -3475,7 +3489,11 @@ renice +9 -g <group>[ ...]
 
 - As opções de PID, usuário e grupo podem ser combinadas
 
-### *ImageMagick*
+### Conversões
+
+Conversões entre arquivos e de arquivos.
+
+#### *ImageMagick*
 
 As converções funcionaram entre tipos de imagem: *JPG to PNG*, *PNG to JPG* e também *PDF to IMAGE*.
 
@@ -3485,7 +3503,7 @@ Programas necessários:
 [sudo] apt install imagemagick
 ```
 
-#### `convert`
+##### `convert`
 
 *IMAGE to PDF*:
 
@@ -3499,7 +3517,7 @@ convert /path/folder/*.png /path/out.pdf
 # multiples, one to one
 for file in /path/folder/*.png; do convert "$file" "${file%.*}.pdf"; done
 ```
-#### `mogrify`
+##### `mogrify`
 
 *IMAGE to PDF*:
 
@@ -3515,14 +3533,6 @@ Remover metadados de imagens:
 
 ```sh
 mogrify -strip /path/folder/*.png
-```
-
-#### `identify`
-
-Verificar metadados de imagens:
-
-```sh
-identify -verbose /path/image.png | grep exif
 ```
 
 ## Configurações
