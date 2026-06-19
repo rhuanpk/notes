@@ -2531,6 +2531,12 @@ Coloca linhas lado a lado:
 paste <(<command>) <(<command>)
 ```
 
+Saída de comandos lado a lado:
+
+```sh
+paste <(<command>) <(<command>) | column -ts $'\t'
+```
+
 ### `rsync`
 
 *Parâmetros usados:*
