@@ -3721,6 +3721,18 @@ Alguns *workarounds* são possíveis para esses cenários:
 
 - Para a abordagem com `expand_aliases` funcionar, terá que tirar a validação de *shell* não interativo no início do seu `.bashrc` (a não ser que carregue *alises* de outro arquivo?)
 
+### *Function*
+
+*Parâmetros usados:*
+
+- `<function>`: Nome da função
+
+Execute com `bash -c` e `declare -f`:
+
+```sh
+sudo bash -c "$(declare -f <function>); <function> [args]"
+```
+
 ### Usuários
 
 *Parâmetros usados:*
