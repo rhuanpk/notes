@@ -2842,6 +2842,54 @@ gifwrap -f /path/image.gif
 
 - Deixe o menor *zoom* possível do terminal
 
+#### `qrencode`
+
+*Opções usadas:*
+
+- `-v`: Versão do tipo de *QR Code* (quanto maior, mais *pixels*)
+- `-s`: Tamanho dos pixels do *QR Code*
+- `-l`: Aumenta a quantidade de *pixels* do *QR Code*
+- `-t`: Tipo do arquivo de saída
+- `-m`: Largura das bordas da imagem
+- `-o`: Caminho do *QR Code* gerado
+
+Programas necessários:
+
+```sh
+[sudo] apt install qrencode
+```
+
+Gerar *QR Code*:
+
+```sh
+qrencode [-v 5] [-s 10] [-l H] -[t {PNG|SVG}] [-m 3] -o /path/qrcode.png {<url>|<email>|<phone>|<string>}
+```
+
+#### `zbar*`
+
+*Opções usadas:*
+
+- `-q`: Silencia a saída
+- `--raw`: Mostra somente o contéudo *raw* *QR Code*
+
+Programas necessários:
+
+```sh
+[sudo] apt install zbar-tools
+```
+
+Ler *QR Code* de uma imagem:
+
+```sh
+zbarimg [--raw] [-q] /path/qrcode.png
+```
+
+Ler *QR Code* da câmera:
+
+```sh
+zbarcam [--raw] [-q]
+```
+
 ### `gocr`
 
 Programas necessários:
