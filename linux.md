@@ -3701,6 +3701,26 @@ Variável PS1:
 - `\W`: Diretório de trabalho atual com o nome base (último segmento) apenas
 - `$(__git_ps1 ["%s"])`: Branch atual caso esteja em um repositório Git, se não, não exibe nada
 
+### *Alias*
+
+Configurações de Alias no sistema.
+
+#### *Scripts*
+
+*Alises* dentro de *shell scrips* não são possíveis pois quando um script é executado, não é carregado nenhum ambiente de *shell* (inclusive o atual), portanto o *shell* não reconhece *aliases*.
+
+Alguns *workarounds* são possíveis para esses cenários:
+
+- `expand_aliases`
+	1. `shopt -s expand_aliases`
+	1. `. ~/.bashrc`
+- `BASH_ENV`
+	1. `BASH_ENV=/path/aliases <command>`
+
+*OBSERVAÇÕES:*
+
+- Para a abordagem com `expand_aliases` funcionar, terá que tirar a validação de *shell* não interativo no início do seu `.bashrc` (a não ser que carregue *alises* de outro arquivo?)
+
 ### Usuários
 
 *Parâmetros usados:*
