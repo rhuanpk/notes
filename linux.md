@@ -1479,6 +1479,28 @@ Recortar última linha de um arquivo para o mesmo arquivo:
 echo $(tail -n 1 /path/file.txt) > /path/file.txt
 ```
 
+### `unset`
+
+Variáveis:
+
+```sh
+unset <variable>
+```
+
+Funções:
+
+```sh
+unset -f <function>
+```
+
+### `unalias`
+
+Aliases:
+
+```sh
+unalias <alias>
+```
+
 ### `ls`
 
 *Opções usadas:*
@@ -2842,7 +2864,7 @@ gifwrap -f /path/image.gif
 
 - Deixe o menor *zoom* possível do terminal
 
-#### `qrencode`
+### `qrencode`
 
 *Opções usadas:*
 
@@ -2865,7 +2887,7 @@ Gerar *QR Code*:
 qrencode [-v 5] [-s 10] [-l H] -[t {PNG|SVG}] [-m 3] -o /path/qrcode.png {<url>|<email>|<phone>|<string>}
 ```
 
-#### `zbar*`
+### `zbar*`
 
 *Opções usadas:*
 
