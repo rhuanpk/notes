@@ -1585,6 +1585,7 @@ read -re -t 5 -a ARRAY -p 'Your name: ' -i 'Tux'
 - `<lines>`: Inteiro de quantidade de linhas
 - `<pattern>`: *String* de RegEx
 - `<path>`: Caminho para arquivo ou pasta
+- `<command>`: Comando final completo
 
 *Opções usadas:*
 
@@ -1624,6 +1625,18 @@ Exemplos de exclusão:
 *OBSERVAÇÕES:*
 
 - As exclusões irão excluir todos os arquivos e(ou) diretórios independente do nível do lugar que o grep estiver percorrendo que casar com a cadeia do `exclude` passado a partir da pasta *root*
+
+Pegar a(s) linha(s) mais longa(s) de um arquivo:
+
+```sh
+grep -P "^.{$(wc -L < /path/file.txt)}$" /path/file.txt
+```
+
+Pegar a(s) linha(s) mais longa(s) de um comando:
+
+```sh
+<command> | grep -P "^.{$(<command> | wc -L)}$"
+```
 
 ### `sed`
 
