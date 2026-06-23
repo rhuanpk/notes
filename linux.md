@@ -2526,6 +2526,15 @@ Diferença entre dois arquivos:
 
 - É possível misturar *strings* e arquivos
 
+#### Cabeçalho
+
+Como ler o cabeçado de um comando `diff`? O cabeçalho de exemplo `@@ -37,6 +35,8 @@` significa:
+
+- `-37,6`: Indica que as alterações começam na linha 37 do arquivo original e se estende por 6 linhas
+- `+35,8`: Indica que as linhas adicionadas começam na linha 35 do novo arquivo e se estendem por 8 linhas
+
+Ou seja, as linhas citadas na verdade não começam desde a primeira linha alterada mas da primeira linha mostrada de todo o contexto e o restante das linhas são o restante das linhas do contexto e não quantas linhas mais foram alteradas.
+
 ### `column`
 
 *Parâmetros usados:*
