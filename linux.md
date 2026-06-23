@@ -822,32 +822,32 @@ systemctl thaw '*'
 *Opções usadas:*
 
 - <details>
-    <summary><code>-p {&lt;priority&gt;|&lt;code&gt;}</code>: Filtra por prioridade</summary>
+	<summary><code>-p {&lt;priority&gt;|&lt;code&gt;}</code>: Filtra por prioridade</summary>
 
-    - `emerg` (`0`): O sistema está inutilizável
-    - `alert` (`1`): Medidas devem ser tomadas imediatamente
-    - `crit` (`2`): Condições críticas
-    - `error` (`3`): Condições de erro
-    - `warning` (`4`): Condições de aviso
-    - `notice` (`5`): Condição normal, mas significativa
-    - `info` (`6`): Mensagem informativa
-    - `debug` (`7`): Mensagens que são úteis para depuração
+	- `emerg` (`0`): O sistema está inutilizável
+	- `alert` (`1`): Medidas devem ser tomadas imediatamente
+	- `crit` (`2`): Condições críticas
+	- `error` (`3`): Condições de erro
+	- `warning` (`4`): Condições de aviso
+	- `notice` (`5`): Condição normal, mas significativa
+	- `info` (`6`): Mensagem informativa
+	- `debug` (`7`): Mensagens que são úteis para depuração
 - <details>
-    <summary><code>-o &lt;format&gt;</code>: Formata a saída</summary>
+	<summary><code>-o &lt;format&gt;</code>: Formata a saída</summary>
 
-    - `cat`: Inclua apenas mensagens dos *logs*
-    - `short`: Forma padrão
-    - `json`: JSON *raw*
-    - `json-pretty`: JSON indentado
-    - `verbose`: *Log* completo
+	- `cat`: Inclua apenas mensagens dos *logs*
+	- `short`: Forma padrão
+	- `json`: JSON *raw*
+	- `json-pretty`: JSON indentado
+	- `verbose`: *Log* completo
 - <details>
-    <summary><code>--since &lt;time&gt; [--until &lt;time&gt;]</code>: Filtra desde alguma data ou por um <i>range</i> de data</summary>
+	<summary><code>--since &lt;time&gt; [--until &lt;time&gt;]</code>: Filtra desde alguma data ou por um <i>range</i> de data</summary>
 
-    - `2021-11-23 23:02:15`
-    - `2021-05-04`
-    - `12:00`
-    - `5 hour ago, or 32 min ago`
-    - `yesterday`, `today`, `now`
+	- `2021-11-23 23:02:15`
+	- `2021-05-04`
+	- `12:00`
+	- `5 hour ago, or 32 min ago`
+	- `yesterday`, `today`, `now`
 </details>
 </details>
 </details>
@@ -3438,17 +3438,17 @@ qemu-img convert -pO qcow2 /path/disk.qcow2 /path/cloned.qcow2
 Redimensionamento:
 
 1. Redimensionar VD (*out*):
-    ```sh
-    qemu-img resize /path/disk.qcow2 {+|-}32G
-    ```
+	```sh
+	qemu-img resize /path/disk.qcow2 {+|-}32G
+	```
 2. Redimensionar partição (*in*):
-    ```sh
-    growpart /dev/sdX Y
-    ```
+	```sh
+	growpart /dev/sdX Y
+	```
 3. Redimensionar *filesystem* (*in*):
-    ```sh
-    resize2fs /dev/sdXY
-    ```
+	```sh
+	resize2fs /dev/sdXY
+	```
 
 *OBSERVAÇÕES:*
 
@@ -3474,15 +3474,15 @@ qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX}
 <summary>Recursos OVMF!</summary>
 
 - CODE: Firmware (RO)
-    - `OVMF_CODE_4M.fd`: Padrão
-    - `OVMF_CODE_4M.secboot.fd`: _Secure Boot_
-    - `OVMF_CODE_4M.secboot.strictnx.fd`: _Secure Boot_ com _Strict NX (No-Execute)_
-    - `OVMF_CODE_4M.ms.fd`: _Alias_ para `OVMF_CODE_4M.secboot.fd`
-    - `OVMF_CODE_4M.snakeoil.fd`: _Alias_ para `OVMF_CODE_4M.secboot.fd`
+	- `OVMF_CODE_4M.fd`: Padrão
+	- `OVMF_CODE_4M.secboot.fd`: _Secure Boot_
+	- `OVMF_CODE_4M.secboot.strictnx.fd`: _Secure Boot_ com _Strict NX (No-Execute)_
+	- `OVMF_CODE_4M.ms.fd`: _Alias_ para `OVMF_CODE_4M.secboot.fd`
+	- `OVMF_CODE_4M.snakeoil.fd`: _Alias_ para `OVMF_CODE_4M.secboot.fd`
 - VARS: Variáveis persistentes NVRAM (RW)
-    - `OVMF_VARS_4M.fd`: Padrão (NVRAM vazia)
-    - `OVMF_VARS_4M.ms.fd`: Variáveis da Microsoft (_Secure Boot_)
-    - `OVMF_VARS_4M.snakeoil.fd`: Variáveis de teste auto-assinadas
+	- `OVMF_VARS_4M.fd`: Padrão (NVRAM vazia)
+	- `OVMF_VARS_4M.ms.fd`: Variáveis da Microsoft (_Secure Boot_)
+	- `OVMF_VARS_4M.snakeoil.fd`: Variáveis de teste auto-assinadas
 </details>
 
 Subir VM:
@@ -3993,22 +3993,22 @@ Configurações do SSH (*client & sever*) no sistema.
 Arquivos de coniguração:
 
 - Arquivo de configuração do usuário (*client*):
-    `~/.ssh/config`
+	`~/.ssh/config`
 - Arquivo global de configuração (*client*):
-    `/etc/ssh/ssh_config`
+	`/etc/ssh/ssh_config`
 - Arquivo global de configuração (*server*):
-    `/etc/ssh/sshd_config`
+	`/etc/ssh/sshd_config`
 
 Diretórios de configuração:
 
 - Pasta de configuração do usuário (*client*):
-    `~/.ssh/`
+	`~/.ssh/`
 - Pasta global de configuração:
-    `/etc/ssh/`
+	`/etc/ssh/`
 - Pasta de configuração do usuário (*client*):
-    `/etc/ssh/ssh_config.d/`
+	`/etc/ssh/ssh_config.d/`
 - Pasta de configuração do usuário (*server*):
-    `/etc/ssh/sshd_config.d/`
+	`/etc/ssh/sshd_config.d/`
 
 Arquivos de identificação:
 
