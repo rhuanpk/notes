@@ -117,18 +117,18 @@ webfsd -dF [-4] [-p <port>] [-r <folder>]
 
 Comandos base:
 
-1. Listar todos os *plugins* e suas versões (já instalados):
-    `asdf list`
-1. Listar todos os *plugins* disponíveis (para adição):
-    `asdf plugin list all`
-1. Adicionar um *plugin*:
-    `asdf plugin add <plugin>`
-1. Instalar uma ferramenta:
-    `asdf install <plugin> {<version>|latest}`
-1. Define localmente a versão de uma ferramenta:
-    `asdf set [-u] [-p] <plugin> {<version>|latest}`
-1. Verificar a versão atual de cada ferramenta:
-    `asdf current`
+1. `asdf list`:
+	Listar todos os *plugins* e suas versões (já instalados)
+1. `asdf plugin list all`:
+	Listar todos os *plugins* disponíveis (para adição)
+1. `asdf plugin add <plugin>`:
+	Adicionar um *plugin*
+1. `asdf install <plugin> {<version>|latest}`:
+	Instalar uma ferramenta
+1. `asdf set [-u] [-p] <plugin> {<version>|latest}`:
+	Define localmente a versão de uma ferramenta
+1. `asdf current`:
+	Verificar a versão atual de cada ferramenta
 
 ## `aws`
 
@@ -140,15 +140,24 @@ Comandos base:
 
 Comandos base:
 
-- `aws configure`: configura o perfil padrão
-- `aws configure --profile <name>`: configura o perfil especificado (cria se não existir)
-- `aws configure list`: lista as configurações do perfil padrão
-- `aws configure list-profiles`: lista os nomes dos perfis configurados
-- `aws configure list --profile <name>`: lista as configuerações do perfil especificado
-- `aws configure set <key> <value>`: define o valor na variável do perfil padrão
-- `aws configure set <key> <value> --profile <name>`: define o valor na variável do perfil especificado
-- `aws configure get <key>`: pega o valor da variável específica do perfil padrão
-- `aws configure get <key> --profile <name>`: pega o valor da variável específica do perfil especificado
+- `aws configure`:
+	Configura o perfil padrão
+- `aws configure --profile <name>`:
+	Configura o perfil especificado (cria se não existir)
+- `aws configure list`:
+	Lista as configurações do perfil padrão
+- `aws configure list-profiles`:
+	Lista os nomes dos perfis configurados
+- `aws configure list --profile <name>`:
+	Lista as configuerações do perfil especificado
+- `aws configure set <key> <value>`:
+	Define o valor na variável do perfil padrão
+- `aws configure set <key> <value> --profile <name>`:
+	Define o valor na variável do perfil especificado
+- `aws configure get <key>`:
+	Pega o valor da variável específica do perfil padrão
+- `aws configure get <key> --profile <name>`:
+	Pega o valor da variável específica do perfil especificado
 
 *OBSERVAÇÕES:*
 
