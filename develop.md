@@ -2,7 +2,7 @@
 
 Anotações gerais sobre Desenvolvimento: programas e configurações.
 
-### `base64`
+## `base64`
 
 Tanto para codificar quanto para decodificar é necessário passar o dado via **arquivo** ou **STDIN**.
 
@@ -70,7 +70,7 @@ Verifique se retorna `yes`:
 loginctl user-status | grep -m1 'Linger'
 ```
 
-### `webfsd`
+## `webfsd`
 
 Servidor *web* estático leve.
 
