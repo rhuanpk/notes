@@ -2498,6 +2498,34 @@ fi
 echo "temp: $temp"
 ```
 
+### `diff`
+
+*Parâmetros usados:*
+
+- `<command>`: Comando fina completo
+
+Diferença entre duas *strings*:
+
+1.
+	```sh
+	diff [--color] 'foo' 'bar'
+	```
+
+Diferença entre dois arquivos:
+
+1.
+	```sh
+	diff [--color] /path/file1.txt /path/file2.txt
+	```
+1.
+	```sh
+	diff [--color] <(<command>) <(<command>)
+	```
+
+*OBSERVAÇÕES:*
+
+- É possível misturar *strings* e arquivos
+
 ### `column`
 
 *Parâmetros usados:*

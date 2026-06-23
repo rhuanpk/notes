@@ -67,7 +67,7 @@ Recuperar os arquivos:
 [sudo] icat -o <start> /dev/sdX <inode> > /tmp/recover.txt
 ```
 
-### Recuperação
+## Recuperação
 
 1. SE for um arquivo editável:
 	1. Pegue pid do na segunda coluna e o descritor de arquivo na quarta coluna:
