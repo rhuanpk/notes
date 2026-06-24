@@ -107,8 +107,8 @@ webfsd -dF [-4] [-p <port>] [-r <folder>]
 
 *Parâmetros usados:*
 
-- `<plugin>`: Nome da ferramenta
-- `<version>`: Versão da ferramenta
+- `<plugin>`: Nome do programa
+- `<version>`: Versão do programa
 
 *Opções usadas:*
 
@@ -124,11 +124,11 @@ Comandos base:
 1. `asdf plugin add <plugin>`:
 	Adicionar um *plugin*
 1. `asdf install <plugin> {<version>|latest}`:
-	Instalar uma ferramenta
+	Instalar um *plugin*
 1. `asdf set [-u] [-p] <plugin> {<version>|latest}`:
-	Define localmente a versão de uma ferramenta
+	Definer a versão de um *plugin*
 1. `asdf current`:
-	Verificar a versão atual de cada ferramenta
+	Verificar a versão atual de cada *plugin*
 
 ## `aws`
 
