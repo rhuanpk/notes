@@ -118,7 +118,7 @@ webfsd -dF [-4] [-p <port>] [-r <folder>]
 Comandos base:
 
 1. `asdf list`:
-	Listar todos os *plugins* e suas versões (já instalados)
+	Listar todos os *plugins* e suas versões (já instaladas)
 1. `asdf plugin list all`:
 	Listar todos os *plugins* disponíveis (para adição)
 1. `asdf plugin add <plugin>`:
