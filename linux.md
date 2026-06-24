@@ -3535,6 +3535,65 @@ Liberar apenas comandos específicos (via *sudoers*):
 <user> ALL=[NOPASSWD:]/absolute/path/command[,...]
 ```
 
+### Usuários
+
+*Parâmetros usados:*
+
+- `<user>`: Nome do usuário
+- `<group>`: Nome do grupo
+
+Adicionar **usuário** (*mod*):
+
+```sh
+adduser [<options>] <user>
+```
+
+Adicionar **usuário** (*vanilla*):
+
+1. Cria o usuário (e seus grupos):
+	```
+	useradd -m [-G <group>[,...]] <user>
+	```
+1. Define a senha do novo usuário
+	```
+	passwd <user>
+	```
+
+Remover usuário (*mod*):
+
+```sh
+deluser [<options>] <user>
+```
+
+Adicionar usuário à um ou muitos grupos:
+
+```sh
+usermod -aG <group>[,...] <user>
+```
+
+*OBSERVAÇÕES:*
+
+- Omitindo a flag `-a`, você deixará o usuário somente com os grupos especificados e todos os outros grupos serão removidos
+
+Remover usuário de um grupo:
+
+```sh
+gpasswd -d <user> <group>
+```
+
+#### Usarname
+
+Para trocar o nome de usuário no sistema:
+
+1. Troque o *login* do usuário:
+	`sudo usermod -l <new> <old>`
+
+1. Troque a *home* e passe os arquivos para o novo usuário:
+	`sudo usermod -md /home/<new> <new>`
+
+1. Troque o nome do grupo do antigo usuário:
+	`sudo groupmod -n <new> <old>`
+
 ### IP
 
 Saber IP externo:
@@ -3583,52 +3642,6 @@ Execute com `bash -c` e `declare -f`:
 
 ```sh
 sudo bash -c "$(declare -f <function>); <function> [args]"
-```
-
-### Usuários
-
-*Parâmetros usados:*
-
-- `<user>`: Nome do usuário
-- `<group>`: Nome do grupo
-
-Adicionar **usuário** (*mod*):
-
-```sh
-adduser [<options>] <user>
-```
-
-Adicionar **usuário** (*vanilla*):
-
-1. Cria o usuário (e seus grupos):
-	```
-	useradd -m [-G <group>[,...]] <user>
-	```
-1. Define a senha do novo usuário
-	```
-	passwd <user>
-	```
-
-Remover usuário (*mod*):
-
-```sh
-deluser [<options>] <user>
-```
-
-Adicionar usuário à um ou muitos grupos:
-
-```sh
-usermod -aG <group>[,...] <user>
-```
-
-*OBSERVAÇÕES:*
-
-- Omitindo a flag `-a`, você deixará o usuário somente com os grupos especificados e todos os outros grupos serão removidos
-
-Remover usuário de um grupo:
-
-```sh
-gpasswd -d <user> <group>
 ```
 
 ### Partições
