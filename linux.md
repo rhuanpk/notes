@@ -3458,6 +3458,52 @@ renice +9 -g <group>[ ...]
 
 Anotações gerais sobre procedimentos (tutoriais).
 
+### Kernel
+
+Assinar e "triggar" módulo do Kernel:
+
+1. Instalar dependências:
+	```sh
+	[sudo] apt install mokutil dkms openssl linux-headers-$(uname -r)
+	```
+1. Gerar a chave/certificado:
+	```sh
+	openssl req -new -x509 -newkey rsa:4096 -keyout <module>.priv -outform DER -out <module>.der -nodes -days 9999 -subj '/CN=<provider>/'
+	```
+1. Assine o módulo manualmente:
+	```sh
+	[sudo] /usr/src/linux-headers-$(uname -r)/scripts/sign-file sha256 <module>.priv <module>.der "$(modinfo -n <module>)"
+	```
+1. Importar o certificado manualmente:
+	```sh
+	[sudo] mokutil --import <module>.der
+	```
+1. *Reinicie o sistema*:
+	```sh
+	[sudo] shutdown -r now
+	```
+1. Verifique se o módulo foi adicionado:
+	```sh
+	cat /proc/keys | grep asymmetri
+	# or like in modprobe command
+	```
+1. Adicione o trigger no `dkms`:
+	```sh
+	echo 'SIGN_TOOL=/usr/local/bin/sign-<module>.sh' | sudo tee /etc/dkms/<module>.conf
+	```
+1. Crie o script de assinatura em `/usr/local/bin/sign-<module>.sh`:
+	```sh
+	#!/usr/bin/bash
+	private_key=<module>.priv
+	x509_cert=<module>.der
+	/usr/src/linux-headers-$1/scripts/sign-file sha256 "$private_key" "$x509_cert" "$2" || { echo "error signing module \"$2\"" >&2; exit 1; }
+	echo "signed newly-built module \"$2\"" >&2
+	```
+1. Dê permissão de execução para o script:
+	```sh
+	[sudo] chmod +x '/usr/local/bin/sign-<module>.sh'
+	```
+
 ### Sudo
 
 Manipulação do arquivo **sudoers**:
@@ -3923,48 +3969,52 @@ echo $'[connection]\nwifi.powersave = 2' | [sudo] tee /etc/NetworkManager/conf.d
 
 - Caso já exista algum arquivo de configuração dentro de `/etc/NetworkManager/conf.d/`, apenas troque o parâmetro da configuração `wifi.powersave` para `2`
 
-### Kernel
+### Bluetooth
 
-Assinar e "triggar" módulo do Kernel:
+Configurações de Bluetooth no sistema.
 
-1. Instalar dependências:
-	```sh
-	[sudo] apt install mokutil dkms openssl linux-headers-$(uname -r)
-	```
-1. Gerar a chave/certificado:
-	```sh
-	openssl req -new -x509 -newkey rsa:4096 -keyout <module>.priv -outform DER -out <module>.der -nodes -days 9999 -subj '/CN=<provider>/'
-	```
-1. Assine o módulo manualmente:
-	```sh
-	[sudo] /usr/src/linux-headers-$(uname -r)/scripts/sign-file sha256 <module>.priv <module>.der "$(modinfo -n <module>)"
-	```
-1. Importar o certificado manualmente:
-	```sh
-	[sudo] mokutil --import <module>.der
-	```
-1. *Reinicie o sistema*:
-	```sh
-	[sudo] shutdown -r now
-	```
-1. Verifique se o módulo foi adicionado:
-	```sh
-	cat /proc/keys | grep asymmetri
-	# or like in modprobe command
-	```
-1. Adicione o trigger no `dkms`:
-	```sh
-	echo 'SIGN_TOOL=/usr/local/bin/sign-<module>.sh' | sudo tee /etc/dkms/<module>.conf
-	```
-1. Crie o script de assinatura em `/usr/local/bin/sign-<module>.sh`:
-	```sh
-	#!/usr/bin/bash
-	private_key=<module>.priv
-	x509_cert=<module>.der
-	/usr/src/linux-headers-$1/scripts/sign-file sha256 "$private_key" "$x509_cert" "$2" || { echo "error signing module \"$2\"" >&2; exit 1; }
-	echo "signed newly-built module \"$2\"" >&2
-	```
-1. Dê permissão de execução para o script:
-	```sh
-	[sudo] chmod +x '/usr/local/bin/sign-<module>.sh'
-	```
+#### *GUI*
+
+Programas necessários:
+
+```sh
+[sudo] apt install blueman
+```
+
+Habilitar o daemon:
+
+```sh
+[sudo] systemctl enable --now bluetooth
+```
+
+Depois, basta abir algum dos *apps* do *blueman* no menu de aplicativos.
+
+#### *CLI*
+
+Programas necessários:
+
+```sh
+[sudo] apt install bluetooth bluez bluez-tools libspa-0.2-bluetooth
+```
+
+Habilitar o daemon:
+
+```sh
+[sudo] systemctl enable --now bluetooth
+```
+
+Enviar arquivo:
+
+```sh
+bt-obex -p {<name>|<mac>} /path/file.txt
+```
+
+Para receber arquivos:
+
+```sh
+bt-obex -ys
+```
+
+*OBSERVAÇÕES:*
+
+- Os arquivos serão salvos por padrão em `~/.cache/obexd/`
