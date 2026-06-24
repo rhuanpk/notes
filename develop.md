@@ -117,17 +117,17 @@ webfsd -dF [-4] [-p <port>] [-r <folder>]
 
 Comandos base:
 
-1. `asdf list`:
+- `asdf list`:
 	Listar todos os *plugins* e suas versões (já instaladas)
-1. `asdf plugin list all`:
+- `asdf plugin list all`:
 	Listar todos os *plugins* disponíveis (para adição)
-1. `asdf plugin add <plugin>`:
+- `asdf plugin add <plugin>`:
 	Adicionar um *plugin*
-1. `asdf install <plugin> {<version>|latest}`:
+- `asdf install <plugin> {<version>|latest}`:
 	Instalar um *plugin*
-1. `asdf set [-u] [-p] <plugin> {<version>|latest}`:
+- `asdf set [-u] [-p] <plugin> {<version>|latest}`:
 	Definer a versão de um *plugin*
-1. `asdf current`:
+- `asdf current`:
 	Verificar a versão atual de cada *plugin*
 
 ## `aws`
