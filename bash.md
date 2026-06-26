@@ -18,34 +18,144 @@ Parâmetros da variável `PS1`:
 
 ## *Parameter Expansion*
 
-Remove Matching:
+*Default values:*
+
+- `:-`:
+	```sh
+	echo "$foo"
+	#
+
+	echo "${foo:-bar}"
+	# bar
+
+	echo "$foo"
+	#
+	```
+- `:=`:
+	```sh
+	echo "$foo"
+	#
+
+	echo "${foo:=bar}"
+	# bar
+
+	echo "$foo"
+	# bar
+	```
+- `:?`:
+	```sh
+	: ${foo:?not defined}
+	# bash: foo: not defined
+	```
+- `:+`:
+	```sh
+	foo='bar'
+
+	echo "$foo"
+	# bar
+
+	echo "${foo:+boo baz}"
+	# boo baz
+
+	echo "$foo"
+	# bar
+
+	foo="${foo:+boo baz}"
+
+	echo "$foo"
+	# boo baz
+	```
+
+*OBSERVAÇÕES:*
+
+- Essas expansões podem ser usadas sem `:`:
+	- COM `:` Bash testa se o parâmetro é ***unset*** ou ***null***
+	- SEM `:` Bash testa apenas se o parâmetro é ***unset***
+
+*Case modification:*
+
+- `^`:
+	```sh
+	xpto='hello world'
+
+	echo "${xpto^}"
+	# Hello world
+	```
+- `^^`:
+	```sh
+	xpto='hello world'
+
+	echo "${xpto^^}"
+	# HELLO WORLD
+	```
+- `,`:
+	```sh
+	xpto='HELLO WORLD'
+
+	echo "${xpto,}"
+	# hELLO WORLD
+	```
+- `,,`:
+	```sh
+	xpto='HELLO WORLD'
+
+	echo "${xpto,,}"
+	# hello world
+	```
+
+- `~`:
+	```sh
+	xpto='Hello World'
+
+	echo "${xpto~}"
+	# hello World
+	```
+
+- `~~`:
+	```sh
+	xpto='Hello World'
+
+	echo "${xpto~~}"
+	# hELLO wORLD
+	```
+
+*OBSERVAÇÕES:*
+
+- Essas expanções aceitam *wildcards*:
+    `echo "${foo^^[aeiou]}"`
+
+*Remove matching:*
 
 - `#`:
 	```sh
 	url="https://sub.domain.xyz/downloads/archive.tar.gz"
+
 	echo "${url#*/}"
 	# /sub.domain.xyz/downloads/archive.tar.gz
 	```
 - `##`:
 	```sh
 	url="https://sub.domain.xyz/downloads/archive.tar.gz"
+
 	echo "${url##*/}"
 	# archive.tar.gz
 	```
 - `%`:
 	```sh
 	url="https://sub.domain.xyz/downloads/archive.tar.gz"
+
 	echo "${url%/*}"
 	# https://sub.domain.xyz/downloads
 	```
 - `%%`:
 	```sh
 	url="https://sub.domain.xyz/downloads/archive.tar.gz"
+
 	echo "${url%%/*}"
 	# https:
 	```
 
-Parameter transformation:
+*Parameter transformation:*
 
 - `@E` (trata como `$''`):
 	```sh
@@ -70,7 +180,7 @@ Parameter transformation:
 	# 'hello world'
 	```
 
-*Array*:
+*Arrays*:
 
 | Expansão            | Descrição                                                  |
 | ------------------- | ---------------------------------------------------------- |
@@ -83,3 +193,18 @@ Parameter transformation:
 | `${array[@]:N:M}`   | Imprime ‘M’ elementos a partir da posição ‘N’.             |
 | `${array[@]: -N}`   | Imprime os últimos ‘N’ elementos.                          |
 | `${array[@]: -N:M}` | Imprime ‘M’ elementos a partir da última ‘N’ posição.      |
+
+*OBSERVAÇÕES:*
+
+- Essas expansões aceitam variáveis no lugar dos valores:
+	```sh
+	array=(hello world)
+	
+	echo "${array[@]:1}"
+	# world
+	
+	index=1
+
+	echo "${array[@]:index}"
+	# world
+	```

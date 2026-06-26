@@ -93,7 +93,7 @@ Recuperar os arquivos:
 		1. OU restaure somente um arquivo: `extundelete --restore-file relative/path/to/file.any {/dev/sdXY|/path/to/backup.hd}`
 		1. OU restaure somente uma pasta: `extundelete --restore-directory relative/path/to/directory/ {/dev/sdXY|/path/to/backup.hd}`
 
-		_OBSERVAÇÕES_:
+		*OBSERVAÇÕES:*
 		- Arquivos restaurados serão salvos em `./RECOVERED_FILES/` se não especificado "`--output-dir /extundelete/`"
 		- Se retornar `0 descriptors loaded` e `0 recoverable inodes`, o _journal_ não tem registros e a ferramenta não consegue recuperar
 	- <details>
@@ -108,7 +108,7 @@ Recuperar os arquivos:
 		1. Verifique se há indícios do que procura: `grep -oa "<pattern>" {/dev/sdXY|/path/to/backup.hd}`
 		1. Restaure como texto pleno: `strings {/dev/sdXY|/path/to/backup.hd} | grep -A <lines> "<pattern>" > /recovered.txt`
 
-		_OBSERVAÇÕES_:
+		*OBSERVAÇÕES:*
 		- Técnica mais indica para arquivos de texto (documentos, códigos fonte e etc)
 		- Para com cabeçalhos bem definidos (imagens, vídeos, PDFs, ZIPs e etc) o `photorec` tem mais acurácia
 	</details>

@@ -3925,7 +3925,7 @@ Caso não queira desabilita-lo:
 1. Recarregue os *daemons* e reinicie o *socket*:
 	`systemctl daemon-reload && systemctl restart ssh.socket`
 
-OBSERVAÇÕES:
+*OBSERVAÇÕES:*
 
 - Ao fazer o recarregamento e o reinício, `/usr/lib/systemd/system-generators/sshd-socket-generator` será executado, gerando o arquivo `/run/systemd/generator/ssh.socket.d/addresses.conf` contendo as configurações pro *sshd* funcionar como esperado
 
