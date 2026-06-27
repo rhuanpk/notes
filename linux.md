@@ -3206,7 +3206,7 @@ fg <job>
 
 ### *Memory*
 
-Comando relacionados a Memória RAM no sistema.
+Comandos relacionados a Memória RAM no sistema.
 
 #### *Cache*
 
@@ -3453,6 +3453,20 @@ renice +9 -g <group>[ ...]
 *OBSERVAÇÕES:*
 
 - As opções de PID, usuário e grupo podem ser combinadas
+
+### *Monitors*
+
+Monitores CLI (*top like*):
+
+- `atop`
+- `btop`
+- `dnstop`
+- `iftop`
+- `iotop`
+- `logtop`
+- `nvtop`
+- `powertop`
+- `usbtop`
 
 ## Configurações
 
