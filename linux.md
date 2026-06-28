@@ -2658,7 +2658,7 @@ Descobrir o *hash* de algum arquivo:
 sha256sum /path/file.txt
 ```
 
-#### `md5sum`
+### `md5sum`
 
 Descobrir o *hash* de algum arquivo:
 
@@ -3174,9 +3174,31 @@ while :; do clear; echo $((($(cat /sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_c
 
 ##### `turbostat`
 
+Programas necessários:
+
+```sh
+[sudo] apt install linux-cpupower
+```
+
+Monitorar frequência média do processador:
+
+```sh
+sudo turbostat -Sqi 1 -s {frequency|Bzy_MHz}
+```
+
 ##### `lshw`
 
-##### `btop`
+Programas necessários:
+
+```sh
+[sudo] apt install lshw
+```
+
+Monitorar frequência média do processador:
+
+```sh
+while :; do clear; lshw -c cpu 2>&- | grep size; sleep 1; done
+```
 
 ### *Memory*
 
