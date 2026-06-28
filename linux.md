@@ -3065,6 +3065,68 @@ ssh-keyscan [-p <port>] [-t {rsa|dsa|ecdsa|ed25519}[,...]] <host> >> ~/.ssh/know
 
 - Este comando lista as chaves pública do próprio servidor SSH (**sshd**) que são as credenciais validadas na hora de se conectar em um novo *host* e que precisamos responder se confiamos ou não (*yes/no*)
 
+### *Processor*
+
+Comandos relacionados a CPU no sistema.
+
+#### *Frequency*
+
+Podemos alterar o *clock* do processador (e o desempenho do sistema em geral) via comandos que funcionam como interfaces para um conjuntos de configurações (`powerprofilesctl`) relacionadas ou comandos que atuam diretamente no governador do CPU (`cpupower`).
+
+##### `powerprofilesctl`
+
+Altera não só o governador do CPU mas também o desempenho do sistema em geral.
+
+Programas necessários:
+
+```sh
+[sudo] apt install power-profiles-daemon
+```
+
+Listar perfis e suas informações:
+
+```sh
+powerprofilesctl [list]
+```
+
+Pegar perfil atual:
+
+```sh
+powerprofilesctl get
+```
+
+Definir perfil:
+
+```sh
+powerprofilesctl set <profile>
+```
+
+##### `cpupower`
+
+Altera o governador do CPU.
+
+Programas necessários:
+
+```sh
+[sudo] apt install linux-cpupower
+```
+
+Listar perfis:
+
+```sh
+cpupower frequency-info | grep governors
+```
+
+Definir perfil:
+
+```sh
+cpupower frequency-set -g <governor>
+```
+
+*OBSERVAÇÕES:*
+
+- Também é possível definir *clocks* específicos, veja `cpupower frequency-set --help`
+
 ### *Memory*
 
 Comandos relacionados a Memória RAM no sistema.
