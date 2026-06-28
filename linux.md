@@ -3127,6 +3127,29 @@ cpupower frequency-set -g <governor>
 
 - Também é possível definir *clocks* específicos, veja `cpupower frequency-set --help`
 
+#### *Avarage*
+
+Para checar o *clock* atual do processador, podemos monitorar um núcleo específico, todos de uma vez ou fazer uma média total do processador.
+
+Ao fazer uma média simples do processador, ou seja, de todos os núcleos, não necessariamente significa que ela irá ter o *clock* máximo (geralmente informado por outras ferramentas), mesmo que todos os núcleos atinjam seu pico. Isso acontece porque cada núcleo pode ter um *clock* máximo diferente um do outro. Na maioria das vezes o "*clock* máximo do processador" que é vendido, é o *clock* máximo de pelo menos um de seus núcleos.
+
+Não existe uma ferramenta dedicada específica para monitorar **somente** o *clock* médio do processador, porém, há sim ferramentas de proprósito mais genérico e outra com escopo mais fechado que nos dão essa informação (além de podermos obte-la diretamente do Kernel):
+
+##### Kernel
+
+Podemos ler o *clock* do processador diretamente do Kernel pelos arquivos em `/sys/devices/system/cpu/`:
+
+- `/sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_cur_freq`
+- `/sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_avg_freq`
+- `/sys/devices/system/cpu/cpufreq/policy*/cpuinfo_cur_freq`
+- `/sys/devices/system/cpu/cpufreq/policy*/cpuinfo_avg_freq`
+
+##### `turbostat`
+
+##### `lshw`
+
+##### `btop`
+
 ### *Memory*
 
 Comandos relacionados a Memória RAM no sistema.
