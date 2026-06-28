@@ -3065,6 +3065,28 @@ ssh-keyscan [-p <port>] [-t {rsa|dsa|ecdsa|ed25519}[,...]] <host> >> ~/.ssh/know
 
 - Este comando lista as chaves pública do próprio servidor SSH (**sshd**) que são as credenciais validadas na hora de se conectar em um novo *host* e que precisamos responder se confiamos ou não (*yes/no*)
 
+### *Memory*
+
+Comandos relacionados a Memória RAM no sistema.
+
+#### *Cache*
+
+Limpar *cache* da RAM:
+
+```sh
+sync && echo {1|2|3} | sudo tee /proc/sys/vm/drop_caches
+```
+
+Valores possíveis:
+
+- Valor `1`: Limpa apenas as páginas de *cache*, dados de arquivos
+- Valor `2`: Limpa apenas entradas de diretório e *inodes*, metadados de arquivos
+- Valor `3`: Limpa os recursos dos valores `1` e `2`
+
+*OBSERVAÇÕES:*
+
+- Não é recomendado para manutenção regular do sistema o uso recorrente desse comando
+
 ### *Signals*
 
 *Parâmetros usados:*
@@ -3204,27 +3226,65 @@ fg <job>
 - `ctrl+z` também **pausa a execução**, execute `bg` em seguida para que o programa despause, e continue em segundo plano
 - `bg` sem argumento coloca em segundo plano o último *job* em execução (mesmo que pausado)
 
-### *Memory*
+### *Nice*
 
-Comandos relacionados a Memória RAM no sistema.
+Toda a prioridade de tempo de CPU é feito com base em valor de *nice* (legal)... quanto mais "legal" um processo é, mais ele disponibiliza tempo de CPU para outros processos, ou seja, menos prioritário é este processo (e o contrário também é verdadeiro).
 
-#### *Cache*
+Os valores de *nice* vareiam de:
 
-Limpar *cache* da RAM:
+- `-20` (processo com **MAIOR prioridade**)
+
+até
+
+- `+19` (processo com **MENOR prioridade**)
+
+*Parâmetros usados:*
+
+- `<pid>`: ID do processo no sistema
+- `<user>`: Nome do usuário no sistema
+- `<group>`: Nome do grupo no sistema
+
+#### `nice`
+
+Comando *nice* especifica o valor de *nice* de um processo no seu lançamento.
+
+Sem valor de *nice* especificado, por padrão é atribuido `+10`:
 
 ```sh
-sync && echo {1|2|3} | sudo tee /proc/sys/vm/drop_caches
+nice [sudo] apt update &
 ```
 
-Valores possíveis:
+Especifique o valor de *nice* com a *flag* `-n`:
 
-- Valor `1`: Limpa apenas as páginas de *cache*, dados de arquivos
-- Valor `2`: Limpa apenas entradas de diretório e *inodes*, metadados de arquivos
-- Valor `3`: Limpa os recursos dos valores `1` e `2`
+```sh
+nice -n -15 yes | docker system prune
+```
+
+#### `renice`
+
+Comando *renice* altera o valor de *nice* de um processo já em execução.
+
+Alterar o valor de *nice* de um ou vários processos:
+
+```sh
+renice +5 [-p] <pid>[ ...]
+```
+
+Alterar o valor de *nice* de todos os procesos de um usuário:
+
+```sh
+renice +9 -u <user>[ ...]
+```
+
+Alterar o valor de *nice* de todos os procesos de um grupo:
+
+```sh
+renice +9 -g <group>[ ...]
+```
 
 *OBSERVAÇÕES:*
 
-- Não é recomendado para manutenção regular do sistema o uso recorrente desse comando
+- As opções de PID, usuário e grupo podem ser combinadas
 
 ### QEMU
 
@@ -3393,66 +3453,6 @@ Instalação e configuração:
 1. `[sudo] apt install --install-recommends virt-manager`
 1. `[sudo] usermod -aG libvirt rhuanpk`
 1. *Reinicie a sessão gráfica*
-
-### *Nice*
-
-Toda a prioridade de tempo de CPU é feito com base em valor de *nice* (legal)... quanto mais "legal" um processo é, mais ele disponibiliza tempo de CPU para outros processos, ou seja, menos prioritário é este processo (e o contrário também é verdadeiro).
-
-Os valores de *nice* vareiam de:
-
-- `-20` (processo com **MAIOR prioridade**)
-
-até
-
-- `+19` (processo com **MENOR prioridade**)
-
-*Parâmetros usados:*
-
-- `<pid>`: ID do processo no sistema
-- `<user>`: Nome do usuário no sistema
-- `<group>`: Nome do grupo no sistema
-
-#### `nice`
-
-Comando *nice* especifica o valor de *nice* de um processo no seu lançamento.
-
-Sem valor de *nice* especificado, por padrão é atribuido `+10`:
-
-```sh
-nice [sudo] apt update &
-```
-
-Especifique o valor de *nice* com a *flag* `-n`:
-
-```sh
-nice -n -15 yes | docker system prune
-```
-
-#### `renice`
-
-Comando *renice* altera o valor de *nice* de um processo já em execução.
-
-Alterar o valor de *nice* de um ou vários processos:
-
-```sh
-renice +5 [-p] <pid>[ ...]
-```
-
-Alterar o valor de *nice* de todos os procesos de um usuário:
-
-```sh
-renice +9 -u <user>[ ...]
-```
-
-Alterar o valor de *nice* de todos os procesos de um grupo:
-
-```sh
-renice +9 -g <group>[ ...]
-```
-
-*OBSERVAÇÕES:*
-
-- As opções de PID, usuário e grupo podem ser combinadas
 
 ### *Monitors*
 
