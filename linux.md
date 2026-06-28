@@ -3137,12 +3137,40 @@ Não existe uma ferramenta dedicada específica para monitorar **somente** o *cl
 
 ##### Kernel
 
-Podemos ler o *clock* do processador diretamente do Kernel pelos arquivos em `/sys/devices/system/cpu/`:
+Podemos ler o *clock* do processador diretamente do Kernel por um dos conjuntos de arquivos em `/sys/devices/system/cpu/`:
 
 - `/sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_cur_freq`
 - `/sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_avg_freq`
 - `/sys/devices/system/cpu/cpufreq/policy*/cpuinfo_cur_freq`
 - `/sys/devices/system/cpu/cpufreq/policy*/cpuinfo_avg_freq`
+
+Os arquivos `_cur_freq` ou `_avg_freq` guardam a frequência atual de um CPU. Utilizando o *glob* `*` em `cpu*/` ou `cpufreq/policy*/` conseguimos extrair a frequência atual de todos os CPUs (núcleos).
+
+A partir da obtenção das frequências, fazemos a média simples e dividimos por **1000** para converter de **KHz** para **MHz**. Se desejar obter o resultado em *GHz*, dividimos mais uma vez por *1000*, ou dividimos uma única vez por `1000^2`.
+
+*Script* de exemplo:
+
+```sh
+#!/bin/bash
+
+while :; do
+	clear
+
+	freqs="$(cat /sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_cur_freq)"
+	cpus="$(wc -l <<< "$freqs")"
+	sums="$(paste -sd+ <<< "$freqs")"
+
+	echo "$(((sums)/cpus/1000))MHz"
+
+	sleep 1
+done
+```
+
+*Pipeline* de exemplo:
+
+```sh
+while :; do clear; echo $((($(cat /sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_cur_freq | paste -sd+))/$(nproc)/1000))MHz; sleep 1; done
+```
 
 ##### `turbostat`
 
