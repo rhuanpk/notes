@@ -389,6 +389,7 @@ mokutil --sb-state
 *Parâmetros usados:*
 
 - `X`: Letra do disco
+- `N`: Número do NVMe
 
 Programas necessários:
 
@@ -436,21 +437,21 @@ Pegar informações relevantes sobre **HDD**:
 
 ```sh
 # HDD, <30k, ==0
-sudo smartctl -a /dev/sda | grep -P '^ID#|Power_On_Hours|Reallocated_Sector_Ct|Current_Pending_Sector|Offline_Uncorrectable|Reported_Uncorrect' | column -t -H 3-9
+[sudo] smartctl -a /dev/sdX | grep -P '^ID#|Power_On_Hours|Reallocated_Sector_Ct|Current_Pending_Sector|Offline_Uncorrectable|Reported_Uncorrect' | column -t -H 3-9
 ```
 
 Pegar informações relevantes sobre **SSD**:
 
 ```sh
 # SSD, % lifespan remaining
-sudo smartctl -a /dev/sda | grep -P '^ID#|Power_On_Hours|Reallocated_Sector_Ct|Current_Pending_Sector|Offline_Uncorrectable|Reported_Uncorrect|Remaining_Lifetime_Perc|Wear_Leveling_Count|Percent_Lifetime_Remain|SSD_Life_Left|Media_Wearout_Indicator' | column -t -H 3,5,7-9
+[sudo] smartctl -a /dev/sdX | grep -P '^ID#|Power_On_Hours|Reallocated_Sector_Ct|Current_Pending_Sector|Offline_Uncorrectable|Reported_Uncorrect|Remaining_Lifetime_Perc|Wear_Leveling_Count|Percent_Lifetime_Remain|SSD_Life_Left|Media_Wearout_Indicator' | column -t -H 3,5,7-9
 ```
 
 Pegar informações relevantes sobre **NVMe**:
 
 ```sh
 # NVMe, % disk usage
-sudo smartctl -a /dev/nvme0n1 | grep -P '^(Power On Hours:|Media and Data Integrity Errors:|Error Information Log Entries:|Critical Warning:|Percentage Used:)'
+[sudo] smartctl -a /dev/nvme0nN | grep -P '^(Power On Hours:|Media and Data Integrity Errors:|Error Information Log Entries:|Critical Warning:|Percentage Used:)'
 ```
 
 ### `fio`
