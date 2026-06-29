@@ -331,7 +331,7 @@ O comando `shutdown` é um *handler* para todas essas instruções mas faz o "en
 - `--show`: Mostra (se houver) a operação de *shutdown* pendente
 
 ```
-shutdown [<options>] [<time>|now [wall]]
+shutdown [<options>] [now|<time> [wall]]
 ```
 
 ### `efibootmgr`
