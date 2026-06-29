@@ -597,7 +597,7 @@ fio --output /path/log.txt <job>
 Trocando formato de saída do resultado:
 
 ```sh
-fio --output /path/log.<type> --output-format=<type> <job>
+fio --output-format=<type> [--output /path/log.<type>] <job>
 ```
 
 *OBSERVAÇÕES:*
