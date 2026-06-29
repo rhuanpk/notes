@@ -384,6 +384,48 @@ Checar se *secure boot* está ativo:
 mokutil --sb-state
 ```
 
+### `smartctl`
+
+*Parâmetros usados:*
+
+- `X`: Letra do disco
+
+Programas necessários:
+
+```sh
+[sudo] apt install smartmontools
+```
+
+Mostra informações sobre o disco (inclusive se tem suporte a tecnologia S.M.A.R.T. e está habilitado):
+
+```sh
+[sudo] smartctl -i /dev/sdX
+```
+
+Habilita a tecnologia S.M.A.R.T. caso esteja desabilitado (e o disco tenha suporte):
+
+```sh
+[sudo] smartctl -s on /dev/sdX
+```
+
+Testa a saúde do disco:
+
+```sh
+[sudo] smartctl -H /dev/sdX
+```
+
+Faz a checagem no disco:
+
+```sh
+[sudo] smartctl -t {short|long} /dev/sdX
+```
+
+Lista as checagens manuais feitas no disco (pela opção `-t`):
+
+```sh
+[sudo] smartctl -l selftest /dev/sdX
+```
+
 ### `fio`
 
 *Benchmark* de I/O (HDDs, SSDs, NVMes, Pendrives, SD Cards e etc).
