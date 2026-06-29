@@ -396,13 +396,13 @@ Programas necessários:
 [sudo] apt install smartmontools
 ```
 
-Mostra informações sobre o disco (inclusive se tem suporte a tecnologia S.M.A.R.T. e está habilitado):
+Mostra informações sobre o disco (inclusive se tem suporte a tecnologia SMART e está habilitado):
 
 ```sh
 [sudo] smartctl -i /dev/sdX
 ```
 
-Habilita a tecnologia S.M.A.R.T. caso esteja desabilitado (e o disco tenha suporte):
+Habilita a tecnologia SMART caso esteja desabilitado (e o disco tenha suporte):
 
 ```sh
 [sudo] smartctl -s on /dev/sdX
@@ -426,6 +426,33 @@ Lista as checagens manuais feitas no disco (pela opção `-t`):
 [sudo] smartctl -l selftest /dev/sdX
 ```
 
+Mostra todas as informações SMART sobre o dispositivo:
+
+```sh
+[sudo] smartctl -a /dev/sdX
+```
+
+Pegar informações relevantes sobre **HDD**:
+
+```sh
+# HDD, <30k, ==0
+sudo smartctl -a /dev/sda | grep -P '^ID#|Power_On_Hours|Reallocated_Sector_Ct|Current_Pending_Sector|Offline_Uncorrectable|Reported_Uncorrect' | column -t -H 3-9
+```
+
+Pegar informações relevantes sobre **SSD**:
+
+```sh
+# SSD, % lifespan remaining
+sudo smartctl -a /dev/sda | grep -P '^ID#|Power_On_Hours|Reallocated_Sector_Ct|Current_Pending_Sector|Offline_Uncorrectable|Reported_Uncorrect|Remaining_Lifetime_Perc|Wear_Leveling_Count|Percent_Lifetime_Remain|SSD_Life_Left|Media_Wearout_Indicator' | column -t -H 3,5,7-9
+```
+
+Pegar informações relevantes sobre **NVMe**:
+
+```sh
+# NVMe, % disk usage
+sudo smartctl -a /dev/nvme0n1 | grep -P '^(Power On Hours:|Media and Data Integrity Errors:|Error Information Log Entries:|Critical Warning:|Percentage Used:)'
+```
+
 ### `fio`
 
 *Benchmark* de I/O (HDDs, SSDs, NVMes, Pendrives, SD Cards e etc).
@@ -435,7 +462,7 @@ Para usa-lo você deve passar um série de parâmetros como opções ou arquivos
 Exemplos de arquivos de configuração de "perfis de parâmetros":
 
 - <details>
-	<summary><i>Global</i> (<code>global.fio</code>):</summary>
+	<summary><i>Global</i> (<code>global.fio</code>)</summary>
 
 	```ini
 	filename=test.dat
@@ -461,7 +488,7 @@ Exemplos de arquivos de configuração de "perfis de parâmetros":
 	loops=3
 	```
 - <details>
-	<summary><i>Default</i> (<code>default.fio</code>):</summary>
+	<summary><i>Default</i> (<code>default.fio</code>)</summary>
 
 	```ini
 	[global]
@@ -539,7 +566,7 @@ Exemplos de arquivos de configuração de "perfis de parâmetros":
 	numjobs=1
 	```
 - <details>
-	<summary><i>SSD</i> (<code>ssd.fio</code>):</summary>
+	<summary><i>SSD</i> (<code>ssd.fio</code>)</summary>
 
 	```ini
 	[global]
