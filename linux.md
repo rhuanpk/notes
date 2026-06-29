@@ -312,10 +312,10 @@ mtr [<options>] example.com
 Em geral, os comandos puros são:
 
 - `halt`: Encerra todos os processos e desliga a CPU (matendo a energia do *hardware*)
-- `poweroff`: Como `halt`, mas também envia um comando ACPI para a Placa (cortando toda a energia do *hardware*)
+- `poweroff`: Como `halt`, mas também envia um comando ACPI para a Placa Mãe (cortando toda a energia do *hardware*)
 - `reboot`: Como `halt`, mas inicia novamente o sistema
 
-O comando `shutdown` é um *handler* para todos esses comandos mas faz o "encerramento gracioso" dos processos.
+O comando `shutdown` é um *handler* para todas essas instruções mas faz o "encerramento gracioso" dos processos.
 
 *Parâmetros usados:*
 
@@ -324,9 +324,9 @@ O comando `shutdown` é um *handler* para todos esses comandos mas faz o "encerr
 
 *Opções usadas:*
 
-- `-H`: Para a máquina
-- `-P`: Desliga a máquina (*default*)
-- `-r`: Reinicia a máquina
+- `-H`: Para a máquina, *halt*
+- `-P`: Desliga a máquina, *poweroff* (*default*)
+- `-r`: Reinicia a máquina, *reboot*
 - `-c`: Cancela a operação de *shutdown* pendente
 - `--show`: Mostra (se houver) a operação de *shutdown* pendente
 
