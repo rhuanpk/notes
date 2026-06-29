@@ -334,6 +334,10 @@ O comando `shutdown` é um *handler* para todas essas instruções mas faz o "en
 shutdown [<options>] [now|<time> [wall]]
 ```
 
+*OBSERVAÇÕES:*
+
+- A mensagem *wall* aparece somente nos terminais "logados"
+
 ### `efibootmgr`
 
 *Parâmetros usados:*
