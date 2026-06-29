@@ -392,7 +392,9 @@ Para usa-lo você deve passar um série de parâmetros como opções ou arquivos
 
 Exemplos de arquivos de configuração de "perfis de parâmetros":
 
-- *Global* (`global.fio`):
+- <details>
+	<summary><i>Global</i> (<code>global.fio</code>):</summary>
+
 	```ini
 	filename=test.dat
 	size=1G
@@ -416,8 +418,9 @@ Exemplos de arquivos de configuração de "perfis de parâmetros":
 
 	loops=3
 	```
+- <details>
+	<summary><i>Default</i> (<code>default.fio</code>):</summary>
 
-- *Default* (`default.fio`):
 	```ini
 	[global]
 	include=global.fio
@@ -493,8 +496,9 @@ Exemplos de arquivos de configuração de "perfis de parâmetros":
 	iodepth=1
 	numjobs=1
 	```
+- <details>
+	<summary><i>SSD</i> (<code>ssd.fio</code>):</summary>
 
-- *SSD*  (`ssd.fio`):
 	```ini
 	[global]
 	include=global.fio
@@ -570,6 +574,9 @@ Exemplos de arquivos de configuração de "perfis de parâmetros":
 	iodepth=1
 	numjobs=1
 	```
+</details>
+</details>
+</details>
 
 *Parâmetros usados:*
 
