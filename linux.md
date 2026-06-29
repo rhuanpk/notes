@@ -454,6 +454,10 @@ Pegar informações relevantes sobre **NVMe**:
 [sudo] smartctl -a /dev/nvme0nN | grep -P '^(Power On Hours:|Media and Data Integrity Errors:|Error Information Log Entries:|Critical Warning:|Percentage Used:)'
 ```
 
+*OBSERVAÇÕES:*
+
+- Para as informações relacionadas a nível de saúde do dispositivo, usar a coluna `VALUE`, qualquer outras informações (como contagem de erros) e etc, usar a coluna `RAW_VALUE`
+
 ### `fio`
 
 *Benchmark* de I/O (HDDs, SSDs, NVMes, Pendrives, SD Cards e etc).
