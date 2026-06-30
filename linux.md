@@ -3571,25 +3571,30 @@ pkill [-f] [-u <user>] '<pattern>'
 
 ### *Processes*
 
-| POSIX Signals  | Descrição                                                                                                                                     |
-| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `01` (SIGHUP)  | Terminal do processo foi desconectado ou o processo foi encerrado (alguns *deamons* usam esse sinal para recarregar configurações).           |
-| `02` (SIGINT)  | Interrompe o processo e aguarda o próximo comando do usuário (*lançado por `ctrl+c`*).                                                        |
-| `03` (SIGQUIT) | Força o *core dumped* do processo e o termina (*lançado por `ctrl+\`*).                                                                       |
-| `05` (SIGTRAP) | Enviado esse sinal para o processo quando ocorre uma exceção ou quando cai numa *trap*.                                                       |
-| `09` (SIGKILL) | Quando enviado ao processo causa seu encerramente imediato. Diferente do `SIGTERM` e `SIGINT`, esse sinal não pode ser capturado ou ignorado. |
-| `15` (SIGTERM) | Quando enviado ao processo causa seu encerramento, porém, pode ser capturado ou ignorado pelo processo.                                       |
-| `18` (SIGCONT) | Enviado esse sinal para o processo reiniciar, voltar ao estado de *running* depois de `SIGSTOP` ou `SIGTSTP`.                                 |
-| `19` (SIGSTOP) | Quando enviado, o processo é pausado pelo sistema para ser resumido futuramente e pode apenas receber os sinais `SIGKILL` e `SIGCONT`.        |
-| `20` (SIGTSTP) | Sua diferença para o `SIGSTOP` é que quando pausado, o processo ainda pode ser manipulado (*lançado por `ctrl+z`*).                           |
+| POSIX Signals  | Descrição                                                                                                                        |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `01` (SIGHUP)  | Enviado quando o terminal controlador é desconectado (*hangup*). Alguns *daemons* usam esse sinal para recarregar configurações. |
+| `02` (SIGINT)  | Solicita interrupção do processo (*lançado por `ctrl+c`*). Pode ser capturado ou ignorado.                                       |
+| `03` (SIGQUIT) | Solicita encerramento do processo e normalmente gera *core dump* (*lançado por `ctrl+\`*).                                       |
+| `05` (SIGTRAP) | Usado para depuração, *breakpoints* e eventos de rastreamento (*tracing*).                                                       |
+| `09` (SIGKILL) | Encerra imediatamente o processo. Não pode ser capturado ou ignorado.                                                            |
+| `15` (SIGTERM) | Solicita encerramento do processo. Pode ser capturado ou ignorado (permitindo tratamento e limpeza antes de sair).               |
+| `18` (SIGCONT) | Continua a execução de um processo parado por `SIGSTOP` ou `SIGTSTP`.                                                            |
+| `19` (SIGSTOP) | Para imediatamente a execução do processo. Não pode ser capturado ou ignorado.                                                   |
+| `20` (SIGTSTP) | Solicita parada do processo (*lançado por `ctrl+z`*). Diferente do `SIGSTOP`, pode ser capturado ou ignorado.                    |
 
-| Processes States            | Descrição                                                                                                                      |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `D` (UNINTERRUPTABLE_SLEEP) | Processo dorme e aguarda alguma entrada, nesse estado, se interrompido, pode causar problemas.                                 |
-| `R` (RUNNING & RUNNABLE)    | Processo está pronto para ser executado ou já está em execução.                                                                |
-| `S` (INTERRRUPTABLE_SLEEP)  | Processo dorme e aguarda alguma entrada, nesse estado, pode ser interrompido com "segurança".                                  |
-| `T` (STOPPED)               | Processo está pausado, porém, ainda pode ser manipulado ou resumido (`ctrl+z > SIGTSTP`).                                      |
-| `Z` (ZOMBIE)                | Processo foi encerrado, porém, ainda está na tabela de processos, significa que ainda pode estar finalizando alguma atividade. |
+| Process States              | Descrição                                                                                     |
+| --------------------------- | --------------------------------------------------------------------------------------------- |
+| `D` (UNINTERRUPTIBLE_SLEEP) | Processo aguardando conclusão de uma operação que não pode ser interrompida (geralmente I/O). |
+| `R` (RUNNING/RUNNABLE)      | Processo em execução ou pronto para executar.                                                 |
+| `S` (INTERRUPTIBLE_SLEEP)   | Processo aguardando algum evento e podendo ser acordado por sinais.                           |
+| `T` (STOPPED)               | Processo parado por sinal (`SIGSTOP`, `SIGTSTP`) ou por depuração.                            |
+| `Z` (ZOMBIE)                | Processo já encerrado, porém, o código de saída ainda não foi coletado pelo processo pai.     |
+
+Diferença dos termos:
+
+- Encerramento: Processo finaliza sua execução e deixa de existir. O Kernel libera recursos (memória, descritores e etc)
+- Parada: Processo permanece existente e mantém seu estado (memória, arquivos abertos, contexto de execução), porém deixa de receber tempo de CPU
 
 *Parâmetros usados:*
 
