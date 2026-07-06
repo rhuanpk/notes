@@ -746,10 +746,10 @@ Interface interativo para manipulação avançada da tabela de partiçẽos e pa
 
 *LINKS:*
 
-- [MBR Partitions Types¹](https://en.wikipedia.org/wiki/Partition_type)
-- [MBR Partitions Types²](https://tldp.org/HOWTO/Partition-Mass-Storage-Definitions-Naming-HOWTO/x190.html)
-- [GPT Partitions Types](https://en.wikipedia.org/wiki/GUID_Partition_Table#Partition_type_GUIDs)
-- [fdisk (archwiki)](https://wiki.archlinux.org/title/fdisk)
+- [MBR Partitions Types¹](<https://en.wikipedia.org/wiki/Partition_type>)
+- [MBR Partitions Types²](<https://tldp.org/HOWTO/Partition-Mass-Storage-Definitions-Naming-HOWTO/x190.html>)
+- [GPT Partitions Types](<https://en.wikipedia.org/wiki/GUID_Partition_Table#Partition_type_GUIDs>)
+- [fdisk (archwiki)](<https://wiki.archlinux.org/title/fdisk>)
 
 ### `sfdisk`
 
@@ -789,7 +789,7 @@ sfdisk -r /dev/sdX
 
 *LINKS:*
 
-- [Reread/Resort Partitions](https://serverfault.com/questions/36038/reread-partition-table-without-rebooting) (em caso mudança de na ordenação das partições)
+- [Reread/Resort Partitions](<https://serverfault.com/questions/36038/reread-partition-table-without-rebooting>) (em caso mudança de na ordenação das partições)
 
 ### `parted`
 
@@ -2183,7 +2183,7 @@ wget -O - <url>
 - `-H <header>`: Define cabeçalho da *request* (aceita múltiplos `-H`)
 - `-u <user>[:<password>]`: Credenciais para autênticação única
 - `-o <path>`: Informa o nome e o local do arquivo de saída
-- `-w '%{<variable>}\n[...]'`: Retorna somente a [chave específica](https://curl.se/docs/manpage.html#:~:text=The%20variables%20available%20are%3A) da *response*
+- `-w '%{<variable>}\n[...]'`: Retorna somente a [chave específica](<https://curl.se/docs/manpage.html#:~:text=The%20variables%20available%20are%3A>) da *response*
 
 Sintaxe base:
 
@@ -2292,8 +2292,8 @@ dig [+short] [@<dns>] -x <ip>
 
 *LINKS:*
 
-- [Content Base](https://www.certificacaolinux.com.br/comando-linux-dig/)
-- [Record Types](https://www.cloudflare.com/pt-br/learning/dns/dns-records/)
+- [Content Base](<https://www.certificacaolinux.com.br/comando-linux-dig/>)
+- [Record Types](<https://www.cloudflare.com/pt-br/learning/dns/dns-records/>)
 
 ### `nmap`
 
@@ -3097,7 +3097,7 @@ zbarcam [--raw] [-q]
 
 ### `flatpak`
 
-Faça o setup pelo guia do [Flatpak](https://flatpak.org/setup) ou do [Flathub](https://flathub.org/setup).
+Faça o setup pelo guia do [Flatpak](<https://flatpak.org/setup>) ou do [Flathub](<https://flathub.org/setup>).
 
 *Parâmetros usados:*
 
@@ -3163,7 +3163,7 @@ flatpak update --commit=<commit> <app>
 
 #### *Games*
 
-Por sugestão do [Eddie](https://github.com/eddiecsilva/debian-post-install?tab=readme-ov-file#configura%C3%A7%C3%B5es-extras-para-jogos), instalação dos pacotes necessários para **Steam** e **Heroic Games Launcher**:
+Por sugestão do [Eddie](<https://github.com/eddiecsilva/debian-post-install?tab=readme-ov-file#configura%C3%A7%C3%B5es-extras-para-jogos>), instalação dos pacotes necessários para **Steam** e **Heroic Games Launcher**:
 
 ```sh
 flatpak install com.valvesoftware.Steam com.valvesoftware.Steam.Utility.MangoHud com.valvesoftware.Steam.Utility.vkBasalt com.valvesoftware.Steam.VulkanLayer.MangoHud com.heroicgameslauncher.hgl
@@ -3203,7 +3203,7 @@ telinit <runlevel>
 
 *LINKS:*
 
-- [Runlevels & Targets](https://access.redhat.com/articles/754933)
+- [Runlevels & Targets](<https://access.redhat.com/articles/754933>)
 
 ### *Targets*
 
@@ -3249,7 +3249,7 @@ systemctl isolate <target>.target
 
 *LINKS:*
 
-- [Runlevels & Targets](https://access.redhat.com/articles/754933)
+- [Runlevels & Targets](<https://access.redhat.com/articles/754933>)
 
 ### SSH
 
