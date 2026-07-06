@@ -1273,6 +1273,7 @@ pwgen [-scny] [<chars>] [<passwords>]
 - `<binary>`: Nome do executável
 - `<sandbox>`: Nome dado ao *sandbox*
 - `<command>`: Comando final completo
+- `<ipv4>`: Endereço IPv4
 
 Programas necessários:
 
@@ -1350,6 +1351,12 @@ Problemas com áudio usando `pulseauido` como driver:
 1. `mkdir -pv ~/.config/pulse`
 1. `cp -v /etc/pulse/client.conf ~/.config/pulse`
 1. `echo 'enable-shm = no' >> ~/.config/pulse/client.conf`
+
+Problemas com falta de *internet* ao usar `--private` pode ser falta de DNS:
+
+```
+firejail --private --dns=<ipv4>[ ...] <command>
+```
 
 Para executar Google Chrome:
 
@@ -1876,8 +1883,9 @@ read -re -t 5 -a ARRAY -p 'Your name: ' -i 'Tux'
 
 *Comandos usados:*
 
-- `:-i`: *Case insensitive* para buscas simples
-- `:-I`: *Case insensitive* para buscas também com padrões
+- `:-i`: *Toggle case insensitive* para buscas simples
+- `:-I`: *Toggle case insensitive* para buscas também com padrões
+- `:-N`: *Toggle case insensitive* para mostrar linhas
 - `:m`: Define uma marca para a página atual
 - `'<mark>`: Vai para a marca
 - `<line>g`: Vai para a linha
