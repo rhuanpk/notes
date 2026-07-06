@@ -238,7 +238,6 @@ Parâmetros da variável `PS1`:
 | `[:space:]`  | Espaços em branco (` `, `\t`, `\n`, `\v`, `\f`, `\r`).                      |
 | `[:xdigit:]` | Dígitos hexadecimais (`[0-9A-Fa-f]`).                                       |
 
-
 *OBSERVAÇÕES:*
 
 - Num RegEx você também pode negar uma classe inteira com: `[^[:<class>:]]`
