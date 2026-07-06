@@ -3759,6 +3759,97 @@ renice +9 -g <group>[ ...]
 
 - As opções de PID, usuário e grupo podem ser combinadas
 
+### *Temporary*
+
+As "Pastas Temporárias" (`/tmp`) no Linux podem atuar de duas maneiras, via Disco ou `tmpfs`. Cada modo de uso tem suas próprias características e funcionamento que diferem entre si, porém, com o mesmo propósito, guardar arquivos temporários de qualquer propósito que serão excluídos no futuro.
+
+Fica a cargo da distribuição decidir trazer as `/tmp` por padrão em Disco e/ou como `tmpfs`.
+
+As rotinas de manutenção das `/tmp` são realizadas via *software* que podem executar em momentos únicos específicos ou regularmente via *Crons* ou *Timers*.
+
+
+Entendimento geral:
+
+- `*/tmp` são as Pastas Temporárias
+- `systemd-fstab-generator` é a ferramenta que gera os pontos de montagem e nem toda `/tmp` será um
+- `systemd-tmpfiles` é a ferrameta dá manutenção das `/tmp` independente de serem *Disco* ou *tmpfs*
+
+#### `systemd-fstab-generator`
+
+É uma ferramenta do `systemd` chamada no *boot* que gera as unidades `.mount`. Essas unidades descrevem pontos de montagem e SWAP.
+
+As únidades `.mount` são (re)geradas em todo *boot*, com base em pré-definições do próprio sistema e/ou em arquivos de configuração como `/etc/fstab`.
+
+Cada "fonte de geração" pode criar as unidades em lugares de configuração diferentes, que tem **precedência** de sobrescrita uns sobre os outros, ou seja, fica somente a configuração que foi prcessada por último.
+
+Nos sistemas que trazem `tmpfs` por padrão no `/tmp`, uma declaração de `/tmp` no `/etc/fstab` irá gerar um `.mount` com precedência, fazendo que este seja executado primeiro e o do `tmpfs` não.
+
+#### `systemd-tmpfiles`
+
+Nos sistemas que usam `systemd-tmpfiles`, ele é geralmente executado no *boot* e periodicamente enquanto o sistema está *in live*. Ele executa rotinas de **limpeza**, **remoção**, **criação** e etc conforme descrito nos arquivos de configuração.
+
+Esses arquivos de configuração são compostos pelos seguintes parâmetros:
+
+1. `Type`
+2. `Path`
+3. `Mode`
+4. `User`
+5. `Group`
+6. `Age`
+7. `Argument`
+
+Sendo `Type` a operação de *limpeza*, *remoção*, *criação* ou etc a ser feito pelo `systemd-tmpfiles` se a *flag* que permite essa ação tiver sido passada. *E.g.*, caso o comando no arquivo de configuração for `D`, mas NÃO for passado a *flag* `--remove` para `systemd-tmpfiles`, então nada será removido.
+
+Cada comando pode usar ou não todos os parâmetros, ou seja, um comando de *criação*, muito provavelmente irá suportar os parâmetros `Mode`, `User` e `Group`, mas talvez não `Age`. Da mesma maneira, um comando de *limpeza* certamente suportará o parâmetro `Age`, mas não fará sentido ter definido o trio citado anteriormente.
+
+Ou seja, cada comando pode ter uma ou mais funções "internas" e usar o mínimo ou todos os parâmetros disponíveis.
+
+#### Disco
+
+Quando `/tmp` é **diretamente no disco**, seu conteúdo ficará persistido, a menos que alguma ação de *limpeza* ou *remoção* seja executada nas rotinas de manutenção (de inicialização ou periódicas).
+
+Nessa abordagem o tamanho da pasta temporária (ou seja, *filesystem*) é definido pelo usuário na criação da partição em que reside.
+
+Caso o sistema adote esse modo por padrão e queira usar `tmpfs`, temos dois cenários:
+
+1. Sem partições dedicadas, direto na raiz (que seria o "*default*")
+	1. Basta habilitar (ou desmascarar) a unidade `.mount`:
+		`[sudo] systemctl enable --now tmp.mount`
+1. Com partições dedicadas no disco
+	1. Habilitar (ou desmascarar) a unidade `.mount` caso esteja desabilitada:
+		`[sudo] systemctl enable --now tmp.mount`
+	1. Então comente ou remova a linha da partição no `/etc/fstab`
+
+*OBSERVAÇÕES:*
+
+- Caso o `tmp.mount` não exista nos diretórios do `systemd`, então procure-o com `find` e copie para um diretório válido como `/etc/systemd/system/`
+- Caso o `tmp.mount` de fato não exista no sistema, será necessário cria-lo ferramenta *builtin* da distro para isso ou simplesmente defina a partição em `/etc/fstab`
+- Também é possível ter um `tmp.mount` temporário com `systemd-mount --tmpfs`?
+
+#### RAM (`tmpfs`)
+
+Quando `/tmp` é **sistema de arquivos temporário**, significa que o armazenamento é feito diretamente na **Memória RAM**, ou seja, por pura "definição de *hardware*", quando a RAM é "resetada" de qualquer maneira (*shutdown*, *reboot*, *crash* do sistema e etc), `/tmp` também é "resetada" e tudo nela é completamente removido/perdido.
+
+Nessa abordagem o tamanho máximo da pasta temporária (ou seja, *filesystem*) é 50% o tamanho da RAM no sistema, então, parte da sua RAM poderá estar sendo utilizando para "guardar coisa que seriam armazenadas no disco, só que de forma MUITO rápida".
+
+Caso o sistema adote esse modo por padrão e queira usar *diretamente no disco*, podemos fazer de duas maneiras:
+
+1. Sem partições dedicadas, direto na raiz (que seria o "*default*")
+	1. Mascare o *unit file* de montagem:
+		`[sudo] systemctl mask tmp.mount`
+	2. Reinicie o sistema para que as alterações sejam aplicadas
+2. Com partições dedicadas no disco
+	1. Basta configurar a montagem da partição no `/etc/fstab` e automáticamente os `*.mount` não serão acionados:
+		`UUID=<uuid> /tmp ext4 discard,noatime,nodiratime,noexec,nosuid,nodev 0 2`
+
+Caso queria manter esse modo mas alterar o tamanho do `tmpfs`, utilize a edição nativa do `systemd`:
+
+```sh
+[sudo] systemctl edit tmp.mount
+```
+
+Copie a linha com o parâmetro `Options=` para o espaço correto indicado pelo editor e altere a opção `size=` na linha de argumentos aumentando ou diminuindo o valor máximo padrão de `50%`. Também é possível alterar para uma unidade de medida diferente como `4G` ou `512M`.
+
 ### QEMU
 
 *Parâmetros usados:*
