@@ -4,21 +4,40 @@ Anotações gerais sobre *Network*: programas e configurações.
 
 ## `ip`
 
-Verificar as interfaces de redes com saida formatada e "highlightada" (*pretty*):
+Verificar as interfaces de rede:
 
 ```sh
-ip -br -c a
+ip [-br] [-c] a
 ```
 
-Verificar qual interface de rede está se comunicando com a *internet*:
+Verificar rotas da tabela principal:
 
 ```sh
 ip route
 ```
 
+Verificar rotas de todas as tabelas:
+
+```sh
+ip route show table all
+```
+
 *OBSERVAÇÕES:*
 
+- A rota marcada como `default` é a usada para qualquer destino que não tenha um rota mais específica na tabela
 - Caso esteja conectado a *internet* em mais de uma interface de rede ao mesmo tempo, pode ser que tenha mais de uma definida como `default`, nesse caso, a interface com **menor** valor de `metric` é a saída real
+
+Verificar tabelas de regras:
+
+```sh
+ip rule show
+```
+
+Verificar regras de tabela específica:
+
+```sh
+ip route show table <table>
+```
 
 ## `lsof`
 
