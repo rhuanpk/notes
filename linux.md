@@ -2223,6 +2223,29 @@ XML:
 curl [-H 'content-type: application/xml'] -d '<root><element>value</element></root>' <url>
 ```
 
+### `ufw`
+
+Programas necessários:
+
+```sh
+[sudo] apt install ufw
+```
+
+Gerar *backup* das regras:
+
+```sh
+# cutting the first line
+ufw show added | tail -n +2 > /path/ufw.txt
+# cutting the line starts with
+ufw show added | sed -E '/^[aA]dded/d' > /path/ufw.txt
+```
+
+Restaurar *backup* das regras:
+
+```sh
+while read -r rule; do eval "sudo $rule"; done < /path/ufw.txt
+```
+
 ### `ip`
 
 Verificar as interfaces de redes com saida formatada e "highlightada" (*pretty*):
