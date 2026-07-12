@@ -22,6 +22,12 @@ Verificar rotas de todas as tabelas:
 ip route show table all
 ```
 
+Saber por qual rota saí o destino específicado:
+
+```sh
+ip route get <ip>
+```
+
 *OBSERVAÇÕES:*
 
 - A rota marcada como `default` é a usada para qualquer destino que não tenha um rota mais específica na tabela
