@@ -168,6 +168,16 @@ Architectures: [<arch> ...]
 Signed-By: [{/usr/share|/etc/apt}/keyrings/<package>.gpg]
 ```
 
+### *Packages*
+
+Saber a qual fonte determinado package pertence:
+
+1. Descobrir os arquivos de fontes atuais:
+	```sh
+	ls /var/lib/apt/lists/*_Packages
+	```
+1. Pesquisar dentro do arquivo com `less`, `grep` ou qualquer outra ferramenta o nome do pacote procurado
+
 ## `wajig`
 
 Programas necessários:
