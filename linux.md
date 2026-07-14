@@ -2628,6 +2628,27 @@ flatpak install com.valvesoftware.Steam com.valvesoftware.Steam.Utility.MangoHud
 
 > Se for necessário, utilizando o FlatSeal libere as permissões do pacote flatpak do Steam para acessar outras unidades de disco.
 
+### Bash
+
+Iterar sobre *strings*:
+
+- 1ª Opção:
+	```sh
+	foo='string'; for ((index=0; index < ${#foo}; index++)); do echo "${foo:$index:1}"; done
+	```
+- 2ª Opção:
+	```sh
+	while read -n1 line; do echo "$line"; done < <(echo -n 'string')
+	```
+- 3ª Opção:
+	```sh
+	grep --only-matching --color=never '.' <<< 'string' | while read line; do echo "$line"; done
+	```
+- 4ª Opção:
+	```sh
+	for char in `sed -E 's/(.)/\1\n/g' <<< 'string'`; do echo "$char"; done
+	```
+
 ### Heredoc
 
 Normal:
