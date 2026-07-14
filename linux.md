@@ -3533,6 +3533,31 @@ Assinar e "triggar" módulo do Kernel:
 	[sudo] chmod +x '/usr/local/bin/sign-<module>.sh'
 	```
 
+### Shells
+
+Shell de ***Login***:
+
+- Iniciado como resultado de um *login*
+- Quando faz *login* a partir de um terminal virtual (TTY)
+- Quando se conecta via SSH
+- Quando usa um gerenciador de login gráfico que inicia um *shell*
+
+Shell de ***Não-Login***:
+
+- Iniciado não como resultado de um *login*
+- Abertura de um terminal dentro de um ambiente gráfico
+- Execução de *scripts* que invocam *shells* (*subshells*)
+
+Shell **Interativo**:
+
+- Espera e responde a comandos do usuário
+
+Shell **Não-Interativo**:
+
+- Não (necessarimente) espera entrada do usuário
+- Executado a partir de *scripts* ou comandos automatizados
+- Comandos passados por argumentos (`bash -c '<command>'`)
+
 ### Sudo
 
 Manipulação do arquivo **sudoers**:
