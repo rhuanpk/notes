@@ -3558,6 +3558,48 @@ Shell **Não-Interativo**:
 - Executado a partir de *scripts* ou comandos automatizados
 - Comandos passados por argumentos (`bash -c '<command>'`)
 
+### Inicialização
+
+Configuração dos arquivos de inicialização no sistema.
+
+#### CLI
+
+Shells de *Login*:
+
+1. `/etc/environment` (`~/.pam_environment`):
+    - Independete (carregado pelo **PAM**)
+1. `/etc/profile` (`/etc/profile.d/*.sh`):
+    - Configuração global para *shells* de *login*
+1. `~/.bash_profile`:
+    - Configuração local para *shells* de *login*
+1. `~/.bash_login`:
+    - Carregado caso o anterior não exista a menos que seja explícito
+1. `~/.profile`:
+    - Carregado caso o anterior não exista a menos que seja explícito
+
+Shells Interativos:
+
+1. `/etc/bash.bashrc`:
+    - Configuração global para *shells* interativos
+1. `~/.bashrc`:
+    - Configuração local do usuario para *shells* interativos
+
+Shells de *Não-Login* e Não-Interativos:
+
+1. Fazem o `source` da variável `$BASH_ENV` se populada
+
+#### GUI
+
+1. `/etc/environment` (`~/.pam_environment`):
+    - Independente (carregado pelo **PAM**)
+1. `~/.config/environment.d/*.conf`:
+    - Crregados pelo *systemd* (caso o ambiente gráfico execute: *systemctl --user import-environment*)
+
+*LINKS:*
+
+- [Environment Variables (Debian Wiki)](https://wiki.debian.org/EnvironmentVariables)
+- [Configuration Files (ArchWiki)](https://wiki.archlinux.org/title/bash#Configuration_files)
+
 ### Sudo
 
 Manipulação do arquivo **sudoers**:
