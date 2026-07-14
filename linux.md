@@ -2653,6 +2653,18 @@ eval $'cat << eof\nhello\neof'
 
 eval $'read foo << eof\nhello\neof'
 ```
+### *FileDescriptors*
+
+Ver os descritores de arquivos do shell atual:
+
+```sh
+ls /proc/"$$"/fd/
+```
+
+*OBSERVAÇÕES:*
+
+- Caso você abra um novo para escrita ou leitura ele também será listado e você identificará seu tipo pelas permissões
+- É possível enviar algo para o descritor de arquivo de otro processo com redirecionamento: `<command> >/proc/<pid>/fd/<fd>`
 
 ### *Runlevels*
 

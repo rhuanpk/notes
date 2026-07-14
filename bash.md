@@ -242,7 +242,11 @@ Parâmetros da variável `PS1`:
 
 - Num RegEx você também pode negar uma classe inteira com: `[^[:<class>:]]`
 
-## *Return Keyword*
+## *Internal Keywords*
+
+Palavras reservadas do Bash.
+
+### `return`
 
 Usar quando dentro de uma função você não quiser encerrar o *script* por completo (com comando `exit` por exemplo), ou seja, quando quiser somente sair da função antecipadamente.
 
@@ -251,6 +255,8 @@ Com esse comando podemos especificar o código de retorno da função com `retur
 E o comando também só será útil caso queira retornar de forma antecipada pois caso utilize o `return` na última linha, NÃO ter o `return` terá o mesmo efeito.
 
 ## *Tips & Tricks*
+
+Dicas e truques gerais do Bash.
 
 ### Iterar (via *Loop*) Sobre *Strings*
 
