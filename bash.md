@@ -241,3 +241,11 @@ Parâmetros da variável `PS1`:
 *OBSERVAÇÕES:*
 
 - Num RegEx você também pode negar uma classe inteira com: `[^[:<class>:]]`
+
+### *Return Keyword*
+
+Usar quando dentro de uma função você não quiser encerrar o *script* por completo (com comando `exit` por exemplo), ou seja, quando quiser somente sair da função antecipadamente.
+
+Com esse comando podemos especificar o código de retorno da função com `return <code>` e caso não especifique o código de retorno o comando automáticamente retornará a função com o código de retorno do último comando executado.
+
+E o comando também só será útil caso queira retornar de forma antecipada pois caso utilize o `return` na última linha, NÃO ter o `return` terá o mesmo efeito.
