@@ -242,7 +242,7 @@ Parâmetros da variável `PS1`:
 
 - Num RegEx você também pode negar uma classe inteira com: `[^[:<class>:]]`
 
-### *Return Keyword*
+## *Return Keyword*
 
 Usar quando dentro de uma função você não quiser encerrar o *script* por completo (com comando `exit` por exemplo), ou seja, quando quiser somente sair da função antecipadamente.
 
@@ -250,28 +250,35 @@ Com esse comando podemos especificar o código de retorno da função com `retur
 
 E o comando também só será útil caso queira retornar de forma antecipada pois caso utilize o `return` na última linha, NÃO ter o `return` terá o mesmo efeito.
 
-### *Tips & Tricks*
+## *Tips & Tricks*
 
-Iterar sobre *strings*:
+### Iterar (via *Loop*) Sobre *Strings*
 
-- 1ª Opção:
-	```sh
-	foo='string'; for ((index=0; index < ${#foo}; index++)); do echo "${foo:$index:1}"; done
-	```
-- 2ª Opção:
-	```sh
-	while read -n1 line; do echo "$line"; done < <(echo -n 'string')
-	```
-- 3ª Opção:
-	```sh
-	grep --only-matching --color=never '.' <<< 'string' | while read line; do echo "$line"; done
-	```
-- 4ª Opção:
-	```sh
-	for char in `sed -E 's/(.)/\1\n/g' <<< 'string'`; do echo "$char"; done
-	```
+1ª Opção:
 
-Montar *string* de opções sem espaços:
+```sh
+foo='string'; for ((index=0; index < ${#foo}; index++)); do echo "${foo:$index:1}"; done
+```
+
+2ª Opção:
+
+```sh
+while read -n1 line; do echo "$line"; done < <(echo -n 'string')
+```
+
+3ª Opção:
+
+```sh
+grep --only-matching --color=never '.' <<< 'string' | while read line; do echo "$line"; done
+```
+
+4ª Opção:
+
+```sh
+for char in `sed -E 's/(.)/\1\n/g' <<< 'string'`; do echo "$char"; done
+```
+
+### Montar *String* de Opções Sem Espaços
 
 ```sh
 options=('option1' 'option2' 'option3' 'option4')
@@ -283,3 +290,11 @@ array=('option1' 'option2' 'option3' 'option4')
 options=`IFS=,; echo "${array[*]}"`
 <command> "$options"
 ```
+
+### Comando `test` Como Um `if` Tradicional
+
+```sh
+[ 0 -eq 0 ] && { ls /foo; :; } || echo false
+```
+
+Nesse caso o comando do bloco verdade falhará (`ls /foo`), e caso não tenha o ":;", o bloco false também será executado pois como o operador `&&`, o operador `||` avalia o código de saída do último comando executado (comando anterior a ele) e não a condição do comando `test` (para isso temos especificamente o comando `if`). Isso não é uma falha, muito pelo contrário, de fato é o comportamento correto uma vez que você entende o intuito e o funcionamento dos operadores lógicos do _shell_... Esse exemplo é apenas um _trick_ para que o comportamento dessa expressão seja o mais próximo de um **if** tradicional.
