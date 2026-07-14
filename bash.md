@@ -249,3 +249,37 @@ Usar quando dentro de uma função você não quiser encerrar o *script* por com
 Com esse comando podemos especificar o código de retorno da função com `return <code>` e caso não especifique o código de retorno o comando automáticamente retornará a função com o código de retorno do último comando executado.
 
 E o comando também só será útil caso queira retornar de forma antecipada pois caso utilize o `return` na última linha, NÃO ter o `return` terá o mesmo efeito.
+
+### *Tips & Tricks*
+
+Iterar sobre *strings*:
+
+- 1ª Opção:
+	```sh
+	foo='string'; for ((index=0; index < ${#foo}; index++)); do echo "${foo:$index:1}"; done
+	```
+- 2ª Opção:
+	```sh
+	while read -n1 line; do echo "$line"; done < <(echo -n 'string')
+	```
+- 3ª Opção:
+	```sh
+	grep --only-matching --color=never '.' <<< 'string' | while read line; do echo "$line"; done
+	```
+- 4ª Opção:
+	```sh
+	for char in `sed -E 's/(.)/\1\n/g' <<< 'string'`; do echo "$char"; done
+	```
+
+Montar *string* de opções sem espaços:
+
+```sh
+options=('option1' 'option2' 'option3' 'option4')
+<command> --options "`IFS=,; echo "${options[*]}"`"
+
+# or
+
+array=('option1' 'option2' 'option3' 'option4')
+options=`IFS=,; echo "${array[*]}"`
+<command> "$options"
+```
