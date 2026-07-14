@@ -258,6 +258,23 @@ E o comando também só será útil caso queira retornar de forma antecipada poi
 
 Dicas e truques gerais do Bash.
 
+## Operadores de Atribuição em *Arrays*
+
+Adicionar valor ao *array* depois de inicializado:
+
+```sh
+array=(one two)
+array+=(three)
+```
+
+É possível iniciar o *array* utilizando o próprio operador:
+
+```sh
+array+=(zero)
+array+=(one)
+array+=(two)
+```
+
 ### Iterar (via *Loop*) Sobre *Strings*
 
 1ª Opção:
