@@ -4,7 +4,7 @@ Anotações gerais sobre Debian: programas e configurações.
 
 ## *Internal Variables*
 
-Variáveis do **bash**:
+Variáveis internas do **bash**:
 
 - `BASH_ENV`: Arquivo que será carregado antes do comando
 - `PROMPT_COMMAND`: Define um comando para ser executado depois de cada comando
@@ -17,6 +17,115 @@ Parâmetros da variável `PS1`:
 - `\w`: Diretório de trabalho atual
 - `\W`: Diretório de trabalho atual com o nome base (último segmento) apenas
 - `$(__git_ps1 ["%s"])`: Branch atual caso esteja em um repositório Git, se não, não exibe nada
+
+## *Internal Keywords*
+
+Palavras reservadas do Bash.
+
+### `return`
+
+Usar quando dentro de uma função você não quiser encerrar o *script* por completo (com comando `exit` por exemplo), ou seja, quando quiser somente sair da função antecipadamente.
+
+Com esse comando podemos especificar o código de retorno da função com `return <code>` e caso não especifique o código de retorno o comando automáticamente retornará a função com o código de retorno do último comando executado.
+
+E o comando também só será útil caso queira retornar de forma antecipada pois caso utilize o `return` na última linha, NÃO ter o `return` terá o mesmo efeito.
+
+## *Builtin Commands*
+
+Comandos nativos do Bash.
+
+### `test`
+
+O comando `test` por padrão sem nenhum argumento valida com a opção `-n`, logo:
+
+```sh
+[ -n "$FOO" ]
+```
+
+É equivlaente a:
+
+```sh
+[ "$FOO" ]
+```
+
+#### `-p` & `-t`
+
+*Named pipes* e *process replacements*.
+
+Para o seguinte teste de mesa:
+
+```sh
+#!/bin/bash
+
+for fd in {0..2}; do
+	prefix="fd ${fd@Q} is"
+	[ ! -t "$fd" ] && prefix+=' not'
+	echo "$prefix opened"
+done
+
+for arg; do
+	prefix="arg ${arg@Q} is"
+	[ ! -p "$arg" ] && prefix+=' not'
+	echo "$prefix a named pipe"
+done
+```
+
+Teríamos as seguintes saída para as respectivas chamadas:
+
+1. `$ ./test.sh`:
+    ```
+    fd '0' is opened
+    fd '1' is opened
+    fd '2' is opened
+    ```
+
+1. `$ ./test.sh "foo" "bar"`:
+    ```
+    fd '0' is opened
+    fd '1' is opened
+    fd '2' is opened
+    arg 'foo' is not a named pipe
+    arg 'bar' is not a named pipe
+    ```
+
+1. `$ ./test.sh <(echo "foo") "bar"`:
+    ```
+    fd '0' is opened
+    fd '1' is opened
+    fd '2' is opened
+    arg '/dev/fd/63' is a named pipe
+    arg 'bar' is not a named pipe
+    ```
+
+1. `$ echo "foo" | ./test.sh`:
+    ```
+    fd '0' is not opened
+    fd '1' is opened
+    fd '2' is opened
+    ```
+
+1. `$ ./test.sh < file.txt`:
+    ```
+    fd '0' is not opened
+    fd '1' is opened
+    fd '2' is opened
+    ```
+
+1. `$ ./test.sh <<< "foo"`:
+    ```
+    fd '0' is not opened
+    fd '1' is opened
+    fd '2' is opened
+    ```
+
+1. `$ echo xpto | ./test.sh <(echo foo) bar`:
+    ```
+    fd '0' is not opened
+    fd '1' is opened
+    fd '2' is opened
+    arg '/dev/fd/63' is a named pipe
+    arg 'bar' is not a named pipe
+    ```
 
 ## *Parameter Expansion*
 
@@ -242,23 +351,11 @@ Parâmetros da variável `PS1`:
 
 - Num RegEx você também pode negar uma classe inteira com: `[^[:<class>:]]`
 
-## *Internal Keywords*
-
-Palavras reservadas do Bash.
-
-### `return`
-
-Usar quando dentro de uma função você não quiser encerrar o *script* por completo (com comando `exit` por exemplo), ou seja, quando quiser somente sair da função antecipadamente.
-
-Com esse comando podemos especificar o código de retorno da função com `return <code>` e caso não especifique o código de retorno o comando automáticamente retornará a função com o código de retorno do último comando executado.
-
-E o comando também só será útil caso queira retornar de forma antecipada pois caso utilize o `return` na última linha, NÃO ter o `return` terá o mesmo efeito.
-
 ## *Tips & Tricks*
 
 Dicas e truques gerais do Bash.
 
-## Operadores de Atribuição em *Arrays*
+### Operadores de Atribuição em *Arrays*
 
 Adicionar valor ao *array* depois de inicializado:
 
