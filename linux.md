@@ -570,7 +570,9 @@ Montar:
 
 ```sh
 [sudo] jmtpfs /mount/point -device=<bus>,<device> -o allow_other
+
 # or
+
 [sudo] jmtpfs /mount/point -o allow_other,auto_unmount
 ```
 
@@ -578,7 +580,9 @@ Desmontar:
 
 ```sh
 [sudo] umount /mount/point
+
 # or
+
 [sudo] fusermount -u /mount/point
 ```
 
@@ -1844,6 +1848,7 @@ Gerar *backup* das regras:
 ```sh
 # cutting the first line
 ufw show added | tail -n +2 > /path/ufw.txt
+
 # cutting the line starts with
 ufw show added | sed -E '/^[aA]dded/d' > /path/ufw.txt
 ```
@@ -2272,6 +2277,7 @@ Caso queira validar somente se houver erro:
 if ! temp="$(mktemp XXXXXXX.tmp [2>&-])"; then
 	# case not created
 fi
+
 echo "temp: $temp"
 ```
 
@@ -2283,18 +2289,18 @@ echo "temp: $temp"
 
 Diferença entre duas *strings*:
 
-1.
+-
 	```sh
 	diff [--color] 'foo' 'bar'
 	```
 
 Diferença entre dois arquivos:
 
-1.
+-
 	```sh
 	diff [--color] /path/file1.txt /path/file2.txt
 	```
-1.
+-
 	```sh
 	diff [--color] <(<command>) <(<command>)
 	```
@@ -2621,6 +2627,32 @@ flatpak install com.valvesoftware.Steam com.valvesoftware.Steam.Utility.MangoHud
 ```
 
 > Se for necessário, utilizando o FlatSeal libere as permissões do pacote flatpak do Steam para acessar outras unidades de disco.
+
+### Heredoc
+
+Normal:
+
+```sh
+cat << EOF
+	$SHELL
+EOF
+```
+
+*Raw* (sem escapes ou expanções):
+
+```sh
+cat << \EOF
+	$SHELL
+EOF
+```
+
+*In-line*:
+
+```sh
+eval $'cat << eof\nhello\neof'
+
+eval $'read foo << eof\nhello\neof'
+```
 
 ### *Runlevels*
 
@@ -3421,8 +3453,10 @@ Conectar outro VD ou um HD real:
 ```sh
 # for qcow2 VD
 qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX} -drive file=/path/disk.qcow2,format=qcow2,if=virtio
+
 # for VD created by dd
 qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX} -drive file=/path/disk.img,format=raw,if=virtio
+
 # for partitions (HDD or pendrives)
 qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX} -drive file=/dev/sdXY,format=raw,if=virtio
 ```
