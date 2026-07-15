@@ -418,3 +418,25 @@ options=`IFS=,; echo "${array[*]}"`
 ```
 
 Nesse caso o comando do bloco verdade falhará (`ls /foo`), e caso não tenha o ":;", o bloco false também será executado pois como o operador `&&`, o operador `||` avalia o código de saída do último comando executado (comando anterior a ele) e não a condição do comando `test` (para isso temos especificamente o comando `if`). Isso não é uma falha, muito pelo contrário, de fato é o comportamento correto uma vez que você entende o intuito e o funcionamento dos operadores lógicos do _shell_... Esse exemplo é apenas um _trick_ para que o comportamento dessa expressão seja o mais próximo de um **if** tradicional.
+
+### Imprimir Variável Pelo Valor com Expansão de Parâmetro
+
+Simples:
+
+```sh
+foo='bar'
+bar='xpto'
+# eval echo "\$$foo"
+echo "${!foo}"
+```
+
+Avançado (expansão não é possível aqui):
+
+```sh
+bar1='boo'
+bar2='baz'
+foo=1
+eval echo "\$bar$foo"
+foo=2
+eval echo "\$bar$foo"
+```
