@@ -3529,6 +3529,41 @@ Monitores CLI (*top like*):
 - `powertop`
 - `usbtop`
 
+### ANSI Colors
+
+Escapes:
+
+- Forma longa:
+    - Iniciar: `\033[<ansi>;<ansi>m`
+    - Resetar: `\033[00m`
+- Forma abreviada:
+    - Iniciar: `\e[<ansi>;<ansi>m`
+    - Resetar: `\e[00m`
+
+Cores:
+
+| Color   | Code    | - | Effect    | Code |
+| ------- | ------- | - | --------- | ---- |
+| Black   | {3\|4}0 | - | Regular   | 0    |
+| Red     | {3\|4}1 | - | Bold      | 1    |
+| Green   | {3\|4}2 | - | Dim       | 2    |
+| Yellow  | {3\|4}3 | - | Italic    | 3    |
+| Blue    | {3\|4}4 | - | Underline | 4    |
+| Magenta | {3\|4}5 | - | Blink     | 5    |
+| Cyan    | {3\|4}6 | - | Invert    | 7    |
+| White   | {3\|4}7 | - | Hidden    | 8    |
+
+Exemplo base:
+
+```sh
+echo $'\e[1;31;43m<string>\e[m'
+```
+
+*OBSERVAÇÕES:*
+
+- Quando for utilizdo as cores na `PS1` (Bash), proteja a expressão:
+	`\[\e[<ansi>m\]foobar\[\e[m\]`
+
 ## Configurações
 
 Anotações gerais sobre procedimentos (tutoriais).
