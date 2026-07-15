@@ -2,6 +2,18 @@
 
 Anotações gerais sobre Desenvolvimento: programas e configurações.
 
+## `printf`
+
+Imprimir caracteres em sequência:
+
+```sh
+printf -- '-%.s' `seq <count>`
+
+# or
+
+printf -- '|%.s\n' `seq <count>`
+```
+
 ## `base64`
 
 Tanto para codificar quanto para decodificar é necessário passar o dado via **arquivo** ou **STDIN**.
