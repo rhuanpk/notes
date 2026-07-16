@@ -24,13 +24,13 @@ ffmpeg -i /path/video.mp4 -filter:v "setpts=<speed>*PTS" -an /path/output.mp4
 
 - [Blog Viva o Linux](<https://www.vivaolinux.com.br/dica/Como-aumentar-ou-reduzir-a-velocidade-de-um-video-via-linha-de-comando>)
 
-*MKV to MP4*:
+*MKV to MP4:*
 
 ```sh
 ffmpeg -i /path/video.mkv -codec copy /path/video.mp4
 ```
 
-*VIDEO to GIF*:
+*VIDEO to GIF:*
 
 ```sh
 ffmpeg -i /path/video.mp4 /path/image.gif
@@ -175,7 +175,7 @@ Programas necessários:
 [sudo] apt install poppler-utils
 ```
 
-*PDF to IMAGE*:
+*PDF to IMAGE:*
 
 ```sh
 # one to one
@@ -209,7 +209,7 @@ Remover metadados de imagens:
 mogrify -strip /path/folder/*.png
 ```
 
-*IMAGE to PDF*:
+*IMAGE to PDF:*
 
 ```sh
 # one to one
@@ -221,14 +221,14 @@ mogrify -format pdf /path/folder/*.png
 
 ### `convert`
 
-*IMAGE to PDF*:
+*IMAGE to PDF:*
 
 ```sh
 # one to one
-convert /path/image.png /path/out.pdf
+convert /path/image.png /path/document.pdf
 
 # many to one
-convert /path/folder/*.png /path/out.pdf
+convert /path/folder/*.png /path/document.pdf
 
 # multiples, one to one
 for file in /path/folder/*.png; do convert "$file" "${file%.*}.pdf"; done
@@ -240,6 +240,27 @@ Se houver erro de não permissão devido a policitas para PDFs:
 
 ```sh
 sed -Ei 's,(<policy domain="coder" rights=").*(" pattern="PDF" />),\1read|write\2,' /etc/ImageMagick-?/policy.xml
+```
+
+## SVG
+
+Programas necessários:
+
+```sh
+[sudo] apt install librsvg2-bin imagemagick
+```
+
+*SVG to PNG:*
+
+```sh
+rsvg-convert -o /path/image.png /path/image.svg
+```
+
+*SVG to JPG:*
+
+```sh
+# can set background color as desired
+rsvg-convert -b '#ffffff' /path/image.svg | magick - /path/image.jpg
 ```
 
 ## Fonts
