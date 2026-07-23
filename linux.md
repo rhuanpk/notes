@@ -3110,8 +3110,8 @@ Desabilitar:
 *Parâmetros usados:*
 
 - <algorithm>: Tipo do algoritmo de compressão
-    - `zstd`: Maior compressão e mais "lento"
-    - `lz4`: Menor compressão e mais "rápido"
+    - Velocidade: `lz4` > `zstd` > `lzo`
+    - Compressão: `zstd` > `lzo` > `lz4`
 - <space>: Define o tamanho da área de compressão
     - `PERCENT`: Porcentagem refente ao total de RAM
     - `SIZE`: Tamanho em MiB independente do tamanho da RAM
@@ -3127,15 +3127,18 @@ Habilitar:
 1. Configurar zRAM `/etc/default/zramswap`:
     ```sh
     ALGO=<algorithm>
-    PRIORITY=100
-    # leave only one of these
     PERCENT=<space>
     SIZE=<space>
+    PRIORITY=100
     ```
 1. Iniciar o serviço:
     ```sh
     systemctl enable --now zramswap
     ```
+
+*OBSERVAÇÕES:*
+
+- A propriedade `PERCENT` tem precedencia sobre `SIZE`
 
 Desabilitar:
 
@@ -3149,8 +3152,8 @@ Desabilitar:
 Exige que uma SWAP já esteja configurada, uma vez que atuam em conjunto.
 
 - <algorithm>: Tipo do algoritmo de compressão
-    - `zstd`: Maior compressão e mais "lento"
-    - `lz4`: Menor compressão e mais "rápido"
+    - Velocidade: `lz4` > `zstd` > `lzo`
+    - Compressão: `zstd` > `lzo` > `lz4`
 
 Habilitar:
 
