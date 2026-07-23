@@ -3030,6 +3030,151 @@ Valores possíveis:
 
 - Não é recomendado para manutenção regular do sistema o uso recorrente desse comando
 
+### Troca
+
+Comandos para configuração de cada tipo de Área de Troca.
+
+*Parâmetros usados:*
+
+- `X`: Letra do disco
+- `Y`: Número da partição
+
+#### SWAP
+
+A SWAP pode ser configurada via partição (diretamente no disco) ou via arquivo (que é mais lenta ainda, porém, muito mais flexível caso precise removê-la ou alterar seu tamanho).
+
+##### Partição
+
+Habilitar:
+
+1. Formatar partição como SWAP:
+    ```sh
+    [sudo] mkswap /dev/sdXY
+    ```
+1. Ativar partição SWAP:
+    ```sh
+    [sudo] swapon /dev/sdXY
+    ```
+1. Editar `/etc/fstab` para persistência:
+    ```sh
+    [sudo] tee -a /etc/fstab <<< '/dev/sdXY none swap sw 0 0'
+    ```
+
+Desabilitar:
+
+1. Desativar partição:
+    ```sh
+    [sudo] swapoff /dev/sdXY
+    ```
+1. Remover entrada do `/etc/fstab`
+
+##### Arquivo
+
+Habilitar:
+
+1. Criar arquivo de SWAP:
+    ```sh
+    [sudo] fallocate -l <size>G /swapfile
+    ```
+1. Mudar permissões do arquivo de SWAP:
+    ```sh
+    [sudo] chmod 600 /swapfile
+    ```
+1. Formatar arquivo como SWAP:
+    ```sh
+    [sudo] mkswap /swapfile
+    ```
+1. Ativar arquivo SWAP:
+    ```sh
+    [sudo] swapon /swapfile
+    ```
+1. Editar `/etc/fstab` para persistência:
+    ```sh
+    [sudo] tee -a /etc/fstab <<< '/swapfile none swap sw 0 0'
+    ```
+
+Desabilitar:
+
+1. Desativar arquivo:
+    ```sh
+    [sudo] swapoff /swapfile
+    ```
+1. Remover arquivo:
+    ```sh
+    [sudo] rm -v /swapfile
+    ```
+1. Remover entrada do `/etc/fstab`
+
+#### zRAM
+
+*Parâmetros usados:*
+
+- <algorithm>: Tipo do algoritmo de compressão
+    - `zstd`: Maior compressão e mais "lento"
+    - `lz4`: Menor compressão e mais "rápido"
+- <space>: Define o tamanho da área de compressão
+    - `PERCENT`: Porcentagem refente ao total de RAM
+    - `SIZE`: Tamanho em MiB independente do tamanho da RAM
+
+Programas necessários:
+
+```sh
+[sudo] apt install zram-tools
+```
+
+Habilitar:
+
+1. Configurar zRAM `/etc/default/zramswap`:
+    ```sh
+    ALGO=<algorithm>
+    PRIORITY=100
+    # leave only one of these
+    PERCENT=<space>
+    SIZE=<space>
+    ```
+1. Iniciar o serviço:
+    ```sh
+    systemctl enable --now zramswap
+    ```
+
+Desabilitar:
+
+1. Parar o serviço:
+    ```sh
+    systemctl disable --now zramswap
+    ```
+
+#### Zswap
+
+Exige que uma SWAP já esteja configurada, uma vez que atuam em conjunto.
+
+- <algorithm>: Tipo do algoritmo de compressão
+    - `zstd`: Maior compressão e mais "lento"
+    - `lz4`: Menor compressão e mais "rápido"
+
+Habilitar:
+
+1. Editar o `/etc/default/grub` "appendando" em `GRUB_CMDLINE_LINUX_DEFAULT`:
+    ```sh
+    zswap.enabled=1 zswap.compressor=<algorithm> zswap.max_pool_percent=20
+    ```
+1. Atualizar o `grub`:
+    ```sh
+    [sudo] update-grub
+    ```
+
+*OBSERVAÇÕES:*
+
+- O parâmetro `max_pool_percent` é o tamanho da área de cache baseado no total de RAM
+
+Desabilitar:
+
+1. Remover os parâmetros da `zswap` ou definir `zswap.enabled=1` da `GRUB_CMDLINE_LINUX_DEFAULT` em `/etc/default/grub`
+1. Atualizar o `grub`:
+    ```sh
+    [sudo] update-grub
+    ```
+
 ### *Signals*
 
 *Parâmetros usados:*
@@ -3935,6 +4080,64 @@ Renomear:
 ```sh
 [sudo] ntfslabel /dev/sdXY <label>
 ```
+
+### Troca
+
+Independente do tipo, Áreas de Troca no Linux são técnicas para "estender" a capacidade física da Memória RAM.
+
+São estes os tipos de Área de Troca: SWAP, zRAM e Zswap.
+
+#### SWAP
+
+Separamos parte do armazenamento (de qualquer *drive* conectado ao sistema) como **área de troca**.
+
+Quando a Memória RAM fica cheia, o excedente começa a escoar para o espaço em disco que foi reservado.
+
+Isso impede que o sistema trave, porém também pode deixá-lo lento. HDDs são consideravelmente mais lentos do que SSDs, por isso, essa técnica é menos preferível em discos rígidos.
+
+O espaço em disco destinado para SWAP pode ser definido na mesma unidade de medida do mesmo.
+
+Geralmente a SWAP tem cerca de 50%, 100% ou 150% da RAM total, mas isso não é uma regra, apenas valores comuns utilizados.
+
+##### Hibernação
+
+Caso utilize a função de hibernação no sistema, a SWAP será usada para guardar todo o conteúdo "importante" que está na RAM, por isso, o tamanho da SWAP deverá ser no mínimo o tamanho total da RAM.
+
+Nos cenários onde a SWAP é menor que o tamanho total da RAM ou mesmo quando a SWAP tem o tamanho total, se parte dela já estiver em uso, pode faltar espaço para guardar toda a RAM ao hibernar, então a operação falharia e o sistema continuaria "acordado".
+
+#### zRAM
+
+Diferentemente da SWAP, não estendemos a capacidade da Memória RAM utilizando armazenamento físico, comprimimos o conteúdo da RAM dentro dela mesma, separando parte da própria Memória para servir como **área de compressão**.
+
+O espaço que reservamos na RAM é um teto e é dinâmico, ou seja, significa que o valor que a zRAM ocupado cresce conforme a necessidade.
+
+Se temos 8G de RAM e reservamos 2G para zRAM, isso significa que temos:
+
+- 6G de RAM "normal" (descomprimida)
+- 2G de zRAM (área de compreensão)
+
+A proporção de ganho de espaço depende do algoritmo de compressão utilizado, mas suponhamos que seja de `2:1`, isso significa que:
+
+- A cada 2G de RAM utilizados, se tornam 1G
+- Então, 2G de zRAM equivalem a 4G de RAM
+- Somando a RAM descomprimida, totalizam 10G
+
+Caso a RAM atinja um pico de uso de 100%, o sistema poderá travar.
+
+Como essa técnica não envolve disco rígido, é relativamente mais performática do que SWAP, entretanto, é mais custosa em processamento.
+
+Teoricamente, para um uso mínimo confortável de zRAM, recomendasse um processador de pelo menos:
+
+- 2 núcleos (*dual-core*)
+- 1.5GHz de *clock*
+
+Não é recomendado o uso da zRAM para processadores de apenas 1 núcleo (*single-core*) ou se o seu uso diário já é de 100%.
+
+#### Zswap
+
+Essencialmente é a junção dos conceitos de SWAP e zRAM. Atua como uma **área de *cache*** entre a RAM e a SWAP.
+
+Quando uma página de memória é enviada para SWAP, a Zswap tenta comprimi-la e guardar no *cache* em RAM. Caso o *cache* esteja cheio ou a compressão não for boa, então a página é destinada à SWAP.
 
 ### SSH
 
