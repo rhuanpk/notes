@@ -946,16 +946,22 @@ firejail --put=<sandbox> /path/host/file.txt /path/sandbox/file.txt
 
 #### *Troubleshooting*
 
-Problemas com áudio usando `pulseauido` como driver:
+Problemas com áudio usando `pulseauido` como *driver*:
 
 1. `mkdir -pv ~/.config/pulse`
 1. `cp -v /etc/pulse/client.conf ~/.config/pulse`
 1. `echo 'enable-shm = no' >> ~/.config/pulse/client.conf`
 
+Problemas com falta de entradas padrão (teclado/*mouse*):
+
+```
+firejail --nodbus --private <command>
+```
+
 Problemas com falta de *internet* ao usar `--private` pode ser falta de DNS:
 
 ```
-firejail --private --dns=<ipv4>[ ...] <command>
+firejail --dns=<ipv4>[ ...] --private <command>
 ```
 
 Para executar Google Chrome:
@@ -967,7 +973,7 @@ firejail --private google-chrome --no-sandbox --no-first-run
 Caso ainda tenha problemas com Google Chrome e esteja no Wayland:
 
 ```sh
-firejail --noprofile --private --env=MOZ_ENABLE_WAYLAND=1 --dns=1.1.1.1 google-chrome --no-sandbox --ozone-platform=wayland --disable-vulkan --no-first-run
+firejail --noprofile --env=MOZ_ENABLE_WAYLAND=1 --private google-chrome --no-sandbox --no-first-run --ozone-platform=wayland --disable-vulkan
 ```
 
 ### `smem`
