@@ -210,6 +210,12 @@ Converter/Comprimir JPG|JPEG|PNG|Y4M para AVIF:
 avifenc [-q <speed>] [-s <speed>] [-j <procs>] /path/image.png /path/image.avif
 ```
 
+## `rav1e`
+
+```sh
+ffmpeg -i /path/video.mp4 -c:v librav1e -qp 255 -speed 0 -threads 12 -tiles 9 /path/video.mkv
+```
+
 ## *ImageMagick*
 
 Programas necessários:
