@@ -185,6 +185,31 @@ pdftoppm -png /path/file.pdf /path/file.pdf
 find /path/folder -maxdepth 1 -type f -name -name '*.pdf' -exec pdftoppm -png '{}' '{}' \;
 ```
 
+## `avifenc`
+
+*Parâmetros usados:*
+
+- `<quality>`: Valor da qualidade final da imagem num *range* de `{0..100}`
+- `<speed>`: Valor da velocidade de processamento num *range* de `{0..10}`
+- `<procs>`: Contagem de processadores a serem usados na condificação ou `all` para usar todos de forma automática
+
+*Opções usadas:*
+
+- `-q <quality>`: Qualidade da codificação, `0` maior perca e menor tamanho, `100` menor perca e maior tamanho (`50` **melhor custo benefício**)
+- `-s <speed>`: Velocidade da condificação, `0` mais lento melhor compressão, `10` mais rápido pior compressão (`5` melhor **custo benefício**)
+
+Programas necessários:
+
+```sh
+[sudo] apt install libavif-bin
+```
+
+Converter/Comprimir JPG|JPEG|PNG|Y4M para AVIF:
+
+```sh
+avifenc [-q <speed>] [-s <speed>] [-j <procs>] /path/image.png /path/image.avif
+```
+
 ## *ImageMagick*
 
 Programas necessários:
