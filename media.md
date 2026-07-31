@@ -191,12 +191,13 @@ find /path/folder -maxdepth 1 -type f -name -name '*.pdf' -exec pdftoppm -png '{
 
 - `<quality>`: Valor da qualidade final da imagem num *range* de `{0..100}`
 - `<speed>`: Valor da velocidade de processamento num *range* de `{0..10}`
-- `<procs>`: Contagem de processadores a serem usados na condificação ou `all` para usar todos de forma automática
+- `<jobs>`: Contagem de processadores a serem usados na condificação ou `all` para usar todos de forma automática
 
 *Opções usadas:*
 
-- `-q <quality>`: Qualidade da codificação, `0` maior perca e menor tamanho, `100` menor perca e maior tamanho (`50` **melhor custo benefício**)
-- `-s <speed>`: Velocidade da condificação, `0` mais lento melhor compressão, `10` mais rápido pior compressão (`5` melhor **custo benefício**)
+- `-q <quality>`: Qualidade da codificação, `0` **menor qualidade** e tamanho, `100` **maior qualidade** e tamanho (`50` **melhor custo benefício**)
+- `-s <speed>`: Velocidade da condificação, `0` **melhor compressão** lento, `10` **pior compressão** rápido (`5` melhor **custo benefício**)
+- `-j <jobs>`: Quantidade de processadores usados para processamento simultâneo (paralelismo)
 
 Programas necessários:
 
@@ -207,13 +208,34 @@ Programas necessários:
 Converter/Comprimir JPG|JPEG|PNG|Y4M para AVIF:
 
 ```sh
-avifenc [-q <speed>] [-s <speed>] [-j <procs>] /path/image.png /path/image.avif
+avifenc [-q <speed>] [-s <speed>] [-j <jobs>] /path/image.png /path/image.avif
 ```
 
 ## `rav1e`
 
+*Parâmetros usados:*
+
+- `<quantizer>`: Valor da qualidade final do vídeo num *range* de `{0..255}`
+- `<speed>`: Valor da velocidade de processamento num *range* de `{0..10}`
+- `<threads>`: Contagem de processadores a serem usados na condificação
+- `<tiles>`: Contagem de quadros a serem processados por vez de cada *frame*
+
+*Opções usadas:*
+
+- `-i <path>`: Caminho do vídeo de entrada (de qualquer tipo que o `ffmpeg` suporte)
+- `-qp <quantizer>`: Qualidade da codificação, `0` **maior qualidade** e tamanho, `255` **menor qualidade** e tamanho (`128` **melhor custo benefício**)
+- `-speed <speed>`: Velocidade da condificação, `0` **melhor compressão** lento, `10` **pior compressão** rápido (`5` melhor **custo benefício**)
+- `-threads <threads>`: Quantidade de processadores usados para processamento simultâneo (paralelismo)
+- `-tiles <tiles>`: Quantidade de quadros de *frame* processados simultâneamente (paralelismo)
+
+Programas necessários:
+
 ```sh
-ffmpeg -i /path/video.mp4 -c:v librav1e -qp 255 -speed 0 -threads 12 -tiles 9 /path/video.mkv
+[sudo] apt install librav1e-dev ffmpeg
+```
+
+```sh
+ffmpeg -i /path/video.mp4 -c:v librav1e [-qp <quantizer>] [-speed <speed>] [-threads <threads>] [-tiles <tiles>] /path/video.mkv
 ```
 
 ## *ImageMagick*
