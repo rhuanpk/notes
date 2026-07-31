@@ -238,6 +238,10 @@ Programas necessários:
 ffmpeg -i /path/video.mp4 -c:v librav1e [-qp <quantizer>] [-speed <speed>] [-threads <threads>] [-tiles <tiles>] /path/video.mkv
 ```
 
+*OBSERVAÇÕES:*
+
+- Para um bom equilíbrio de paralelismo em um processamento individual de vídeo, utilize um proporção de 50% até 75% de *tiles* em relação a quantidade de *threads* (*e.g.* `-threads 12 -tiles 6`, `-threads 12 -tiles -9`)
+
 ## *ImageMagick*
 
 Programas necessários:
