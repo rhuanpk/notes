@@ -1153,6 +1153,28 @@ Criar *link* simbólico:
 ln -s /path/original/file.txt /path/symlink
 ```
 
+### `parallel`
+
+Programas necessários:
+
+```sh
+[sudo] apt install parallel
+```
+
+Ferramenta de paralelismo GNU. De forma geral, ela pareliza comandos com base na quantidade de entradas que recebe.
+
+Cada *newline* é uma entrada, se temos 5 linha, temos 5 processos, se paralelizamos 3 processos, teremos 2 rodadas:
+
+```sh
+parallel -j3 "sleep 1; echo done" <<< $'1\n2\n3\n4\n5'
+```
+
+As entrada podem ser enviadas ao comando via *placeholders*:
+
+```sh
+echo /foo/bar/xpto.any | parallel "echo '{} | {.} | {/} | {//} | {/.}'"
+```
+
 ### `tar`
 
 *Parâmetros usados:*
