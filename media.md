@@ -205,7 +205,7 @@ Programas necessários:
 [sudo] apt install libavif-bin
 ```
 
-Converter/Comprimir JPG|JPEG|PNG|Y4M para AVIF:
+Converter JPG|JPEG|PNG|Y4M para AVIF:
 
 ```sh
 avifenc [-q <speed>] [-s <speed>] [-j <jobs>] /path/image.png /path/image.avif
@@ -219,6 +219,7 @@ avifenc [-q <speed>] [-s <speed>] [-j <jobs>] /path/image.png /path/image.avif
 - `<speed>`: Valor da velocidade de processamento num *range* de `{0..10}`
 - `<threads>`: Contagem de processadores a serem usados na condificação
 - `<tiles>`: Contagem de quadros a serem processados por vez de cada *frame*
+- `<jobs>`: Contagem de processadores a serem usados na paralelização de processos
 
 *Opções usadas:*
 
@@ -234,8 +235,16 @@ Programas necessários:
 [sudo] apt install librav1e-dev ffmpeg
 ```
 
+Encodar MP4|MKV|MOV|AVI|WebM em AV1:
+
 ```sh
 ffmpeg -i /path/video.mp4 -c:v librav1e [-qp <quantizer>] [-speed <speed>] [-threads <threads>] [-tiles <tiles>] /path/video.mkv
+```
+
+Encodar múltiplos em paralelo:
+
+```sh
+find /path/videos -not -path '*/videos' | parallel -j<jobs> 'ffmpeg -i {} -c:v librav1e -qp <quantizer> -speed <speed> -threads <threads> -tiles <tiles> {.}.mkv'
 ```
 
 *OBSERVAÇÕES:*
