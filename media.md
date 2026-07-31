@@ -192,6 +192,7 @@ find /path/folder -maxdepth 1 -type f -name -name '*.pdf' -exec pdftoppm -png '{
 - `<quality>`: Valor da qualidade final da imagem num *range* de `{0..100}`
 - `<speed>`: Valor da velocidade de processamento num *range* de `{0..10}`
 - `<jobs>`: Contagem de processadores a serem usados na condificação ou `all` para usar todos de forma automática
+- `<procs>`: Contagem de processadores a serem usados na paralelização de processos
 
 *Opções usadas:*
 
@@ -208,13 +209,20 @@ Programas necessários:
 Converter JPG|JPEG|PNG|Y4M para AVIF:
 
 ```sh
-avifenc [-q <speed>] [-s <speed>] [-j <jobs>] /path/image.png /path/image.avif
+avifenc [-q <quality>] [-s <speed>] [-j <jobs>] /path/image.png /path/image.avif
+```
+
+Converter múltiplos em paralelo:
+
+```sh
+find /path/images -not -path '*/images' | parallel -j<procs> 'avifenc -q <quality> -s <speed> -j <jobs> {} {.}.avif'
 ```
 
 ## `rav1e`
 
 *Parâmetros usados:*
 
+- `<path>`: Caminho para arquivo no sistema
 - `<quantizer>`: Valor da qualidade final do vídeo num *range* de `{0..255}`
 - `<speed>`: Valor da velocidade de processamento num *range* de `{0..10}`
 - `<threads>`: Contagem de processadores a serem usados na condificação
