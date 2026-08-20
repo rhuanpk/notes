@@ -2050,7 +2050,7 @@ gpg --full-gen-key
 - Para mudar o "nível de segurança da chave":
 	- `gpg --edit-key <key>`
 	- `gpg> trust`
-	- *escolher*
+	- *Escolha a opção desejada*
 	- `gpg> save`
 
 Listar chaves públicas:
@@ -3002,7 +3002,7 @@ while :; do
 done
 ```
 
-*Pipeline* de exemplo:
+*PIPELINE:*
 
 ```sh
 while :; do clear; echo $((($(cat /sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_cur_freq | paste -sd+))/$(nproc)/1000))MHz; sleep 1; done

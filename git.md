@@ -2,129 +2,120 @@
 
 Anotações gerais sobre Git: comandos e configurações.
 
-### *Quick Start*
+## *Quick Start*
 
 1. `git add ./`
-1. `git commit -m 'commit message'`
-1. `git push origin main`
+1. `git commit -m "commit message"`
+1. `git push origin HEAD`
 
-_pipeline_:
+## *Branchs*
 
-```sh
-git add ./ && git commit -m 'commit message' && git push origin main
-```
+Comandos e configurações de *branchs*.
 
-### Branchs
-
-#### Listagem de branchs
+### Listagem
 
 Locais:
 
-```bash
-git branch [--list|-l]
+```sh
+git branch [-l]
 ```
 
 Remotas:
 
-```bash
-git branch {--remotes|-r} {--list|-l}
+```sh
+git branch [-l] -r
 ```
 
 Locais e remotas:
 
-```bash
-git branch {--all|-a}
+```sh
+git branch -a
 ```
 
-Detalhamento das branchs:
+Adicionar verbosidade:
 
-```bash
-git branch -vva
+```sh
+git branch -v[v]
 ```
 
-Mostra além das branchs remotas, outras infos:
-
-```bash
-git remote show <remote_name>
-```
-
-#### Troca de branchs
+### Troca
 
 Com *checkout*:
 
-- -b: cria uma nova branch.
-
-```bash
-git checkout [-b] <branch_name>
+```sh
+# -b: creates the branch if not exists
+git checkout [-b] <branch>
 ```
 
-Com *switch*:
+Com *switch* (padrão atual):
 
-- -c: cria uma nova branch.
-
-```bash
-git switch [-c] <branch_name>
+```sh
+# -c: creates the branch if not exists
+git switch [-c] <branch>
 ```
 
-OBS: casp seja passado a opção de criação de branch na hora de mudar para ela, será criado essa nova branch e seguida mudado para ela.
+### Remoção
 
-#### Remoção de branchs
+Comandos e configurações de remoção de *branchs*.
 
-##### Local
+#### Local
 
 Remover:
 
-```bash
-git branch -d <branch_name>
+```sh
+git branch -d <branch>
 ```
 
 Forçando:
 
-```bash
-git branch -D <branch_name>
+```sh
+git branch -D <branch>
 ```
 
-Deletar somente a referência das branchs remotas:
+Deletar somente a referência das *branchs* remotas:
 
-```bash
+```sh
 git branch -rl '<remote>/*' | xargs git branch -dr
 ```
 
-##### Remoto
+#### Remoto
 
 Remover:
 
-```bash
-git push origin {:<remote_branch>|--delete <remote_branch>}
+```sh
+git push origin {:<branch>|-d <branch>}
 ```
 
-Parar de _trackear_ branch remota:
+Parar de "trackear" *branch* remota:
 
 ```sh
 git branch -dr <remote>/<branch>
 ```
 
-#### Renomeação de Branchs
+### Nomeação
 
-##### Local
+Comandos e configurações de nomeação de *branchs*.
 
-Renomear:
+#### Local
+
+Nomear:
 
 ```sh
-git branch -m <new_branch>
+git branch -m <branch>
 ```
+
 Forçando:
 
 ```sh
-git branch -M <new_branch>
+git branch -M <branch>
 ```
 
-##### Remoto
+#### Remoto
 
-Renomear:
+Nomear:
 
 ```sh
-git push <remote> <remote>/<old_branch>:refs/heads/<new_branch> :<old_branch>
+git push <remote> <remote>/<old>:refs/heads/<new> :<old>
 ```
 
 Desvincular local com remoto inexistente:
@@ -136,875 +127,954 @@ git branch --unset-upstream
 Vincular local com novo remoto:
 
 ```sh
-git branch --set-upstream-to=<remote>/<new_branch>
+git branch --set-upstream-to=<remote>/<new>
 ```
 
-#### Criação de Branchs
+### Criação
 
 A partir de uma remoto já existente:
+
 ```sh
-git switch -c <local-branch> <remote>/<remote-branch>
+git switch -c <branch> <remote>/<branch>
 ```
 
-#### Alteração de Branchs
+### Alteração
 
-Colocar _branch_ em _commit_ específico:
+Colocar *branch* em *commit* específico:
+
 ```sh
 git branch -f <branch> <commit>
 ```
 
-### Push
+## *Push*
 
-Enviar a _branch_ local para o _remote_ específicado com o mesmo nome da _branch_ local, caso a _branch_ local não exista no remoto, será criada:
+Enviar a *branch* local para o remoto, para uma *branch* (remota) com o mesmo noma da local. Caso a *branch* remota não exista, será criada:
 
-```bash
-git push <remote> <local-branch>
+```sh
+git push <remote> <destination>
 ```
 
-Enviar a _branch_ local para o _remote_ específicado para a _branch_ remota específicada, caso a _branch_ remota não exista no remoto, será criada:
+Enviar a *branch* local para o remoto, para a *branch* (remota) especificada. Caso a *branch* remota não exista, será criada:
 
-```bash
-git push <remote> <local-branch>:<remote-branch>
+```sh
+# left of ":" is the existent local branch
+# right of ":" is the new or existent remote branch
+git push <remote> <source>:<destination>
 ```
 
-### Commits
+## *Commits*
 
-#### Revert
+Comandos e configurações de *commits*.
 
-Desfaz o _commit_ criando um novo _commit_ sem essas alterações:
+### *Revert*
+
+Desfaz o *commit* criando um novo *commit* sem essas alterações:
 
 ```sh
 git revert <commit>
 ```
 
-Passando um _range_ (do mais antigo para o mais novo) de _commits_ (isso fará um **revert** por vez):
+Passando um *range* (do mais antigo para o mais novo) de *commits*. Isso fará um *revert* por vez:
 
 ```sh
-git revert <oldest-commit>..<newst-commit>
+git revert <oldest>..<newst>
 ```
 
-#### Reset
+### *Reset*
 
-Resetar o commit sem perder as alterações colocando elas na _worktree_:
+Resetar o *commit* sem perder as alterações, colocando-as na *worktree*:
 
-```bash
-git reset <commit-hash>
+```sh
+git reset <commit>
 ```
 
-Resetar o commit sem perder as alterações voltando elas para o _index_ (_staged area_):
+Resetar o *commit* sem perder as alterações, colocando-as no *index* (*staging area*):
 
-```bash
-git reset --soft <commit-hash>
+```sh
+git reset --soft <commit>
 ```
 
-Desfazer o commit por completo (sem manter as alterações):
+Remover o *commit* por completo (sem manter as alterações):
 
-```bash
-git reset --hard <commit-hash>
+```sh
+git reset --hard <commit>
 ```
 
-#### Amend
+### *Amend*
 
-Para adicionar um novo arquivo para o último _commit_ ou editar qualquer arquivo do _commit_, basta fazer as alterações desejadas e adicionar em _stage_ (`git add <path>`):
+Para adicionar ou editar qualquer alteração no último *commit*, basta fazer as alterações desejadas, adicionar em *staging* (`git add <path>`) e "commitar" com *amend*.
 
-```bash
-# simplesmente commitar sem alterar nada (mensagem):
+Simplesmente "commitar", sem alterar nada (mensagem):
+
+```sh
 git commit --amend --no-edit
-
-# commitar no modo interativo (abre o editor padrão):
-git commit [-i] --amend
-
-# já passando a mensagem:
-git commit --amend -m '<message>'
 ```
 
-OBS: depois que realizar o comando, aparecerá um "commit extra", porém, simplesmente *pushe* a nova alteração forçando que esse novo commit já e sobrescrito: `git push -f origin <branch_name>`.
+"Commitar" no modo interativo (abre o editor padrão):
 
-#### Cherry Pick
-
-Trazendo um _commit_ específico para a branch:
-
-```bash
-git cherry-pick <commit_hash>
+```sh
+git commit --amend -i
 ```
 
-Somente aplicando as alterações do _commit_:
+Já passando a mensagem:
 
-```bash
-git cherry-pick --no-commit <commit-hash>
+```sh
+git commit --amend -m "<message>"
 ```
 
-Trazendo o _commit_ e edita a mensagem antes de concluir:
+### *Cherry Pick*
 
-```bash
-git cherry-pick --edit <commit-hash>
+Trazer um *commit* específico para a branch:
+
+```sh
+git cherry-pick <commit>
 ```
 
-OBS: estando na _branch_ que vai receber as alterações.
+Apenas aplicar as alterações do *commit*:
 
-_REFERENCELINKS_:
-
-- https://www.atlassian.com/git/tutorials/cherry-pick
-- https://git-scm.com/docs/git-cherry-pick
-
-#### Squash
-
-_Squashear commits_ da mesma branch com `rebase`:
-
-```bash
-git rebase -i {HEAD*|<commit_hash>}
+```sh
+git cherry-pick --no-commit <commit>
 ```
 
-### Merge
+Trazer o *commit* editando a mensagem do *commit*:
 
-_Dry-run_:
+```sh
+git cherry-pick --edit <commit>
+```
 
-1. Faça o "_merge_ falso":
-	`git merge --no-commit --no-ff <branch-name>`
+*LINKS:*
 
+- <https://www.atlassian.com/git/tutorials/cherry-pick>
+- <https://git-scm.com/docs/git-cherry-pick>
+
+### *Squash*
+
+Comprimir *commits* da mesma branch com *rebase*:
+
+```sh
+git rebase -i {HEAD*|<commit>}
+```
+
+## *Merge*
+
+Para desfazer qualquer *merge* em andamento:
+
+```sh
+git merge --abort
+```
+
+*Dry-run*:
+
+1. Faça o "*merge* falso":
+	`git merge --no-commit --no-ff <branch>`
 1. Caso tenha alguma alteração, veja com:
 	`git diff --cached`
+1. SE for necessário, desafaça o *merge*
 
-OBS: caso precise desafzer algum merge: `git merge --abort`.
-
-Com _squash_:
-
-```bash
-git merge --squash <branch-name>
-```
-
-OBS: dessa forma, como tudo irá virár um único _commit_, no final ele deixa tudo em _staged_ para você _commitar_ com a mensagem desejada.
-
-#### Conflito
+### Conflito
 
 Se a mesclagem já estiver em progresso:
+
 - Aceitar as alterações "locais":
     `git checkout --ours file.txt`
 - Aceitar as alterações "remotas":
     `git checkout --theirs file.txt`
 
 Se ainda irá mesclar:
+
 - Aceitar as alterações "locais":
-    `git merge -X ours <branch-name>`
+    `git merge -X ours <branch>`
 - Aceitar as alterações "remotas":
-    `git merge -X theirs <branch-name>`
+    `git merge -X theirs <branch>`
 
-_OBSERVATIONS_:
-- _Branch_ "local": _branch_ atual na qual será mesclada
-- _Branch_ "remota": _branch_ que será mesclada na atual
+*OBSERVAÇÕES:*
 
-### Rebase
+- "Local": *Branch* atual na qual será mesclada
+- "Remota": *Branch* que será mesclada na atual
 
-#### Simple Rebase
+## *Rebase*
 
-Command:
-	`git rebase <new-base>`
+Comandos e configurações de *rebase*.
 
-We say: rebase atual branch to "new base" branch.
+### *Simple*
 
-Command:
-	`git rebase <new-base> <rebase-branch>`
-
-We say: rebase "branch to rebase" branch to "new base" branch.
-
-Eexplain: before perform normal rebase, switch to the "branch to rebase" branch.
-
-#### Rebase With Onto
-
-Command:
-	`git rebase --onto <new-base> <start-point>`
-
-We say: rebase atual branch to "new base" branch starting from "start point".
-
-Command:
-	`git rebase --onto <new-base> <start-point> <end-point>`
-
-We say: in atual branch starting from "start point" util the "end point" rebasing onto "new base" branch.
-
-OBSERVATIONS:
-
-- In **rebase onto** the _start point_ actually is the child commit of him (so you'll probably want to do something like `<start-point>^` or `<start-point>~1`);
-
-- This guide uses "newbie terms" for better explanation. In "technical terms" in **common rebase** (and **git onto**) the `<new-base>` actually is `<new-parent-commit>` and in **rebase onto** the `<start-point>` is `<old-parent-commit>` and `<end-point>` is `<until-the-commit>`.
-
-### Stash
-
-- `-u`: _stashear_ arquivos não traqueados (#saving,#listing);
-- `-p`: _patch_ dos arquivos (#listing);
-- `-S`: aplica o **stash** somente sobre o _staging_ (#saving);
-- `-k`: apesar de _stashear_ o que está em _staging_, não o limpa (#saving);
-- `-m <message>`: _stashear_ com mensagem específica (#saving);
-- `--index`: restaurar preservando o _staging_ (#applying).
-
-_Stashear_ todos os arquivos:
-
-```bash
-git stash [-uk] [-m <message>]
-```
-
-_Stashear_ arquivos específicos:
-
-```bash
-git stash push [-uk] [-m '<message>'] <path/to/folder/or/file.any>*
-```
-
-Listar/Mostrar _stash_:
-
-```bash
-git stash show [-up] 'stash@{<stash_id>}'
-```
-
-Aplicar/Aplicar e Dropar _stash_:
+A base da *branch* atual deve ser essa:
 
 ```sh
-git stash {apply|pop} [--index] ['stash@{<stash_id>}']
+git rebase <base>
+```
+
+Especifica a *branch* que terá a nova base:
+
+```sh
+git rebase <base> <branch>
+```
+
+### *Onto*
+
+A base da *branch* atual deve ser essa, começando desse ponto (*commit*):
+
+```sh
+git rebase --onto <base> <start>
+```
+
+A base da *branch* atual deve ser essa, começando e terminando desse ponto (*commit*):
+
+```sh
+git rebase --onto <base> <start> <end>
+```
+
+*OBSERVAÇÕES:*
+
+- No caso do *rebase onto*, o ponto inicial (que será a base), é um *commit* filho da *branch* base, ou seja, você pode usar `<start>~2`, `<end>^` e etc
+- Em termos técnicos, no *rebase* simples (e também no *onto*) a `<base>` é, na verdade, o `<new-parent-commit>` da *branch* que tera a nova base. No *rebase onto*, o `<start>` corresponde ao `<old-parent-commit>` e o `<end>` ao `<util-the-commit>`
+
+## *Stash*
+
+*Parâmetros usados:*
+
+- `<message>`: Mensagem do *commit*
+- `<stash>`: Identificador único (ID) do *stash* (*e.g.* `0`, `1`)
+
+*Opções usadas:*
+
+- `-u`: "Stashear" arquivos não traqueados (#saving,#listing)
+- `-p`: Mostrar as alterações (*patch*) dos *stashs* (#listing)
+- `-S`: Aplicar o *stash* somente sobre o *staging* (#saving)
+- `-k`: Apesar de "stashear" o que está em *staging*, não o limpa (#saving)
+- `-m <message>`: "Stashear" com mensagem específica (#saving)
+- `--index`: Restaurar o *stash* preservando o que estava em *staging* (#applying)
+
+"Stashear" todos os arquivos:
+
+```sh
+git stash [-uk] [-m "<message>"]
+```
+
+"Stashear" arquivos específicos:
+
+```sh
+git stash push [-uk] [-m "<message>"] path/folder/ path/file.txt
+```
+
+Listar/Mostrar *stashs*:
+
+```sh
+git stash show [-up] ['stash@{<stash>}']
+```
+
+Aplicar/Aplicar e Dropar *stash*:
+
+```sh
+git stash {apply|pop} [--index] ['stash@{<stash>}']
 ```
 
 Deletar **stash**:
 
 ```sh
-git stash drop ['stash@{<stash_id>}']
+git stash drop ['stash@{<stash>}']
 ```
 
-_OBERSAVTIONS_:
+*OBSERVAÇÕES:*
 
-- Nas operações com **stash**, quando NÃO especificado o _id_, é pego por padrão o último (o primeiro da _FIFO_).
+- Nas operações com *stash*, quando NÃO especificado o ID, por padrão é usado o último
 
-### Log's
+## *Log*
 
-- `--all`: caso sua branch esteja atrás, mostra logs dos ramos a frente também;
-- `--oneline`: mostra o log de forma resumida, um por linha;
-- `--patch`: mostras as alteraçẽos feitas nos commits;
-- `--graph`: dsenha uma gráfo da time line dos logs;
-- `--author=<name>`: filtra os logs pelo autor.
+*Parâmetros usados:*
 
-Mostra o log de commits:
+- `<user>`: Nome de usuário do *commiter*
 
-```bash
+*Opções usadas:*
+
+- `--all`: Caso sua *branch* esteja atrás, mostra *logs* dos ramos a frente também
+- `--oneline`: Mostra o *log* resumido, um por linha
+- `--patch`: Mostra as alteraçẽos feitas nos *commits*
+- `--graph`: Dsenha uma gráfo da *time line* dos *logs*
+- `--author=<name>`: Filtra os *logs* pelo autor
+
+Mostra o *log* dos *commits*:
+
+```sh
 git log [--all|--oneline|--patch|--graph]
 ```
 
-OBS: todas as opções podem ser usadas ao mesmo tempo ou não (divirta-se).
-
 Rastrear um único arquivo pelos *commits*:
 
-```bash
-git log --folow [-p] <file_name>
+```sh
+git log [-p] --folow file.txt
 ```
 
-### Blame
+## *Blame*
 
-Mostra quem fez as alterações (autor do commit) em determinado arquivo:
+*Opções usadas:*
 
-- -w: remove espaços em branco.
-- -L: limita a faixa de linhas.
+- `-w`: Remove espaços em branco
+- `-L`: Limita a faixa de linhas
 
-```bash
-git blame [-w|-L 1,12] <file_name>
+Mostra quem fez as alterações (autor do *commit*) em determinado arquivo:
+
+```sh
+git blame [-w|-L 1,23] file.txt
 ```
 
-### Clonagem
+## *Clone*
 
 Clonar repositório remoto:
 
-```bash
+```sh
 git clone <url>
 ```
 
-Clonar repositório remoto de uma branch ou tag específica:
+Clonar repositório remoto de uma *branch* ou *tag* específica:
 
-```bash
-git clone -b {<branch_name>|<tag_name>} <url>
-```
-
-OBS: caso clone por algum tag, pode ser que essa tag esteja num vínculada a um hash que não está apontado por nenhuma branch, nesse caso, se faz necessário cria uma branch logo depois que clonar: `git switch -c newbranch`
-
-Clonar sem outras branch ou referência delas:
 ```sh
-git clone --single-branch [-b {<branch_name>|<tag_name>}] <url>
+git clone -b {<branch>|<tag>} <url>
 ```
 
-### Submodule
+*OBSERVAÇÕES:*
 
-Adicionar um novo _submodule_:
+- Caso clone via *tag*, pode ser que ela esteja vínculada a um *hash* que não está apontado para nenhuma *branch*, nesse caso, se faz necessário criar uma *branch* logo depois do clone: `git switch -c <branch>`
 
-```bash
-git sobmodule add {./path/to/another/local/repo|<remote_url>}
+Clonar sem outras *branchs* ou referência delas:
+
+```sh
+git clone [-b {<branch>|<tag>}] --single-branch <url>
 ```
 
-Iniciar os _submodules_ de um repositório clonado (estando na raiz do repositório local):
+## *Submodule*
 
-```bash
+Adicionar um novo *submodule*:
+
+```sh
+git sobmodule add {<url>|/path/local/repo}
+```
+
+Iniciar os *submodules* de um repositório clonado (estando na raiz do repositório local):
+
+```sh
 git sobmodule init
 ```
 
-_Updatar_ os submódulos:
+Atualizar os *submodules*:
 
-```bash
+```sh
 git sobmodule update
 ```
 
-Caso o _submodule_ não esteja apontando para a HEAD do seu repectivo remoto, você pode resolver isso entrando na pasta do submódulo e realizando um `pull` ou diretamente da sua raiz:
+Caso o *submodule* não esteja apontando para a `HEAD` do seu repectivo remoto, entre na pasta do *submodule* e realize um *pull*, ou, execute diretamente na sua raiz:
 
-```bash
+```sh
 git submodule update --remote
 ```
 
-Para retirar o _submodule_ do `.git/config`, que é da onde o comando de `update` puxa os _submodules_:
+Para retirar o *submodule* do `.git/config`, que é da onde o comando `update` puxa os *submodules*:
 
-```bash
-git submodule deinit <submodule_folder>
+```sh
+git submodule deinit <submodule>
 ```
 
-Clonar repositórios com submódulos já inicializando e atualizando-os:
+Clonar repositórios com *submodules* já inicializando e atualizando-os:
 
-```bash
-git clone --recurse-submodules <remote_url>
+```sh
+git clone --recurse-submodules <url>
 ```
 
-_OBSERVATIONS_:
+*OBSERVAÇÕES:*
 
-- toda vez que fizer alterações nos submódulos, deve-se commitar.
+- Toda vez que fizer alterações nos submódulos, deve-se commitar
+- `git submodule init` refaz a configuração dos submódulos com base no `.gitmodules` caso algum seja retirado do `.git/config`
+- Arquivos e pastas de submódulos:
+	- `.gitmodules`: Arquivo de configuração que mapeia os submódulos dentro do repo (gerado a partir do `git submodules init`)
+	- `.git/config`: Arquivo de configuração local (do repositório), dentro dele é criado uma sessão com o mapeamento das URLs dos submódulos
+	- `.git/modules`: Pasta de destino dos submúdulos baixados (via URL)
 
-- `git submodule init` refaz a configuração dos submódulos com base no `.gitmodules` caso algum seja retirado do `.git/config`.
+## `.gitignore`
 
-- arquivos e pastas:
-	- `.gitmodules`: arquivo de configuração que mapeia os submódulos dentro do repo (gerado a partir do `git submodules init`).
-	- `.git/config`: dentro do arquivo de configuração do _repo_ local é criado uma sessão com os submódulos para serem _updatados_.
-	- `.git/modules`: é a pasta que vão os múdulos baixados por _url_.
+Comandos e configurações de `.gitignore`.
 
-### .gitignore
+### Arquivos
 
-#### Arquivos
-
-Arquivo **global**: pode estar alocado em qualquer lugar e vale para qualquer repositório na máquina.
+Arquivo **global**: pode estar em qualquer lugar e vale para qualquer repositório:
 
 ```
 ~/.gitignore
 ```
 
-Arquivo **local**: deve estar na raiz do projeto e vale somente para aquele projeto e todos que contribuem.
+Arquivo **local**: deve estar na raiz do projeto e vale somente para aquele repositório e todos que contribuem:
 
 ```
-/path/to/project/.gitignore
+/path/project/.gitignore
 ```
 
-Arquivo do usuário: é um arquivo já prédefinido pelo git e não é versionado pelo código.
+Arquivo **usuário**: é um arquivo já pré-definido pelo Git e não é versionado:
 
 ```
-/path/to/project/.git/info/exclude
+/path/project/.git/info/exclude
 ```
 
-#### Comandos
+### Comandos
 
-Setar o `.gitignore` global:
+Definir o `.gitignore` global:
 
-```bash
+```sh
 git config --global core.excludesfile ~/.gitignore
 ```
 
-Caso algum arquivo seja ignorado deve-se remove-lo do índice:
+Caso algum arquivo seja ignorado, remova do índice:
 
-```bash
+```sh
 git rm --cached file.txt
 ```
 
 Adicionar no índice algum arquivo que esteja sendo ignorado:
 
-```bash
+```sh
 git add -f file.txt
 ```
 
-#### Skip Work Tree
+### *Work Tree*
 
 Remover da árvore de trabalho:
 
-```bash
+```sh
 git update-index --skip-worktree file.txt
 ```
 
 Retornar para a árvore de trabalho:
 
-```bash
+```sh
 git update-index --no-skip-worktree file.txt
 ```
 
-Listar os arquivos *skipados*:
+Listar os arquivos "skipados":
 
-```bash
+```sh
 git ls-files -v | grep -E '^S'
 ```
 
-### Tag's
+## *Tag*
 
-Colocar tag em commits (da para clonar de um commit específico):
+Colocar *tag* em *commit*, caso não especificado, o último (atual) é usado:
 
-```bash
-git tag <tag_name> <commit_hash>
+```sh
+git tag <tag> [<commit>]
 ```
 
-Remover tag local:
+Remover *tag* local:
 
-```bash
-git tag -d <tag_name>
+```sh
+git tag -d <tag>
 ```
 
-Remover tag remota:
+Remover *tag* remota:
 
-```bash
-git push origin :refs/tags/<tag_name>
+```sh
+git push origin :refs/tags/<tag>
 ```
 
-### Remote
+## *Remote*
 
-Limpar as referência do remoto no seu repositório local (remover o que não existe mais no repositório remoto?):
+Limpar as referência do repositório remoto no local (remover o que não existe mais no repositório remoto):
 
 ```sh
 git remote prune <remote>
 ```
 
-### Repos
-
-#### Remotes
-
 Renomear repositório remoto:
 
-```bash
-git remote rename <nome_atual> <novo_nome>
+```sh
+git remote rename <old> <new>
 ```
 
-#### Forks
+## *Forks*
 
-Sincronizar repo local com upstream:
+Sincronizar repositório *upstream* no local:
 
-1. Add remote repo:
-	`git remote add upstream <url>`;
-
-1. Fetch infos:
-	`git fetch upstream`;
-
-1. Change to target branch (if needed):
-	`git switch main`;
-
-1. Merge with upstream:
+1. Adicionar repositório remoto:
+	`git remote add upstream <url>`
+1. Baixar informações do remoto:
+	`git fetch upstream`
+1. Trocar para *branch* alvo (se necessário):
+	`git switch main`
+1. Mesclar com *upstream*:
 	`git merge upstream/main`;
 
-### Authentication
+## Autenticação
 
-#### Cache
+Comandos e configurações de autenticação. Configurações para autenticações via senha/*token*.
 
-Configurar:
+Para definir credenciais para diferentes usuários no mesmo host (e como consequência para cada repositório):
 
-```bash
-git config --global credential.helper cache
-# or seting the time
-git config --global credential.helper 'cache --timeout 28800'
-```
-
-Limpar a senha do cache:
-
-```bash
-git credential-cache exit
-```
-
-#### Store
-
-Configurar:
-
-```bash
-git config --global credential.helper store
-# or seting the file
-git config --global credential.helper 'store --file /path/to/.credentials-file'
-```
-
-_Setar_ o arquivo de configuração (_default_):
-
-```bash
-echo 'https://<user>:<token>@<domain>' >> ~/.git-credentials
-```
-
-#### Libsecret (Linux)
-
-Programas necessários:
-```sh
-sudo apt install -y libsecret-1-dev
-```
-
-_Setup_:
-1. _Buildar_ o binário: `sudo make --directory=/usr/share/doc/git/contrib/credential/libsecret`
-1. _Setar_ o helper: `git config --global credential.helper /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret`
-
-_TIP/TRICK_:
-
-- Para definir credenciais para usuários diferente do mesmo host (porém como consequência para cada repo):
 ```sh
 git config --global credential.https://.useHttpPath true
 ```
 
----
+*OBSERVAÇÕES:*
 
-_Desetar_ a configuração global:
+- Pode-se utilizar os dois *helpers* onde, caso não seja encontrado o *helper* do *store* será pedido a senha que posteriormente será gravada no *cache*
 
-```bash
-git config --global --unset credential.helper {cache|store}
+### *Cache*
+
+Definir cache (tempo padrão de 900s (15 minutos)):
+
+```sh
+git config --global credential.helper cache
 ```
 
-_OBSERVATIONS_:
-- Pode-se utilizar os dois _helpers_ aonde caso não seja encontrado o helper do store será pedido a senha que posteriormente será gravada no cache.
+Definir cache especificando tempo:
 
-### Configuration
+```sh
+git config --global credential.helper 'cache --timeout 3600'
+```
 
-_Setar_ usuário e email:
+Desarmar a configuração global:
+
+```sh
+git config --global --unset credential.helper cache
+```
+
+Limpar o cache (senha/*token*):
+
+```sh
+git credential-cache exit
+```
+
+### *Store*
+
+Definir credencial:
+
+```sh
+git config --global credential.helper store
+```
+
+Definir credencial especificando arquivo:
+
+```sh
+git config --global credential.helper 'store --file /path/.git-credentials'
+```
+
+Desarmar a configuração global:
+
+```sh
+git config --global --unset credential.helper store
+```
+
+Definir o arquivo de configuração (caminho *default*):
+
+```sh
+echo 'https://<user>:<token>@<domain>' >> ~/.git-credentials
+```
+
+### *Vault*
+
+Configuração do gerenciador de senha via cofre.
+
+#### Linux
+
+Programas necessários:
+
+```sh
+[sudo] apt install libsecret-tools
+```
+
+Configuração do cofre:
+
+1. "Buildar" o binário:
+	`sudo make --directory=/usr/share/doc/git/contrib/credential/libsecret`
+1. Definir o *helper*:
+	`git config --global credential.helper /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret`
+
+## Configuration
+
+Definir nome de usuário:
+
 ```sh
 git config --global user.name <user>
+```
+
+Definir email:
+
+```sh
 git config --global user.email <email>
 ```
 
-OBS: para setar usuário e email local troque a flag `--global` para `--local`.
+*OBSERVAÇÕES:*
+
+- Para definir nome de usuário e email somente no repositório local, troque a *flag* `--global` por `--local`
 
 Listar todas as configuração:
+
 ```sh
-git config --list --show-origin
+git config [--global] [--local] --list --show-origin
 ```
 
-OBS: caso você esteja dentro de um repo também será mostrado as configurações locais do repo.
-
 Trocar editor padrão:
+
 ```sh
 git config --global core.editor <editor>
 ```
 
-#### `include`
+### `include`
 
-Definir arquivo de configuração para ser incluso:
+Definir arquivo de configuração adicional:
+
 ```sh
-git config --global include.path ~/path/to/.gitconfig
+git config --global include.path ~/path/.gitconfig
 ```
 
-#### `includeIf`
+### `includeIf`
 
-Definir arquivo de configuração específico para todos os repos dentro de terminada pasta:
+Definir arquivo de configuração adicional para todos os repositórios dentro de terminado diretório:
+
 ```sh
-git config --global includeIf.'gitdir:~/path/to/projects/[**]'.path ~/path/to/projects/.gitconfig
+git config --global includeIf.'gitdir:~/path/projects/[**]'.path ~/path/projects/.gitconfig
 ```
 
-_OBSERVATIONS_:
-- Aqui dizemos: Inclua o `.gitconfig` quando estiver dentro da pasta _projects_ ou numa subpasta
-- Necessário a "/" no final do caminho do em `gitdir`
+Nesse exemplo, a diretiva `includeIf` diz para incluir o `.gitconfig` quando você estiver dentro da pasta "*projects*" ou numa subpasta.
 
-### Bare
+*OBSERVAÇÕES:*
 
-#### "Servidor Remoto" Local
+- É necessário a "`/`" no final do caminho do em `gitdir`
 
-1. Defina o servidor remoto local:
-	`git clone --bare /path/to/local/project /mnt/project.git`
-1. Adicione o servidor remoto local no projeto local:
-	`git remote add drive /mnt/project.git`
+## *Bare*
 
-_OBSERVATIONS_:
-- Caso necessário outra pessoa pode pegar a mídia externa que está sendo usada como servidor externo, plugar em sua máquina, adiciona-lo como remote e pegar suas atualização com `pull`:
-	1. `git remote add drive /mnt/project.git`
-	1. `git pull drive main`
+Comandos e configurações de *bare*.
 
-#### Expor "Servidor Remoto" Local
+### Servidor Local
 
-1. _Entre no "servidor remoto" local_
-1. Atualize o _bare_:
+Usar pasta local como servidor remoto:
+
+1. Defina o servidor local:
+	`git clone --bare /path/local/repo /tmp/project.git`
+1. Adicione o servidor local no repositório local:
+	`git remote add drive /tmp/project.git`
+1. Empurre as alterações também para o servidor local:
+	`git push drive HEAD`
+
+Se necessário, é possível montar o servidor remoto numa mídia removível (pendrive ou HD externo), plugar em outra máquina, adiciona-lo como *remote* e pegar suas atualização com `pull`:
+
+1. Adicione o servidor remoto local no repositório local:
+	`git remote add drive /tmp/project.git`
+1. Atualize o repositório local:
+	`git pull drive HEAD`
+
+### Expor Servidor Local
+
+1. *Entre no servidor local*
+1. Atualize o *bare*:
 	`git --bare update-server-info`
-1. Troque os _hooks_ de update:
+1. Troque os *hooks* de update:
 	`mv hooks/post-update{.sample,}`
-1. Suba um mini servidor web (como em **python**):
-	`python -m http.server 8000`
-1. _Faça o clone teste_:
-    `git clone http://localhost:8000 project`
-1. <details>
-    <summary>Acesse de fora</summary>
+1. Suba um servidor *web* (como em `python` ou `webfs`):
+	- `python -m http.server 9418`
+	- `webfsd -Fdp 9418`
+1. *Faça o clone teste*:
+    `git clone http://localhost:9418 project`
 
-    - <details>
-        <summary>Utilize uma VPN</summary>
+Depois, basta expor o servidor local via VPN (**OpenVPN**, **WireGuard**) ou *reverse proxy* (**ngrok**).
 
-        Para clonar, ao invés de usar `localhost`, utilize o IP da sua VPN ou seu _DDNS_.
-    ou
-    - <details>
-        <summary>Utilize um <em>Reverse Proxy</em></summary>
+## Comandos
 
-        1. Exponha a porta 8000 como HTTP (que aponta para nosso mini _web server_):
-            `ngrok http 8000`
-        1. Clone de fora da rede com:
-            `git clone https://<uuid>.ngrok.io project`
-    </details>
-    </details>
-</details>
+Imprime o *hash* do *commit* em comum entre duas *branchs*:
 
-_OBSERVATIONS_:
-- Sugestões VPN:
-    - `PiVPN`
-	- `tailscale`
-	- `ZEROTIER`
-
-### Commands
-
-- _Printa_ o _hash_ do _commit_ em comum de duas _branchs_: `git merge-base <first_branch> <second_branch>`
-- _Printa_ o _hash_ de objeto git do arquivo (seja pasta ou diretório): `git hash-object path/to/any-file`
-
-### Tips & Tricks
-
-#### Sintaxe de URL's:
-
-http:
-
-```bash
-https://<user>:<token>@<domain>/<user>/<repo>.git
+```sh
+git merge-base <source> <target>
 ```
 
-ssh:
+Imprime o *hash* de objeto Git do arquivo (seja pasta ou diretório):
 
-```bash
+```sh
+git hash-object path/folder/ path/file.txt
+```
+
+## *Tips & Tricks*
+
+Dicas e truques sobre Git em geral.
+
+### Protocolos
+
+HTTP:
+
+```
+https://[<user>:<token>@]<domain>/<user>/<repo>.git
+```
+
+SSH:
+
+```
 git@<domain>:<user>/<repo>.git
 ```
 
-latest release:
+*Latest release*:
 
-```bash
-https://github.com/<user>/<repo>/releases/latest/download/<filename>
+```
+https://github.com/<user>/<repo>/releases/latest/download/<file>
 ```
 
-#### Certificados de Segurança
+### Certificados de Segurança
 
-Desabilitar verificação de SSL do git:
+Desabilitar verificação de SSL do Git:
 
-```bash
+```sh
 git config --global http.sslverify false
 ```
 
-#### Copiar/Pegar as Modificações de Um Arquivo de Outra Branch
+### Copiar Modificações
 
-```bash
-git checkout <other_branch> -- ./path/to/{folder|file.any}
-```
-
-#### Comparar Arquivos Entre Duas Commits/Branchs
-
-```bash
-git diff <src-branch/commit> <dst-branch/commit> -- file.any
-```
-
-#### Comparar Duas Branchs Pelo Commit Pai Mais Recente
+Pegar modificações de um arquivo de outra *branch*:
 
 ```sh
-# `git diff $(git merge-base <source> <target>) <target>` is an alias from git itself for:
-git diff HEAD...<target_branch>
+git checkout <branch> -- path/{folder/|file.txt}
 ```
 
-#### Splitar Commit's
+### Comparar Arquivos
 
-Último _commit_:
+Comparar arquivos entre dois *commits/branchs*:
 
-1. _Com seu repo local limpo..._
-1. Reseta o último _commit_ para a _worktree_: `git reset HEAD^`
-1. Adicione e _commite_ conforme a necessidade.
+```sh
+git diff <source> <target> -- file.txt
+```
 
-OBS: necessário _force push_?
+### Comparar Branchs
 
-Algúm _commit_ no meio da árvore/história:
+Comparar duas *branchs* pelo *commit* pai mais recente:
 
-1. Use `rebase`: `git rebase -i <commit_hash>^`
+```sh
+git diff HEAD...<target>
+```
 
-OBS:
+*OBSERVAÇÕES:*
 
-- simplesmente marque todos _commit's_ a serem editados com `e` ou `edit`;
-- _reset_ o _commit_ atual com `git reset HEAD^` e _commite_ conforme desejado;
-- será necessário _force push_;
+- O alias `...` seria o equivalente a: `git diff $(git merge-base <source> <target>) <target>`
 
-#### Mesclar Sem Commitar
+### "Splitar" *Commits*
 
-1. Mescle sem commitar (as alterações iram para o _index_ (_staging area_)): `git merge --no-commit <branch>`
-1. _resolve conflicts and mark them as resolved (if exists)_
-1. Saia do merge (as aterações continuaram no _index_): `git merge --quit`
-1. Fça um `amend` para aplicar as alterações no último _commit_: `git commit --amend --no-edit`
+Último *commit*:
 
-_pipeline_ (work if not have conflicted):
+1. *Deixe o repositório local limpo*
+1. Resete o último *commit* para a *worktree*:
+	`git reset HEAD^`
+1. Adicione e faça *commit* conforme a necessidade
+
+Algúm *commit* no meio do histórico:
+
+1. *Deixe o repositório local limpo*
+1. Use *rebase* interarivo:
+	`git rebase -i <commit>^`
+
+*OBSERVAÇÕES:*
+
+- Simplesmente marque todos *commits* a serem editados utilizando `e` ou `edit`
+
+### Mesclar Sem *Commit*
+
+Mesclar "sem precisar fazer um novo *commit*":
+
+1. Mescle sem *commit* (as alterações iram para o *index* (*staging area*)):
+	`git merge --no-commit <branch>`
+1. *Resolva conflitos e marque eles como resolvidos (se existirem)*
+1. Saia do *merge*, as aterações continuaram no *index*:
+	`git merge --quit`
+1. Faça um `amend` para aplicar as alterações no último *commit*:
+	`git commit --amend --no-edit`
+
+*PIPELINE* (funciona se não houver conflitos):
 
 ```sh
 git merge --no-commit <branch> && git merge --quit && git commit --amend --no-edit
 ```
 
-#### Dar Rebase da Própria Branch (_self rebase_) Pelo Commit de `merge-base`
+### *Self Rebase*
+
+Dar *rebase* da própria *branch* pelo *commit* de *merge-base*:
 
 ```sh
-git rebase [-if] `git merge-base feature main`
+git rebase [-if] `git merge-base <source> main`
 ```
 
-OBS: será útil fazer dessa forma e não pegando de forma manual o último commit da branch quando antes do rebase tiver feito algum merge.
+*OBSERVAÇÕES:*
 
-#### Personalização de URL
+- Será útil fazer dessa forma e não pegar de forma manual o último *commit* da *branch*, quando antes do *rebase* tiver ocorrido algum *merge*
 
-Inclua a sessão `url` no arquivo `.git/config`:
+### Personalização de URL
 
-- Imbutir token de acesso:
-```git
+Inclua a sessão `url` nos arquivos de configurações globais (`~/.gitconfig`) ou locais (`.git/config`).
+
+Injetar *token* de acesso:
+
+```
 [url "https://<user>:<token>@"]
 	insteadOf = https://
 ```
-OBS: No final haverá a substituição: `https://remote.any/user/repo.git` -> `https://user:token@remote.any/user/repo.git`
 
-- Redirecionar para o protocolo SSH:
-```git
+*OBSERVAÇÕES:*
+
+- Haverá a substituição: `https://domain.ext/user/repo.git` -> `https://<user>:<token>@domain.ext/user/repo.git`
+
+Redirecionar para protocolo SSH:
+
+```
 [url "ssh://git@"]
 	insteadOf = https://
 ```
-OBS:
-- No final haverá a substituição: `https://remote.any/user/repo.git` -> `ssh://git@remote.any/user/repo.git`
-- Tenha a chave ssh no agente
-- O mesmo vale caso queira fazer o inverso, `SSH` to `HTTPS`
-- Também é possível fazer via _CLI_: `git config --global url.'git@<remote>:'.insteadOf 'https://<remote>/'`
 
-#### Aplicar Diff Patch Gerado com Cor
+*OBSERVAÇÕES:*
 
-Quando for salvar um patch para ser aplicado posteriormente gere com:
+- Haverá a substituição: `https://domain.ext/user/repo.git` > `ssh://git@domain.ext/user/repo.git`
+- Tenha a chave SSH no agente
+
+### Aplicar *Patch*
+
+Aplicar *diff patch* gerado com cor:
+
 ```sh
-git diff --no-color > /path/to/save/diff.patch
+cat -v /path/diff.patch | sed 's/\^\[\[[[:digit:]]*m//g' | git apply -
 ```
 
-Caso esteja com cor aplique com:
+Quando for salvar um *patch* para ser aplicado posteriormente, gere com `--no-color`:
+
 ```sh
-cat -v /path/to/saved/diff.patch | sed 's/\^\[\[[[:digit:]]*m//g' | git apply -
+git diff --no-color > /path/diff.patch
 ```
 
-#### Sobre `git config --get`
+### `git config --get`
 
-- Com a flag `--global`: listará as informações do arquivo de configuração global (`~/.gitconfig`) ou do sistema (`/etc/gitconfig` ou `/etc/git/gitconfig`);
-- Com a flag ``: listará as informações de escopo do "grupo" (ver #includeIf-repo-groups);
-- Com a flag `--local`: listará as informações do arquivo de configuração do repo local (`/path/to/project/.git/config`).
+Com a *flag* `--system`, listará as informações dos arquivos de configuração do sistema, são eles `/etc/gitconfig` e `/etc/git/gitconfig`.
 
-#### Descartar Somente Alterações do Index
+Com a *flag* `--global`, listará as informações do arquivo de configuração global `~/.gitconfig`.
 
-1. `git stash --staged`
-1. `git stash drop`
+Com a *flag* `--local`: listará as informações do arquivo de configuração do repositório local `/path/project/.git/config`.
 
-#### Alterar Modo de Prompt
+### Alterar *Prompt*
 
-Desabilitar o _prompt_ (git espera encontrar as credenciais no ambiente):
+Desabilitar o *prompt* (Git espera encontrar as credenciais no ambiente):
+
 ```sh
 GIT_TERMINAL_PROMPT=0 <command>
 ```
 
-Habilitar o _prompt_ (git forçara a entrada manual das credenciais):
+Habilitar o *prompt* (Git forçara a entrada manual das credenciais):
+
 ```sh
 GIT_TERMINAL_PROMPT=1 <command>
 ```
 
-#### Remover Commit do Meio do Log
+### Remover Commit do Meio do Log
 
-Utilize `git rebase -i` ou `git revert`. O **revert** é preferível por ser uma abordagem mais "segura" pois evitará pushs forçados, o que bagunçaria o histórico de todos (claro que se as alterações ainda não estiverem no remoto, utilizar o **rebase -i** não seria um problema).
+Utilize `git rebase -i` ou `git revert`.
 
-#### _Author_ X _Commiter_
+O **revert** é preferível por ser uma abordagem mais "segura" pois, evitará *pushs* forçados, o que bagunçaria o histórico de todos, isso se as alterações ainda não estiverem no remoto, nesse caso, utilizar o *rebase* não seria um problema.
 
-O autor é a pessoa que originalmente escreveu o código. O committer, por outro lado, é considerado a pessoa que cometeu o código em nome do autor original. Isso é importante no Git porque o Git permite reescrever o histórico ou aplicar patches em nome de outra pessoa.
+### _Author_ X _Commiter_
 
-#### Pegar Código de Saída de Status
+O **autor** é a pessoa que originalmente escreveu o código. O ***committer***, por outro lado, é considerado a pessoa que confirmou o código em nome do autor original.
 
-_Exit status_ para arquivos modificados/deletados (**worktree**):
+Isso é importante no Git porque é possível reescrever o histórico ou aplicar *patches* em nome de outra pessoa.
+
+### *Exit Code*
+
+Código de saída para arquivos modificados/deletados (*worktree*):
+
 ```sh
-if git diff -s --exit-code <pathspec>; then
-	echo not changed
-else
-	echo changed
-fi
+if git diff -s --exit-code <pathspec>; then echo not changed; else echo changed; fi
 ```
 
-_Exit status_ para arquivos não traqueados (**untracked**):
+Código de saída para arquivos não traqueados (*untracked*):
+
 ```sh
 git status --porcelain | grep '^\?\?'
 ```
 
-#### Múltiplos Remotes
+### Múltiplos Remotos
 
-Buscar configurar somente a branch HEAD do remoto:
+Buscar configurar somente a *branch* HEAD do remoto:
 
 1. Verificar qual o nome da HEAD do remoto:
     `git remote show <remote>`
-
 1. Buscar somente a HEAD do remoto:
     `git fetch <remote> <branch>`
-
-1. Configure a `remote/HEAD` local:
+1. Configure a *branch* `<remote>/HEAD` local:
     `git remote set-head --auto <remote>`
 
-#### Clonagem de Todos Repositórios (Ou Só Alguns)
+## Troubleshooting
 
-Comando para GitHub:
+Resolução de problemas sobre Git em geral.
+
+### Pasta Inacessível
+
+Removendo pasta com *submodule* já indexado:
+
+1. `git rm --cached <folder>`
+1. `rm -rf <folder>/.git`
+1. `git add ./`
+1. `git push origin HEAD`
+
+### Listar Conflitos
+
+Listar somente os arquivos com conflito durante um *rebase*:
+
 ```sh
-for repo in $(curl -fsSL [-H 'authorization: bearer <token>'] https://api.github.com/users/<user>/repos | sed -nE 's~^.*clone_url.*("https.*[<search>.*]").*$~\1~p' | tr -d '"'); do git clone "$repo"; done
-```
-
-### Troubleshooting
-
-#### Pasta inacessível (pasta com *submodule*)
-
-1. `git rm --cached <folder_name>`
-1. `rm -rf <folder_name>/.git`
-1. `git add .`
-1. `git push origin main`
-
-#### Listar somente os arquivos com conflito no `--rebase`:
-
-```bash
 git status --short | sed -n 's/AA //p'
 ```
 
-#### Depois de alterar o nome da branch default no remoto:
+### Nomeação de *Branch*
 
-1. `git branch -m master main`
+Alterar nome da branch local e remoto:
+
+1. `git branch -m <new>`
+1. `git push <remote> <remote>/<old>:refs/heads/<new> :<old>`
+1. `git fetch <remote>`
+1. `git branch -u <remote>/<new>`
+
+*PIPELINE:*
+
+```sh
+git branch -m <new> && git push <remote> <remote>/<old>:refs/heads/<new> :<old> && git fetch <remote> && git branch -u <remote>/<new>
+```
+
+### Nomeação de *Branch Default*
+
+Depois de alterar o nome da *branch default* no remoto:
+
 1. `git fetch origin`
+1. `git branch -m master main`
 1. `git branch -u origin/main main`
 1. `git remote set-head origin -a`
 1. `git remote prune origin`
 
-_pipeline_:
-
-```bash
-git branch -m master main && git fetch origin && git branch -u origin/main main && git remote set-head origin -a && git remote prune origin
-```
-
-#### Renomear Branch Local e Remota
-
-1. `git branch -m <new_branch>`
-1. `git push <remote> <remote>/<old_branch>:refs/heads/<new_branch> :<old_branch>`
-1. `git fetch <remote>`
-1. `git branch -u <remote>/<new_branch>`
-
-_pipeline_:
+*PIPELINE:*
 
 ```sh
-git branch -m <new_branch> && git push <remote> <remote>/<old_branch>:refs/heads/<new_branch> :<old_branch> && git fetch <remote> && git branch -u <remote>/<new_branch>
+git fetch origin && git branch -m master main && git branch -u origin/main main && git remote set-head origin -a && git remote prune origin
 ```
 
-#### Setar Manualmente Branch Upstream das Branchs Locais
+### *Branch Upstream*
 
-Comando:
+Definir automaticamente *branchs* remotas das *branchs* locais:
+
 ```sh
-for branch in `git branch --color=never | sed -E 's/^[ \*] //g'`; do
-	git switch "$branch" \
-	&& git branch -u "origin/$branch"
+for branch in `git branch --color=never | sed -E 's/^[[:blank:]\*]*//'`; do
+	git switch "$branch" && \
+	git branch -u "origin/$branch"
 done
 ```
 
-#### Adicionar Arquivos Já Commitados no .gitignore
+### Arquivos Indexados
 
-É necessário resetar o cache do repositório local:
+Adicionar arquivos já "commitados" no `.gitignore`:
 
 1. `git rm --cached -r ./`
 1. `git add ./`
-1. `git commit -m '<message>'`
+1. `git commit -m "<message>"`
 
-_pipeline_:
+*PIPELINE:*
 
 ```sh
-git rm --cached -r ./ && git add ./ && git commit -m '<message>'
+git rm --cached -r ./ && git add ./ && git commit -m "<message>"
 ```
 
-#### Objeto de Arquivos Vazios
+### Objeto de Arquivos Vazios
 
 Quando alguma operação Git é interrompida:
 
@@ -1012,12 +1082,12 @@ Quando alguma operação Git é interrompida:
 1. `git fetch -p`
 1. `git fsck --full`
 
-_pipeline:_
+*PIPELINE:*
 
 ```sh
 find .git/objects/ -type f -empty -delete && git fetch -p && git fsck --full
 ```
 
-### Git Playground
+## Git Playground
 
-<http://git-school.github.io/visualizing-git/>
+Espaço virtual para testar e treinar Git: <http://git-school.github.io/visualizing-git/>.
