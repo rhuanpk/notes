@@ -553,6 +553,20 @@ Listar os arquivos "skipados":
 git ls-files -v | grep -E '^S'
 ```
 
+## Versionamento
+
+*Opções usadas:*
+
+- `-t`: Exibe o *status* de cada arquivo (se está *tracked* ou *untracked*)
+- `-c`: Exibe (forçado) os arquivos "trackeados"
+- `-o`: Exibe os arquivos não "trackeados"
+
+Saber quais arquivos estão versionado ou não:
+
+```sh
+git ls-files -toc
+```
+
 ## *Tag*
 
 Colocar *tag* em *commit*, caso não especificado, o último (atual) é usado:
@@ -600,7 +614,7 @@ Sincronizar repositório *upstream* no local:
 1. Mesclar com *upstream*:
 	`git merge upstream/main`;
 
-## Autenticação
+## *Auth*
 
 Comandos e configurações de autenticação. Configurações para autenticações via senha/*token*.
 
@@ -685,7 +699,7 @@ Configuração do cofre:
 1. Definir o *helper*:
 	`git config --global credential.helper /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret`
 
-## Configuration
+## Configuração
 
 Definir nome de usuário:
 
@@ -997,7 +1011,7 @@ Buscar configurar somente a *branch* HEAD do remoto:
 1. Configure a *branch* `<remote>/HEAD` local:
     `git remote set-head --auto <remote>`
 
-## Troubleshooting
+## *Troubleshooting*
 
 Resolução de problemas sobre Git em geral.
 
