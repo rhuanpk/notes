@@ -4434,6 +4434,11 @@ bt-obex -ys
 
 Instruções gerais sobre distribuições Linux.
 
+*Parâmetros usados:*
+
+- `X`: Letra do disco
+- `Y`: Número da partição
+
 ## Slax
 
 Instalação em dispositivo persistente (HDD/SSD, *pendrive* e etc):
