@@ -3462,12 +3462,12 @@ Nos sistemas que usam `systemd-tmpfiles`, ele é geralmente executado no *boot* 
 Esses arquivos de configuração são compostos pelos seguintes parâmetros:
 
 1. `Type`
-2. `Path`
-3. `Mode`
-4. `User`
-5. `Group`
-6. `Age`
-7. `Argument`
+1. `Path`
+1. `Mode`
+1. `User`
+1. `Group`
+1. `Age`
+1. `Argument`
 
 Sendo `Type` a operação de *limpeza*, *remoção*, *criação* ou etc a ser feito pelo `systemd-tmpfiles` se a *flag* que permite essa ação tiver sido passada. *E.g.*, caso o comando no arquivo de configuração for `D`, mas NÃO for passado a *flag* `--remove` para `systemd-tmpfiles`, então nada será removido.
 
@@ -3508,8 +3508,8 @@ Caso o sistema adote esse modo por padrão e queira usar *diretamente no disco*,
 1. Sem partições dedicadas, direto na raiz (que seria o "*default*")
 	1. Mascare o *unit file* de montagem:
 		`[sudo] systemctl mask tmp.mount`
-	2. Reinicie o sistema para que as alterações sejam aplicadas
-2. Com partições dedicadas no disco
+	1. Reinicie o sistema para que as alterações sejam aplicadas
+1. Com partições dedicadas no disco
 	1. Basta configurar a montagem da partição no `/etc/fstab` e automáticamente os `*.mount` não serão acionados:
 		`UUID=<uuid> /tmp ext4 discard,noatime,nodiratime,noexec,nosuid,nodev 0 2`
 
@@ -3566,11 +3566,11 @@ Redimensionamento:
 	```sh
 	qemu-img resize /path/disk.qcow2 {+|-}32G
 	```
-2. Redimensionar partição (*in*):
+1. Redimensionar partição (*in*):
 	```sh
 	growpart /dev/sdX Y
 	```
-3. Redimensionar *filesystem* (*in*):
+1. Redimensionar *filesystem* (*in*):
 	```sh
 	resize2fs /dev/sdXY
 	```
@@ -3940,10 +3940,8 @@ Para trocar o nome de usuário no sistema:
 
 1. Troque o *login* do usuário:
 	`sudo usermod -l <new> <old>`
-
 1. Troque a *home* e passe os arquivos para o novo usuário:
 	`sudo usermod -md /home/<new> <new>`
-
 1. Troque o nome do grupo do antigo usuário:
 	`sudo groupmod -n <new> <old>`
 
@@ -4441,25 +4439,25 @@ Instruções gerais sobre distribuições Linux.
 Instalação em dispositivo persistente (HDD/SSD, *pendrive* e etc):
 
 1. Crie as pastas para montagem da ISO e do dispositivo:
-	`sudo mkdir -pv /mnt/{iso,usb}`
+	`[sudo] mkdir -pv /mnt/{iso,usb}`
 1. Edite o dipositivo criando uma nova tabela de partição MBR e uma partição primária:
-	`sudo fdisk /dev/sdX # o, [y], n, <enter>, <enter>, <enter>, <enter>, [y], w`
+	`[sudo] fdisk /dev/sdX # o, [y], n, <enter>, <enter>, <enter>, <enter>, [y], w`
 1. Formate a partição do dispositivo em FAT32:
-	`sudo mkfs.vfat -F 32 /dev/sdX1`
+	`[sudo] mkfs.vfat -F 32 /dev/sdX1`
 1. Monte a ISO (*read-only*):
-	`sudo mount -o loop slax.iso /mnt/iso/`
+	`[sudo] mount -o loop slax.iso /mnt/iso/`
 1. Monte o dispositovo:
-	`sudo mount /dev/sdX1 /mnt/usb/`
+	`[sudo] mount /dev/sdX1 /mnt/usb/`
 1. Copie todo a pasta do Slax para a raiz do dispositivo:
-	`sudo cp -av /mnt/iso/slax/ /mnt/usb/`
+	`[sudo] cp -av /mnt/iso/slax/ /mnt/usb/`
 1. Entre na pasta de *boot* que foi copiado para o dispositovo:
 	`cd /mnt/usb/slax/boot/`
 1. Execute o *script* de configuração de *bootloader*:
-	`sudo ./bootinst.sh`
+	`[sudo] ./bootinst.sh`
 1. Desmonte a ISO e o dispositivo:
-	`sudo umount /mnt/iso/ /mnt/usb/`
+	`[sudo] umount /mnt/iso/ /mnt/usb/`
 1. Ejete o dispositivo:
-	`sudo eject /dev/sdX`
+	`[sudo] eject /dev/sdX`
 
 Esse procedimento faz uma instalação limpa (e persistente) do Slax do dispositivo.
 
@@ -4468,3 +4466,5 @@ Esse procedimento faz uma instalação limpa (e persistente) do Slax do disposit
 Atualmente **UEFI é suportado**.
 
 Caso esteja usando este modo de *firmware* e o *boot* não se complete, por exemplo, fica em tela preta eternamente, edite o arquivo `syslinux.cfg` (no dispositivo) alterando o valor da variável `UI` passando o caminho do `menu.c32` (que provavelmente está dentro da pasta `EFI`), ao invés do `vesamenu.c32` que vem por padrão.
+
+Isso pode acontecer por falha em carregar *drivers* VESA quando em UEFI.
