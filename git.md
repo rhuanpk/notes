@@ -338,41 +338,49 @@ git rebase --onto <base> <start> <end>
 
 *Opções usadas:*
 
-- `-u`: "Stashear" arquivos não traqueados (#saving,#listing)
-- `-p`: Mostrar as alterações (*patch*) dos *stashs* (#listing)
-- `-S`: Aplicar o *stash* somente sobre o *staging* (#saving)
-- `-k`: Apesar de "stashear" o que está em *staging*, não o limpa (#saving)
-- `-m <message>`: "Stashear" com mensagem específica (#saving)
-- `--index`: Restaurar o *stash* preservando o que estava em *staging* (#applying)
+- `-u`: Esconde arquivos não rastreados (*#saving,#listing*)
+- `-S`: Esconde somente os arquivos em *staging* (*#saving*)
+- `-k`: Não limpa o que está em *staging* ao esconder (*#saving*)
+- `-p`: Mostra as alterações (*patch*) dos *stashs* (*#listing*)
+- `-m <message>`: Esconde com mensagem específica (*#saving*)
+- `--index`: Restaura o *stash* preservando o que estava em *staging* (*#applying*)
+- `--date=local`: Exibe a data local em que o *stash* foi feito (*#listing*)
+- `--date=relative`: Exibe a data relativa em que o *stash* foi feito (*#listing*)
 
-"Stashear" todos os arquivos:
+Esconde todos os arquivos:
 
 ```sh
 git stash [-uk] [-m "<message>"]
 ```
 
-"Stashear" arquivos específicos:
+Esconde arquivos específicos:
 
 ```sh
 git stash push [-uk] [-m "<message>"] path/folder/ path/file.txt
 ```
 
-Listar/Mostrar *stashs*:
+Lista/Mostra *stashs*:
 
 ```sh
 git stash show [-up] ['stash@{<stash>}']
 ```
 
-Aplicar/Aplicar e Dropar *stash*:
+Aplica/Aplica e Deleta *stash*:
 
 ```sh
 git stash {apply|pop} [--index] ['stash@{<stash>}']
 ```
 
-Deletar **stash**:
+Deleta *stash*:
 
 ```sh
 git stash drop ['stash@{<stash>}']
+```
+
+Exibir ID e data do *stash*:
+
+```sh
+git stash list --pretty=format:"%gd %ci: %s"
 ```
 
 *OBSERVAÇÕES:*
