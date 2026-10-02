@@ -3710,11 +3710,11 @@ Monitores CLI (*top like*):
 Escapes:
 
 - Forma longa:
-    - Iniciar: `\033[<ansi>;<ansi>m`
-    - Resetar: `\033[00m`
+    - Iniciar: `\033[<ansi>{;...}m`
+    - Resetar: `\033[{0}m`
 - Forma abreviada:
-    - Iniciar: `\e[<ansi>;<ansi>m`
-    - Resetar: `\e[00m`
+    - Iniciar: `\e[<ansi>{;...}m`
+    - Resetar: `\e[{0}m`
 
 Cores:
 
