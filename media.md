@@ -358,7 +358,45 @@ Colocar as pastas de fontes dentro das pastas dos seus respectivos tipos, *e.g.*
 
 ### Comandos
 
-- Listar todas as fontes:
-	`fc-list`
-- Atualizar o *cache* de fontes:
-	`fc-cache`
+Comandos de fontes no Linux.
+
+#### `fc-list`
+
+Listar todas as fontes:
+
+```sh
+fc-list
+```
+
+Filtrar fontes no *userspace*:
+
+```sh
+fc-list | grep .local
+```
+
+#### `fc-match`
+
+Checar com qual fonte casa a *string*:
+
+```sh
+fc-match <name>
+```
+
+*OBSERVAÇÕES:*
+
+- As vezes será necessário passar o nome completo da fonte para que seja reconhecida
+- Pode-se considerar que esse mesmo nome buscado no `fc-match`, o resultado é o mesmo quando definimos fontes em aplicativos
+
+#### `fc-cache`
+
+*Opções usadas:*
+
+- `-f`: Força o escaneamento dos diretórios
+- `-r`: Apaga o cache existente e escaneia
+- `-s`: Faz o escaneamento somente dos diretórios do sistea
+
+Atualizar o *cache* de fontes:
+
+```sh
+fc-cache [<options>]
+```
