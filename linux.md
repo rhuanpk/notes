@@ -3076,14 +3076,20 @@ Valores possíveis:
 
 Comandos para configuração de cada tipo de Área de Troca.
 
-*Parâmetros usados:*
+Para ver informações em geral das SWAPs ativas no sistema:
 
-- `X`: Letra do disco
-- `Y`: Número da partição
+```sh
+[sudo] swapon --show
+```
 
 #### SWAP
 
 A SWAP pode ser configurada via partição (diretamente no disco) ou via arquivo (que é mais lenta ainda, porém, muito mais flexível caso precise removê-la ou alterar seu tamanho).
+
+*Parâmetros usados:*
+
+- `X`: Letra do disco
+- `Y`: Número da partição
 
 ##### Partição
 
@@ -3235,6 +3241,12 @@ Desabilitar:
 	```sh
 	[sudo] update-grub
 	```
+
+Verificar parâmetros configurados:
+
+```sh
+grep -R . /sys/module/zswap/parameters/
+```
 
 #### Algoritmos
 
