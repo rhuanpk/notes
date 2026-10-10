@@ -3290,24 +3290,13 @@ grep -E 'CONFIG_CRYPTO_(ZSTD|LZ4|LZ4HC|LZO|LZO_RLE|DEFLATE|842)=' /boot/config-$
 - `m`: Significa que o módulo do algoritmo está presente mas NÃO carregado
 - Caso algum não tenha aparecido, significa que o Kernel não dá suporte
 
-Se o algoritmo escolhido for `y`, nada precisa ser feito. Se for `m`, faça a ativação persistente do mesmo com base no tipo de SWAP escolhido.
+Se o algoritmo escolhido for `y`, nada precisa ser feito. Se for `m`, faça a ativação persistente do mesmo.
 
-Se utilizando **zRAM**, inclua o módulo para ser carregado no *boot*:
+Inclua o módulo para ser carregado no *boot* e estar disponível quando for solicitado:
 
 ```sh
 sudo tee /etc/modules-load.d/zstd.conf <<< 'zstd'
 ```
-
-Se utilizando **zSWAP**, inclua o módulo no `initramfs`:
-
-1. Adicione no diretório de configurações:
-	```sh
-	[sudo] tee -a /etc/initramfs-tools/modules <<< 'zstd'
-	```
-1. Recompile os Kernel's instalados:
-	```sh
-	[sudo] update-initramfs -u -k all
-	```
 
 Nomes dos módulos:
 
