@@ -3236,6 +3236,64 @@ Desabilitar:
 	[sudo] update-grub
 	```
 
+#### Algoritmos
+
+Alguns tipos de SWAP usam algum tipo de algoritmo de compressão.
+
+Para saber quais algoritmos estão disponíveis no sistema:
+
+```sh
+grep -E 'CONFIG_CRYPTO_(ZSTD|LZ4|LZ4HC|LZO|LZO_RLE|DEFLATE|842)=' /boot/config-$(uname -r)
+```
+
+- `y`: Significa que o módulo do algoritmo está presente e carregado
+- `m`: Significa que o módulo do algoritmo está presente mas NÃO carregado
+- Caso algum não tenha aparecido, significa que o Kernel não dá suporte
+
+Se o algoritmo escolhido for `y`, nada precisa ser feito. Se for `m`, faça a ativação persistente do mesmo com base no tipo de SWAP escolhido.
+
+Se utilizando **zRAM**, inclua o módulo para ser carregado no *boot*:
+
+```sh
+sudo tee /etc/modules-load.d/zstd.conf <<< 'zstd'
+```
+
+Se utilizando **zSWAP**, inclua o módulo no `initramfs`:
+
+1. Adicione no diretório de configurações:
+	```sh
+	[sudo] tee -a /etc/initramfs-tools/modules <<< 'zstd'
+	```
+1. Recompile os Kernel's instalados:
+	```sh
+	[sudo] update-initramfs -u -k all
+	```
+
+Nomes dos módulos:
+
+- `zstd`
+- `lz4`
+- `lz4hc`
+- `lzo`
+- `lzo_rle`
+- `deflate`
+- `842`
+
+Tabela de eficiencia:
+
+| Algoritmo   | Velocidade       | Compressão      | Uso                                                                                                               |
+| ----------- | ---------------- | --------------- | ----------------------------------------------------------------------------------------------------------------- |
+| **lz4**     | Ultra Rápido (5) | Baixa       (1) | Sistemas de alto desempenho ou CPUs fracas/antigas onde a velocidade é crítica.                                   |
+| **lzo-rle** | Muito Rápido (4) | Baixa-Média (2) | Padrão atual em muitas distribuições; um equilíbrio sólido para uso geral.                                        |
+| **lzo**     | Rápido       (3) | Baixa-Média (2) | Ambientes legados onde o lzo-rle ou lz4 não estão disponíveis.                                                    |
+| **842**     | Varia*       (3) | Média       (3) | Plataformas de hardware IBM PowerPC onde coprocessadores de hardware dedicados podem aliviar a carga de trabalho. |
+| **zstd**    | Moderado     (3) | Alta        (4) | Padrão moderno recomendado; melhor escolha para equilibrar economia de memória e bom desempenho.                  |
+| **lz4hc**   | Lento**      (2) | Alta        (4) | Sistemas com memória extremamente limitada, mas onde os tempos de leitura de dados precisam ser rápidos.          |
+| **deflate** | Muito Lento  (1) | Muito Alta  (5) | Configurações de compressão profunda ou servidores que utilizam drivers de aceleração por hardware.               |
+
+- O algoritmo `842` pode atingir pontuações de velocidade mais altas se blocos especializados de descompressão por hardware da IBM estiverem presentes e ativos.
+- O `lz4hc` é lento (2) durante a fase de compressão, mas pontua alto (5) nas fases de descompressão/leitura.
+
 ### *Signals*
 
 *Parâmetros usados:*
