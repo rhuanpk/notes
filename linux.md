@@ -4144,7 +4144,7 @@ Renomear:
 
 Independente do tipo, Áreas de Troca no Linux são técnicas para "estender" a capacidade física da Memória RAM.
 
-São estes os tipos de Área de Troca: SWAP, zRAM e Zswap.
+São estes os tipos de Área de Troca: SWAP, zRAM e zSWAP.
 
 #### SWAP
 
@@ -4192,11 +4192,11 @@ Teoricamente, para um uso mínimo confortável de zRAM, recomendasse um processa
 
 Não é recomendado o uso da zRAM para processadores de apenas 1 núcleo (*single-core*) ou se o seu uso diário já é de 100%.
 
-#### Zswap
+#### zSWAP
 
 Essencialmente é a junção dos conceitos de SWAP e zRAM. Atua como uma **área de *cache*** entre a RAM e a SWAP.
 
-Quando uma página de memória é enviada para SWAP, a Zswap tenta comprimi-la e guardar no *cache* em RAM. Caso o *cache* esteja cheio ou a compressão não for boa, então a página é destinada à SWAP.
+Quando uma página de memória é enviada para SWAP, a zSWAP tenta comprimi-la e guardar no *cache* em RAM. Caso o *cache* esteja cheio ou a compressão não for boa, então a página é destinada à SWAP.
 
 ### SSH
 
