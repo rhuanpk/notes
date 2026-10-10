@@ -3149,14 +3149,19 @@ Desabilitar:
 
 #### zRAM
 
+Ao invés de usar o disco (partição/arquivo) como uma extensão da RAM, a própria memória que vai para a RAM, é comprimida antes, fazendo com que ocupe menos espaço.
+
+Essa estratégia para aumentar a capacidade de RAM não consiste em aumentar seu tamanho, mas sim com que caiba mais dados dentro do espaço já existente.
+
 *Parâmetros usados:*
 
-- <algorithm>: Tipo do algoritmo de compressão
+- `<algorithm>`: Tipo do algoritmo de compressão
     - Velocidade: `lz4` > `zstd` > `lzo`
     - Compressão: `zstd` > `lzo` > `lz4`
-- <space>: Define o tamanho da área de compressão
-    - `PERCENT`: Porcentagem refente ao total de RAM
+- `<space>`: Tamanho da área de compressão
+    - `PERCENT`: Porcentagem refente ao total de RAM (*default:* `50`)
     - `SIZE`: Tamanho em MiB independente do tamanho da RAM
+- `<priority>`: Prioridade de uso da zRAM como SWAP (*default:* `100`)
 
 Programas necessários:
 
@@ -3166,12 +3171,12 @@ Programas necessários:
 
 Habilitar:
 
-1. Configurar zRAM `/etc/default/zramswap`:
+1. Configurar zRAM em `/etc/default/zramswap`:
     ```sh
     ALGO=<algorithm>
     PERCENT=<space>
     SIZE=<space>
-    PRIORITY=100
+    PRIORITY=<priority>
     ```
 1. Iniciar o serviço:
     ```sh
@@ -3180,7 +3185,8 @@ Habilitar:
 
 *OBSERVAÇÕES:*
 
-- A propriedade `PERCENT` tem precedencia sobre `SIZE`
+- A propriedade `PERCENT` tem precedencia sobre `SIZE`, ou seja, se os dois estiverem configurados, `PERCENT` será usado
+- Por padrão o Linux define a `PRIORITY` das SWAPs com valores negativos, sendo assim, um valor de `100`, por exemplo, já define esse tipo de SWAP como prioritária (ver `swapon(2)`)
 
 Desabilitar:
 
@@ -3189,20 +3195,29 @@ Desabilitar:
     systemctl disable --now zramswap
     ```
 
-#### Zswap
+#### zSWAP
+
+É como utilizar zRAM como SWAP primária, porém, se atinge o limite, passa a despejar na SWAP tradicional (em disco).
 
 Exige que uma SWAP já esteja configurada, uma vez que atuam em conjunto.
 
-- <algorithm>: Tipo do algoritmo de compressão
+*Parâmetros usados:*
+
+- `<algorithm>`: Tipo do algoritmo de compressão
     - Velocidade: `lz4` > `zstd` > `lzo`
     - Compressão: `zstd` > `lzo` > `lz4`
+- `<space>`: Tamanho da área de *cache* (*default:* `20`)
+- `<threshold>`: Quantidade de uso para aceitar novas páginas depois que o limite (`<space>`) é atingido (*default:* `90`)
+- `<shrinker>`: Devolve páginas frias (inativas) para o disco em casos de pressão (de uso), `1`/`Y` ou `0`/`N`
 
 Habilitar:
 
-1. Editar o `/etc/default/grub` "appendando" em `GRUB_CMDLINE_LINUX_DEFAULT`:
-    ```sh
-    zswap.enabled=1 zswap.compressor=<algorithm> zswap.max_pool_percent=20
-    ```
+1. Editar o `/etc/default/grub` "appendando" na variável `GRUB_CMDLINE_LINUX_DEFAULT` (separando por espaço):
+    - `zswap.enabled=1`
+    - `zswap.compressor=<algorithm>`
+    - `zswap.max_pool_percent=<space>`
+    - `zswap.accept_threshold_percent=<threshold>`
+    - `zswap.shrinker_enabled=<shrinker>`
 1. Atualizar o `grub`:
     ```sh
     [sudo] update-grub
@@ -3210,11 +3225,12 @@ Habilitar:
 
 *OBSERVAÇÕES:*
 
-- O parâmetro `max_pool_percent` é o tamanho da área de cache baseado no total de RAM
+- O parâmetro `max_pool_percent` é o tamanho da área de *cache* (em porcentagem) baseado no total de RAM
+- O parâmetro `threshold` é a porcentagem do tamanho da própria zSWAP. Necessário para não ficar oscilando entre SWAP e disco quando o uso está na borda
 
 Desabilitar:
 
-1. Remover os parâmetros da `zswap` ou definir `zswap.enabled=1` da `GRUB_CMDLINE_LINUX_DEFAULT` em `/etc/default/grub`
+1. Remover os parâmetros de `zswap` ou definir `zswap.enabled=0`
 1. Atualizar o `grub`:
     ```sh
     [sudo] update-grub
