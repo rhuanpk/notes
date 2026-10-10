@@ -3254,6 +3254,28 @@ Verificar estatísticas de uso:
 [sudo] grep -R . /sys/kernel/debug/zswap/
 ```
 
+##### *Troubleshooting*
+
+Caso escolha utilizar um algoritmo de compressão não embutido no Kernel, devemos fazer sua configuração via `modprobe` ou `initramfs` para que seja carregado durante o *boot*.
+
+Provavelmente o módulo não será carregado rápido o suficiente para estar disponível para zSWAP.
+
+Nesse caso, podemos utilizar o utilitário `sysfsutils` para contornar.
+
+Iremos configura-lo para assim que os módulos do sitema forem carregados, trocar o parâmetro da zSWAP:
+
+1. Instale o utilitário:
+
+```sh
+[sudo] apt install sysfsutils
+```
+
+1. Adicione no final de `/etc/sysfs.conf`:
+
+```
+module/zswap/parameters/compressor = zstd
+```
+
 #### Algoritmos
 
 Alguns tipos de SWAP usam algum tipo de algoritmo de compressão.
