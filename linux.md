@@ -3248,6 +3248,12 @@ Verificar parâmetros configurados:
 grep -R . /sys/module/zswap/parameters/
 ```
 
+Verificar estatísticas de uso:
+
+```sh
+[sudo] grep -R . /sys/kernel/debug/zswap/
+```
+
 #### Algoritmos
 
 Alguns tipos de SWAP usam algum tipo de algoritmo de compressão.
