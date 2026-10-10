@@ -1734,6 +1734,20 @@ Buscar por nome exato:
 locate -b '\file.txt'
 ```
 
+### `fdupes`
+
+Programas necessários:
+
+```sh
+[sudo] apt install fdupes
+```
+
+Producrar por arquivos duplicados (independente do nome):
+
+```sh
+fdupes [-r] /folder/find/duplicates/
+```
+
 ### `xargs`
 
 Pega a saida do pipe e concatena no final do comando que está a frente dele.
