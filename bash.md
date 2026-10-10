@@ -351,6 +351,24 @@ Teríamos as seguintes saída para as respectivas chamadas:
 
 - Num RegEx você também pode negar uma classe inteira com: `[^[:<class>:]]`
 
+Sequeências de Escape PCRE:
+
+| Escape | Correspondência              | Equivalente ASCII      | Descrição                                                                            |
+| ------ | ---------------------------- | ---------------------- | ------------------------------------------------------------------------------------ |
+| `\d`   | **Dígito**                   | `[0-9]`                | Qualquer dígito decimal.                                                             |
+| `\D`   | **Não-dígito**               | `[^0-9]`               | Qualquer caractere que **não** seja um dígito decimal.                               |
+| `\w`   | **Caractere de palavra**     | `[a-zA-Z0-9_]`         | Qualquer caractere alfanumérico mais o sublinhado (*underline*).                     |
+| `\W`   | **Não-caractere de palavra** | `[^a-zA-Z0-9_]`        | Qualquer caractere que **não** seja um caractere de palavra.                         |
+| `\s`   | **Espaço em branco**         | `[ \t\n\r\f]`          | Caracteres de espaço (espaços, *tabs*, quebras de linha, *carriage return*).         |
+| `\S`   | **Não-espaço em branco**     | `[^ \t\n\r\f]`         | Qualquer caractere que **não** seja um espaço em branco.                             |
+| `\h`   | **Espaço horizontal**        | `[ \t]`                | Espaços em branco horizontais (espaços comuns e tabulações horizontais).             |
+| `\H`   | **Não-espaço horizontal**    | `[^\h]`                | Qualquer caractere que **não** seja um espaço em branco horizontal.                  |
+| `\v`   | **Espaço vertical**          | `[\n\r\f\v]`           | Espaços em branco verticais (quebras de linha, *carriage return*, *tabs* verticais). |
+| `\V`   | **Não-espaço vertical**      | `[^\v]`                | Qualquer caractere que **não** seja um espaço em branco vertical.                    |
+| `\N`   | **Não-quebra de linha**      | `[^\n]`                | Qualquer caractere **exceto** uma nova linha (ignora configurações de *dot-all*).    |
+| `\R`   | **Quebra de linha**          | `\r\n` ou `[\n\r\f\v]` | Qualquer sequência universal de quebra de linha.                                     |
+| `\X`   | **Agrupamento de Gremas**    | *(Unicode)*            | Uma sequência Unicode estendida (um caractere base mais acentos combinados).         |
+
 ## *Tips & Tricks*
 
 Dicas e truques gerais do Bash.
