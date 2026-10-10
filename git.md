@@ -276,16 +276,16 @@ git merge --abort
 Se a mesclagem já estiver em progresso:
 
 - Aceitar as alterações "locais":
-    `git checkout --ours file.txt`
+	`git checkout --ours file.txt`
 - Aceitar as alterações "remotas":
-    `git checkout --theirs file.txt`
+	`git checkout --theirs file.txt`
 
 Se ainda irá mesclar:
 
 - Aceitar as alterações "locais":
-    `git merge -X ours <branch>`
+	`git merge -X ours <branch>`
 - Aceitar as alterações "remotas":
-    `git merge -X theirs <branch>`
+	`git merge -X theirs <branch>`
 
 *OBSERVAÇÕES:*
 
@@ -792,7 +792,7 @@ Se necessário, é possível montar o servidor remoto numa mídia removível (pe
 	- `python -m http.server 9418`
 	- `webfsd -Fdp 9418`
 1. *Faça o clone teste*:
-    `git clone http://localhost:9418 project`
+	`git clone http://localhost:9418 project`
 
 Depois, basta expor o servidor local via VPN (**OpenVPN**, **WireGuard**) ou *reverse proxy* (**ngrok**).
 
@@ -1013,11 +1013,11 @@ git status --porcelain | grep '^\?\?'
 Buscar configurar somente a *branch* HEAD do remoto:
 
 1. Verificar qual o nome da HEAD do remoto:
-    `git remote show <remote>`
+	`git remote show <remote>`
 1. Buscar somente a HEAD do remoto:
-    `git fetch <remote> <branch>`
+	`git fetch <remote> <branch>`
 1. Configure a *branch* `<remote>/HEAD` local:
-    `git remote set-head --auto <remote>`
+	`git remote set-head --auto <remote>`
 
 ## *Troubleshooting*
 

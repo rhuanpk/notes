@@ -3090,24 +3090,24 @@ A SWAP pode ser configurada via partição (diretamente no disco) ou via arquivo
 Habilitar:
 
 1. Formatar partição como SWAP:
-    ```sh
-    [sudo] mkswap /dev/sdXY
-    ```
+	```sh
+	[sudo] mkswap /dev/sdXY
+	```
 1. Ativar partição SWAP:
-    ```sh
-    [sudo] swapon /dev/sdXY
-    ```
+	```sh
+	[sudo] swapon /dev/sdXY
+	```
 1. Editar `/etc/fstab` para persistência:
-    ```sh
-    [sudo] tee -a /etc/fstab <<< '/dev/sdXY none swap sw 0 0'
-    ```
+	```sh
+	[sudo] tee -a /etc/fstab <<< '/dev/sdXY none swap sw 0 0'
+	```
 
 Desabilitar:
 
 1. Desativar partição:
-    ```sh
-    [sudo] swapoff /dev/sdXY
-    ```
+	```sh
+	[sudo] swapoff /dev/sdXY
+	```
 1. Remover entrada do `/etc/fstab`
 
 ##### Arquivo
@@ -3115,36 +3115,36 @@ Desabilitar:
 Habilitar:
 
 1. Criar arquivo de SWAP:
-    ```sh
-    [sudo] fallocate -l <size>G /swapfile
-    ```
+	```sh
+	[sudo] fallocate -l <size>G /swapfile
+	```
 1. Mudar permissões do arquivo de SWAP:
-    ```sh
-    [sudo] chmod 600 /swapfile
-    ```
+	```sh
+	[sudo] chmod 600 /swapfile
+	```
 1. Formatar arquivo como SWAP:
-    ```sh
-    [sudo] mkswap /swapfile
-    ```
+	```sh
+	[sudo] mkswap /swapfile
+	```
 1. Ativar arquivo SWAP:
-    ```sh
-    [sudo] swapon /swapfile
-    ```
+	```sh
+	[sudo] swapon /swapfile
+	```
 1. Editar `/etc/fstab` para persistência:
-    ```sh
-    [sudo] tee -a /etc/fstab <<< '/swapfile none swap sw 0 0'
-    ```
+	```sh
+	[sudo] tee -a /etc/fstab <<< '/swapfile none swap sw 0 0'
+	```
 
 Desabilitar:
 
 1. Desativar arquivo:
-    ```sh
-    [sudo] swapoff /swapfile
-    ```
+	```sh
+	[sudo] swapoff /swapfile
+	```
 1. Remover arquivo:
-    ```sh
-    [sudo] rm -v /swapfile
-    ```
+	```sh
+	[sudo] rm -v /swapfile
+	```
 1. Remover entrada do `/etc/fstab`
 
 #### zRAM
@@ -3156,11 +3156,11 @@ Essa estratégia para aumentar a capacidade de RAM não consiste em aumentar seu
 *Parâmetros usados:*
 
 - `<algorithm>`: Tipo do algoritmo de compressão
-    - Velocidade: `lz4` > `zstd` > `lzo`
-    - Compressão: `zstd` > `lzo` > `lz4`
+	- Velocidade: `lz4` > `zstd` > `lzo`
+	- Compressão: `zstd` > `lzo` > `lz4`
 - `<space>`: Tamanho da área de compressão
-    - `PERCENT`: Porcentagem refente ao total de RAM (*default:* `50`)
-    - `SIZE`: Tamanho em MiB independente do tamanho da RAM
+	- `PERCENT`: Porcentagem refente ao total de RAM (*default:* `50`)
+	- `SIZE`: Tamanho em MiB independente do tamanho da RAM
 - `<priority>`: Prioridade de uso da zRAM como SWAP (*default:* `100`)
 
 Programas necessários:
@@ -3172,16 +3172,16 @@ Programas necessários:
 Habilitar:
 
 1. Configurar zRAM em `/etc/default/zramswap`:
-    ```sh
-    ALGO=<algorithm>
-    PERCENT=<space>
-    SIZE=<space>
-    PRIORITY=<priority>
-    ```
+	```sh
+	ALGO=<algorithm>
+	PERCENT=<space>
+	SIZE=<space>
+	PRIORITY=<priority>
+	```
 1. Iniciar o serviço:
-    ```sh
-    systemctl enable --now zramswap
-    ```
+	```sh
+	systemctl enable --now zramswap
+	```
 
 *OBSERVAÇÕES:*
 
@@ -3191,9 +3191,9 @@ Habilitar:
 Desabilitar:
 
 1. Parar o serviço:
-    ```sh
-    systemctl disable --now zramswap
-    ```
+	```sh
+	systemctl disable --now zramswap
+	```
 
 #### zSWAP
 
@@ -3204,8 +3204,8 @@ Exige que uma SWAP já esteja configurada, uma vez que atuam em conjunto.
 *Parâmetros usados:*
 
 - `<algorithm>`: Tipo do algoritmo de compressão
-    - Velocidade: `lz4` > `zstd` > `lzo`
-    - Compressão: `zstd` > `lzo` > `lz4`
+	- Velocidade: `lz4` > `zstd` > `lzo`
+	- Compressão: `zstd` > `lzo` > `lz4`
 - `<space>`: Tamanho da área de *cache* (*default:* `20`)
 - `<threshold>`: Quantidade de uso para aceitar novas páginas depois que o limite (`<space>`) é atingido (*default:* `90`)
 - `<shrinker>`: Devolve páginas frias (inativas) para o disco em casos de pressão (de uso), `1`/`Y` ou `0`/`N`
@@ -3213,15 +3213,15 @@ Exige que uma SWAP já esteja configurada, uma vez que atuam em conjunto.
 Habilitar:
 
 1. Editar o `/etc/default/grub` "appendando" na variável `GRUB_CMDLINE_LINUX_DEFAULT` (separando por espaço):
-    - `zswap.enabled=1`
-    - `zswap.compressor=<algorithm>`
-    - `zswap.max_pool_percent=<space>`
-    - `zswap.accept_threshold_percent=<threshold>`
-    - `zswap.shrinker_enabled=<shrinker>`
+	- `zswap.enabled=1`
+	- `zswap.compressor=<algorithm>`
+	- `zswap.max_pool_percent=<space>`
+	- `zswap.accept_threshold_percent=<threshold>`
+	- `zswap.shrinker_enabled=<shrinker>`
 1. Atualizar o `grub`:
-    ```sh
-    [sudo] update-grub
-    ```
+	```sh
+	[sudo] update-grub
+	```
 
 *OBSERVAÇÕES:*
 
@@ -3232,9 +3232,9 @@ Desabilitar:
 
 1. Remover os parâmetros de `zswap` ou definir `zswap.enabled=0`
 1. Atualizar o `grub`:
-    ```sh
-    [sudo] update-grub
-    ```
+	```sh
+	[sudo] update-grub
+	```
 
 ### *Signals*
 
@@ -3740,11 +3740,11 @@ Monitores CLI (*top like*):
 Escapes:
 
 - Forma longa:
-    - Iniciar: `\033[<ansi>{;...}m`
-    - Resetar: `\033[{0}m`
+	- Iniciar: `\033[<ansi>{;...}m`
+	- Resetar: `\033[{0}m`
 - Forma abreviada:
-    - Iniciar: `\e[<ansi>{;...}m`
-    - Resetar: `\e[{0}m`
+	- Iniciar: `\e[<ansi>{;...}m`
+	- Resetar: `\e[{0}m`
 
 Cores:
 
@@ -3854,22 +3854,22 @@ Configuração dos arquivos de inicialização no sistema.
 Shells de *Login*:
 
 1. `/etc/environment` (`~/.pam_environment`):
-    - Independete (carregado pelo **PAM**)
+	- Independete (carregado pelo **PAM**)
 1. `/etc/profile` (`/etc/profile.d/*.sh`):
-    - Configuração global para *shells* de *login*
+	- Configuração global para *shells* de *login*
 1. `~/.bash_profile`:
-    - Configuração local para *shells* de *login*
+	- Configuração local para *shells* de *login*
 1. `~/.bash_login`:
-    - Carregado caso o anterior não exista a menos que seja explícito
+	- Carregado caso o anterior não exista a menos que seja explícito
 1. `~/.profile`:
-    - Carregado caso o anterior não exista a menos que seja explícito
+	- Carregado caso o anterior não exista a menos que seja explícito
 
 Shells Interativos:
 
 1. `/etc/bash.bashrc`:
-    - Configuração global para *shells* interativos
+	- Configuração global para *shells* interativos
 1. `~/.bashrc`:
-    - Configuração local do usuario para *shells* interativos
+	- Configuração local do usuario para *shells* interativos
 
 Shells de *Não-Login* e Não-Interativos:
 
@@ -3878,9 +3878,9 @@ Shells de *Não-Login* e Não-Interativos:
 #### GUI
 
 1. `/etc/environment` (`~/.pam_environment`):
-    - Independente (carregado pelo **PAM**)
+	- Independente (carregado pelo **PAM**)
 1. `~/.config/environment.d/*.conf`:
-    - Crregados pelo *systemd* (caso o ambiente gráfico execute: *systemctl --user import-environment*)
+	- Crregados pelo *systemd* (caso o ambiente gráfico execute: *systemctl --user import-environment*)
 
 *LINKS:*
 

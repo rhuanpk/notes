@@ -73,59 +73,59 @@ done
 Teríamos as seguintes saída para as respectivas chamadas:
 
 1. `$ ./test.sh`:
-    ```
-    fd '0' is opened
-    fd '1' is opened
-    fd '2' is opened
-    ```
+	```
+	fd '0' is opened
+	fd '1' is opened
+	fd '2' is opened
+	```
 
 1. `$ ./test.sh "foo" "bar"`:
-    ```
-    fd '0' is opened
-    fd '1' is opened
-    fd '2' is opened
-    arg 'foo' is not a named pipe
-    arg 'bar' is not a named pipe
-    ```
+	```
+	fd '0' is opened
+	fd '1' is opened
+	fd '2' is opened
+	arg 'foo' is not a named pipe
+	arg 'bar' is not a named pipe
+	```
 
 1. `$ ./test.sh <(echo "foo") "bar"`:
-    ```
-    fd '0' is opened
-    fd '1' is opened
-    fd '2' is opened
-    arg '/dev/fd/63' is a named pipe
-    arg 'bar' is not a named pipe
-    ```
+	```
+	fd '0' is opened
+	fd '1' is opened
+	fd '2' is opened
+	arg '/dev/fd/63' is a named pipe
+	arg 'bar' is not a named pipe
+	```
 
 1. `$ echo "foo" | ./test.sh`:
-    ```
-    fd '0' is not opened
-    fd '1' is opened
-    fd '2' is opened
-    ```
+	```
+	fd '0' is not opened
+	fd '1' is opened
+	fd '2' is opened
+	```
 
 1. `$ ./test.sh < file.txt`:
-    ```
-    fd '0' is not opened
-    fd '1' is opened
-    fd '2' is opened
-    ```
+	```
+	fd '0' is not opened
+	fd '1' is opened
+	fd '2' is opened
+	```
 
 1. `$ ./test.sh <<< "foo"`:
-    ```
-    fd '0' is not opened
-    fd '1' is opened
-    fd '2' is opened
-    ```
+	```
+	fd '0' is not opened
+	fd '1' is opened
+	fd '2' is opened
+	```
 
 1. `$ echo xpto | ./test.sh <(echo foo) bar`:
-    ```
-    fd '0' is not opened
-    fd '1' is opened
-    fd '2' is opened
-    arg '/dev/fd/63' is a named pipe
-    arg 'bar' is not a named pipe
-    ```
+	```
+	fd '0' is not opened
+	fd '1' is opened
+	fd '2' is opened
+	arg '/dev/fd/63' is a named pipe
+	arg 'bar' is not a named pipe
+	```
 
 ## *Parameter Expansion*
 
@@ -233,7 +233,7 @@ Teríamos as seguintes saída para as respectivas chamadas:
 *OBSERVAÇÕES:*
 
 - Essas expanções aceitam *wildcards*:
-    `echo "${foo^^[aeiou]}"`
+	`echo "${foo^^[aeiou]}"`
 
 *Remove matching:*
 
