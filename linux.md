@@ -1898,7 +1898,7 @@ ufw show added | sed -E '/^[aA]dded/d' > /path/ufw.txt
 Restaurar *backup* das regras:
 
 ```sh
-while read -r rule; do eval "sudo $rule"; done < /path/ufw.txt
+while read -r rule; do eval "[sudo] $rule"; done < /path/ufw.txt
 ```
 
 ### `history`
@@ -3033,7 +3033,7 @@ Programas necessários:
 Monitorar frequência média do processador:
 
 ```sh
-sudo turbostat -Sqi 1 -s {frequency|Bzy_MHz}
+[sudo] turbostat -Sqi 1 -s {frequency|Bzy_MHz}
 ```
 
 ##### `lshw`
@@ -3059,7 +3059,7 @@ Comandos relacionados a Memória RAM no sistema.
 Limpar *cache* da RAM:
 
 ```sh
-sync && echo {1|2|3} | sudo tee /proc/sys/vm/drop_caches
+sync && echo {1|2|3} | [sudo] tee /proc/sys/vm/drop_caches
 ```
 
 Valores possíveis:
@@ -3295,7 +3295,7 @@ Se o algoritmo escolhido for `y`, nada precisa ser feito. Se for `m`, faça a at
 Inclua o módulo para ser carregado no *boot* e estar disponível quando for solicitado:
 
 ```sh
-sudo tee /etc/modules-load.d/zstd.conf <<< 'zstd'
+[sudo] tee /etc/modules-load.d/zstd.conf <<< 'zstd'
 ```
 
 Nomes dos módulos:
@@ -3892,7 +3892,7 @@ Assinar e "triggar" módulo do Kernel:
 	```
 1. Adicione o trigger no `dkms`:
 	```sh
-	echo 'SIGN_TOOL=/usr/local/bin/sign-<module>.sh' | sudo tee /etc/dkms/<module>.conf
+	echo 'SIGN_TOOL=/usr/local/bin/sign-<module>.sh' | [sudo] tee /etc/dkms/<module>.conf
 	```
 1. Crie o script de assinatura em `/usr/local/bin/sign-<module>.sh`:
 	```sh
@@ -4056,11 +4056,11 @@ gpasswd -d <user> <group>
 Para trocar o nome de usuário no sistema:
 
 1. Troque o *login* do usuário:
-	`sudo usermod -l <new> <old>`
+	`[sudo] usermod -l <new> <old>`
 1. Troque a *home* e passe os arquivos para o novo usuário:
-	`sudo usermod -md /home/<new> <new>`
+	`[sudo] usermod -md /home/<new> <new>`
 1. Troque o nome do grupo do antigo usuário:
-	`sudo groupmod -n <new> <old>`
+	`[sudo] groupmod -n <new> <old>`
 
 ### IP
 
@@ -4098,7 +4098,7 @@ Alguns *workarounds* são possíveis para esses cenários:
 Execute com `bash -c` e `declare -f`:
 
 ```sh
-sudo bash -c "$(declare -f <function>); <function> [args]"
+[sudo] bash -c "$(declare -f <function>); <function> [args]"
 ```
 
 ### Partições

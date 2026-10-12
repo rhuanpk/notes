@@ -703,7 +703,7 @@ Programas necessários:
 Configuração do cofre:
 
 1. "Buildar" o binário:
-	`sudo make --directory=/usr/share/doc/git/contrib/credential/libsecret`
+	`[sudo] make --directory=/usr/share/doc/git/contrib/credential/libsecret`
 1. Definir o *helper*:
 	`git config --global credential.helper /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret`
 
