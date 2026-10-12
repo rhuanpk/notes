@@ -3256,7 +3256,7 @@ Verificar estatísticas de uso:
 
 ##### *Troubleshooting*
 
-Caso escolha utilizar um algoritmo de compressão não embutido no Kernel, devemos fazer sua configuração via `modprobe` ou `initramfs` para que seja carregado durante o *boot*.
+Caso escolha utilizar um algoritmo de compressão não embutido no Kernel, devemos fazer sua configuração via `modprobe` (ou `initramfs`) para que seja carregado durante o *boot* (como explicado na sesão referente).
 
 Provavelmente o módulo não será carregado rápido o suficiente para estar disponível para zSWAP.
 
