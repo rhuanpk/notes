@@ -662,8 +662,8 @@ modprobe --dry-run --first-time <module> && echo "not loaded" || echo "loaded"
 
 - `-w`: Modo *tail* (fica escutando a saída)
 - `-H`: Mais legível para humanos
-- `-C`: Limpa o cache do **dmesg**
-- `-c`: Limpa o cache do **dmesg** depois de "printar" na tela
+- `-C`: Limpa o *cache* do **dmesg**
+- `-c`: Limpa o *cache* do **dmesg** depois de "printar" na tela
 
 Sintaxe base:
 
@@ -770,31 +770,43 @@ Remover/Limpar os *logs*:
 
 ### `sysctl`
 
-Trocar a porcentagem de uso (que está sobrando) para que a *swap* seja ativada:
+Altera a porcentagem de uso de RAM (que está sobrando) para que a SWAP seja ativada:
 
 ```sh
-[sudo] sysctl vm.swappiness=90
+[sudo] sysctl vm.swappiness=10
 ```
 
 *OBSERVAÇÕES:*
 
-- 60 é o padrão, quanto maior, "menos" *swap* será usado. No caso, se quiser que a *swap* seja ativa com 90% de uso, defina o valor para 10
+- 60 é o padrão, quanto menor, mais demora para SWAP ser usada, por exemplo, se quiser que a SWAP seja ativada com 90% de uso, defina o valor para `10`
 
-Aumentar o "desejo" de manter o *cache* da RAM:
+Altera o quanto o *cache* tende a se mantem na RAM:
 
 ```sh
-[sudo] sysctl vm.vfs_cache_pressure=75
+[sudo] sysctl vm.vfs_cache_pressure={75|125}
 ```
 
 *OBSERVAÇÕES:*
 
-- 100 é o padrão, quanto menor o valor, mais tempo mantem o cache
+- 100 é o padrão, quanto menor o valor **mais** tempo mantem o *cache*, quanto maior o valor **menos** tempo mantem o *cache*
+- Esse parâmetro controla o quanto o Kernel tende a recuperar a memória usada por *buffer* (inodes) e *cache* (dados)
+- Diminuir faz sentido quando se tem **muita RAM disponível** ou cargas de trabalho que percorrem muitos arquivos repetidamente
+    - Servidores de arquivos (Samba, NFS) com muitos arquivos
+    - Servidores Web/CDN servindo muitos arquivos
+    - `find`/`rsync`, *backups* recorrentes sobre árvores enormes
+    - Sistemas com discos muito lentos (HDD, rede), aonde ler metadados é custoso
+- Aumentar faz sentido quando se tem **pouca RAM disponível** e o *cache* de arquivos compete com a memória de aplicações
+    - Máquinas/VMs com memória escassa
+    - Cargas de trabalhos que varrem muitos arquivos uma única vez e não são (ou são pouco) reaproveitados (`find`)
+- O conceito de muita ou pouca RAM é extremamente relativo ao fluxo de trabalho desempenhado
 
-Caso atualize o arquivos de configuração do usuário como `/etc/sysctl.d/99-sysctl.conf`, utilize o comando para aplicar de imediato os parâmetros ao invés de esperar reiniciar o SO:
+Ao alterar parâmetros, utilize o comando para aplicar de imediato os parâmetros ao invés de esperar reiniciar o SO:
 
 ```sh
 [sudo] sysctl --system
 ```
+
+- Arquivo de configuração do usuário (*system-wide*): `/etc/sysctl.d/99-sysctl.conf`.
 
 ### `last`
 
@@ -1242,7 +1254,7 @@ tar -tf /path/archive.tar.gz
 - `-e`: Criptografar o arquivo compactado
 - `-@`: A lista de arquivos/diretórios a serem compactados vem via STDIN
 - `-FS`: Caso o arquivo não exista mais no *filesystem*, exclui do arquivo compactado
-- `-b <folder>`: Especifica o diretório para o arquivo temporario (de cache) do *zip*
+- `-b <folder>`: Especifica o diretório para o arquivo temporario (de *cache*) do *zip*
 - `-i <pattern>[ ...]`: Inclue arquivos pelo padrão
 - `-x <pattern>[ ...]`: Exclui arquivos pelo padrão
 
