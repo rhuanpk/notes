@@ -3811,6 +3811,14 @@ Passar USB Para VM:
 - Exemplo de parâmetros:
 	![lsusb-tv](./assets/lsusb-tv.png)
 
+#### *Troubleshooting*
+
+Ponteiro não sincronizado entre *host* e VM, adicione a opção:
+
+```sh
+-usb -device usb-tablet
+```
+
 ### VirtManager
 
 Instalação e configuração:
