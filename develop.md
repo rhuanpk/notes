@@ -14,6 +14,49 @@ printf -- '-%.s' `seq <count>`
 printf -- '|%.s\n' `seq <count>`
 ```
 
+## `python`
+
+Programas necessários:
+
+```sh
+apt install python3-venv python3-full
+```
+
+Criando e executando projeto Python em ambiente isolado:
+
+1. Crie o ambiente virtual:
+    ```sh
+    python3 -m venv .venv
+    ```
+1. Ative o ambiente virtual:
+    ```sh
+    source .venv/bin/activate
+    ```
+1. Instale/Configure o programa/projeto:
+    ```sh
+    [python -m] pip install -r requirements.txt [-c constraints.txt]
+    # or
+    [python -m] pip install <program>
+    ```
+1. Execute/Inicie o programa/projeto:
+    ```sh
+    python main.py
+    # or
+    <program> [<options>]
+    ```
+
+Para sair do ambiente virtual:
+
+```sh
+deactivate
+```
+
+*OBSERVAÇÕES:*
+
+- Quando entrar no ambiente virtual, pode ser que apenas o pacote `python` esteja configurado e não o `pip`, se for o caso, temos duas opções:
+    1. Usar o `pip` pelo `python` prefixando o comando `python -m`
+    1. Configurar o `pip` para ambientes virtuais com `python -m ensurepip --upgrade` (porém, nem todos os sistemas permitem essa configuração nativamente)
+
 ## `base64`
 
 Tanto para codificar quanto para decodificar é necessário passar o dado via **arquivo** ou **STDIN**.
