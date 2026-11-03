@@ -56,6 +56,7 @@ deactivate
 - Quando entrar no ambiente virtual, pode ser que apenas o pacote `python` esteja configurado e não o `pip`, se for o caso, temos duas opções:
     1. Usar o `pip` pelo `python` prefixando o comando `python -m`
     1. Configurar o `pip` para ambientes virtuais com `python -m ensurepip --upgrade` (porém, nem todos os sistemas permitem essa configuração nativamente)
+- Ao fazer o *download* de dependências (`pip install -r requirements.txt`), caso esteja demorando muito, pode ser que a versão instalada no sistema, não seja a mesma do programa/projeto, então as dependências teram que ser compiladas. Para contornar isso, use alguma ferramenta como `asdf` para definir uma versão local, a mesma da aplicação
 
 ## `base64`
 
