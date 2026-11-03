@@ -2,6 +2,28 @@
 
 Anotações gerais sobre Windows: programas e configurações.
 
+## Otimização
+
+Lista de coisas a se fazer para otimização do sistema:
+
+- *Atualizar drivers da placa mãe*
+- *Atualizar drivers da placa de vídeo*
+- *Atualizar o sistema (Windows Update)*
+- Menu > "aplicativos em segundo plano" > *Desabilite os apps desejados*
+- Menu > "cmd" > Executar como administrador > "powercfg /h off"
+- Painel de controle > Hardware e sons > Opções de energia > Melhor desempenho
+- Configurações > Jogos > Modo de jogo > Desativar
+- Configurações > Jogos > Modo de jogo > Elementos gráficos > *Adicione os apps desejados*
+- Configurações > Jogos > XBox Game Bar > Desativar
+- Configurações > Personalização > *Altere as opções desejadas*
+- Windows update > Opções avançadas > Otimização de entrega > Permitir *downloads* de outros computadores > Desativado
+- `super+r` > "sysdm.cpl" > Avançado > Configurações (desempenho) > Melhor desempenho
+- `super+r` > "msconfig" > Serviços > Ocultar serviços Microsoft > *Desabilite os serviços desejados*
+- `super+r` > "taskschd.msc" > *biblioteca/microsoft/windows/maintenance/* > WinSAT > *Botão direito* > Desabilitar
+- `super+r` > "taskschd.msc" > *biblioteca/* > *Desabilite os serviços desejados*
+- `ctrl+shift+esc` > Inicialização > *Desabilite os apps desejados*
+- ***Botão direito** no **Menu iniciar*** > Gerenciador de dispositivos > Dispositivos de sistema > Timer de eventos de alta precisão > *Botão direito* > Desabilitar dispositivo
+
 ## ImageMagick
 
 Programas necessários:
