@@ -215,18 +215,18 @@ Instalação via Python:
 
 Para baixar música, álbum ou artista, passe a URL do Spotify:
 
-```
+```sh
 spotdl '<url>'
 ```
 
 Caso muitos *downloads* estejam falhando (provavelmente por limite de requisições), tente usar um *proxy*:
 
 1. Serve um servidor *proxy* Tor local:
-    ```
+    ```sh
     docker run --rm -it -p 127.0.0.1:3128:3128 zhaowde/rotating-tor-http-proxy
     ```
 1. Passa as opções para o comando:
-    ```
+    ```sh
     spotdl download '<url>' --proxy http://127.0.0.1:3128 --threads 1
     ```
 
