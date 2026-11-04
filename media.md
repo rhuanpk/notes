@@ -153,6 +153,64 @@ Baixar áudio e vídeo na melhor qualidade em conjunto, ou seja, a melhor qualid
 yt-dlp -f mp4 <url>
 ```
 
+## `spotdl`
+
+Instalação via Python:
+
+1. Instale o Python no sistema:
+    ```sh
+    [sudo] apt install python3-venv python3-full
+    ```
+1. Crie e entre numa pasta destinada:
+    ```sh
+    mkdir -v music/ && cd music/
+    ```
+1. Crie o ambiente Python virtual:
+    ```shh
+    python3 -m venv .venv
+    ```
+1. Ative o ambiente virtual:
+    ```sh
+    source .venv/bin/activate
+    ```
+1. Instale o `spotdl`:
+    ```sh
+    python -m pip install spotdl
+    ```
+1. Atualize a ferramenta:
+    ```sh
+    python -m pip install --upgrade spotdl
+    ```
+1. Se o `ffmpeg` ainda não estiver instalado no sistema e quiser instala-lo no ambiente virtual:
+    ```sh
+    spotdl --download-ffmpeg
+    ```
+1. Se o `deno` ainda não estiver instalado no sistema e quiser instala-lo no ambiente virtual:
+    ```
+    spotdl --download-deno
+    ```
+
+*OBSERVAÇÕES:*
+
+- Caso tenha os binários pré-compilados, teoricamente pode-se ignorando essa etapa de instalação manual e usar diretamente a ferramenta
+
+Para baixar música, álbum ou artista, passe a URL do Spotify:
+
+```
+spotdl '<url>'
+```
+
+Caso muitos *downloads* estejam falhando (provavelmente por limite de requisições), tente usar um *proxy*:
+
+1. Serve um servidor *proxy* Tor local:
+    ```
+    docker run --rm -it -p 127.0.0.1:3128:3128 zhaowde/rotating-tor-http-proxy
+    ```
+1. Passa as opções para o comando:
+    ```
+    spotdl download '<url>' --proxy http://127.0.0.1:3128 --threads 1
+    ```
+
 ## `mkvtoolnix`
 
 Programas necessários:
