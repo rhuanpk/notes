@@ -3874,6 +3874,34 @@ echo $'\e[1;31;43m<string>\e[m'
 - Quando for utilizdo as cores na `PS1` (Bash), proteja a expressão:
 	`\[\e[<ansi>m\]foobar\[\e[m\]`
 
+### *Browsers*
+
+Instalação de *browsers* sem precisar de um, apenas com ferramentas CLI.
+
+#### Chrome
+
+Para base **Debian** (`.deb`):
+
+- 64 bits (x64):
+    ```
+    curl -LO 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
+    ```
+- ARM64 (AArch64):
+    ```
+    curl -LO 'https://dl.google.com/linux/direct/google-chrome-stable_current_arm64.deb'
+    ```
+
+Para base **Fedora** (`.rpm`):
+
+- 64 bits (x64):
+    ```
+    curl -LO 'https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm'
+    ```
+- ARM64 (AArch64):
+    ```
+    curl -LO 'https://dl.google.com/linux/direct/google-chrome-stable_current_aarch64.rpm'
+    ```
+
 ## Configurações
 
 Anotações gerais sobre procedimentos (tutoriais).
