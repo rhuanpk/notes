@@ -421,9 +421,9 @@ for char in `sed -E 's/(.)/\1\n/g' <<< 'string'`; do echo "$char"; done
 ```sh
 options=('option1' 'option2' 'option3' 'option4')
 <command> --options "`IFS=,; echo "${options[*]}"`"
+```
 
-# or
-
+```sh
 array=('option1' 'option2' 'option3' 'option4')
 options=`IFS=,; echo "${array[*]}"`
 <command> "$options"

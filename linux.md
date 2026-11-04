@@ -485,15 +485,16 @@ Montar arquivo *iso*:
 
 Montar partição *ext4* e manipular com usuário regular:
 
-```sh
-[sudo] mount -o user /dev/sdXY /mnt
-bindfs -u `id -u` -g `id -g` /mnt /media/disk
-
-# or
-
-[sudo] mount /dev/sdXY /media/disk
-chown -Rv `id -un`:`id -gn` /media/disk
-```
+- Utilizando `bindfs`:
+    ```sh
+    [sudo] mount -o user /dev/sdXY /mnt
+    bindfs -u `id -u` -g `id -g` /mnt /media/disk
+    ```
+- Utilizando `chown`:
+    ```sh
+    [sudo] mount /dev/sdXY /media/disk
+    chown -Rv `id -un`:`id -gn` /media/disk
+    ```
 
 *OBSERVAÇÕES:*
 
@@ -570,9 +571,7 @@ Montar:
 
 ```sh
 [sudo] jmtpfs /mount/point -device=<bus>,<device> -o allow_other
-
 # or
-
 [sudo] jmtpfs /mount/point -o allow_other,auto_unmount
 ```
 
@@ -580,9 +579,7 @@ Desmontar:
 
 ```sh
 [sudo] umount /mount/point
-
 # or
-
 [sudo] fusermount -u /mount/point
 ```
 
