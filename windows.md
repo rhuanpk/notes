@@ -46,6 +46,8 @@ slmgr /ckms
 | Windows 11 Enterprise N<br>Windows 10 Enterprise N                     | `DPH2V-TTNVB-4X9Q3-TJR4H-KHJW4` |
 | Windows 11 Enterprise G<br>Windows 10 Enterprise G                     | `YYVX9-NTFWV-6MDM3-9PT4T-4M68B` |
 | Windows 11 Enterprise G N<br>Windows 10 Enterprise G N                 | `44RPN-FTY23-9VTTB-MP9BX-T84FV` |
+
+Acesse o [artigo oficial da Microsfot](https://learn.microsoft.com/en-us/windows-server/get-started/kms-client-activation-keys) para mais detalhes.
 </details>
 
 ## Otimização
