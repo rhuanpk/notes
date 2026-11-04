@@ -109,7 +109,7 @@ Configuração para desabilitar por completo as funções de IA no sistema:
 
 Instalação de *browsers* sem precisar de um, apenas com ferramentas CLI.
 
-### Google Chrome
+### Chrome
 
 Via `winget`:
 

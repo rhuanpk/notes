@@ -973,13 +973,13 @@ Problemas com falta de *internet* ao usar `--private` pode ser falta de DNS:
 firejail --dns=<ipv4>[ ...] --private <command>
 ```
 
-Para executar Google Chrome:
+Para executar Chrome:
 
 ```sh
 firejail --private google-chrome --no-sandbox --no-first-run
 ```
 
-Caso ainda tenha problemas com Google Chrome e esteja no Wayland:
+Caso ainda tenha problemas com Chrome e esteja no Wayland:
 
 ```sh
 firejail --noprofile --env=MOZ_ENABLE_WAYLAND=1 --private google-chrome --no-sandbox --no-first-run --ozone-platform=wayland --disable-vulkan
