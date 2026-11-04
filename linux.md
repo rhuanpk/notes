@@ -4573,7 +4573,7 @@ Instruções gerais sobre distribuições Linux.
 - `X`: Letra do disco
 - `Y`: Número da partição
 
-## Slax
+### Slax
 
 Instalação em dispositivo persistente (HDD/SSD, *pendrive* e etc):
 
@@ -4600,7 +4600,7 @@ Instalação em dispositivo persistente (HDD/SSD, *pendrive* e etc):
 
 Esse procedimento faz uma instalação limpa (e persistente) do Slax do dispositivo.
 
-### UEFI
+#### UEFI
 
 Atualmente **UEFI é suportado**.
 
