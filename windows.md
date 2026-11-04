@@ -22,12 +22,31 @@ Fazer ativação da versão Pro:
     ```
     slmgr /dlv
     ```
+1. Checar status da ativação:
+    ```
+    slmgr /xpr
+    ```
 
 Para limpar o estado de ativação (chave instalada):
 
 ```
 slmgr /ckms
 ```
+
+Verificar se o servidor KMS está *online*:
+
+- Agnóstico:
+    ```
+    nslookup -type=srv _vlmcs._tcp.<url>
+    ```
+- Windows:
+    ```
+    Test-NetConnection -ComputerName <url> -Port 1688
+    ```
+- Linux:
+    ```
+    nc -zv <url> 1688
+    ```
 
 <details>
 <summary>Chaves genéricas:</summary>
