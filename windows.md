@@ -27,12 +27,6 @@ Fazer ativação da versão Pro:
     slmgr /xpr
     ```
 
-Para limpar o estado de ativação (chave instalada):
-
-```
-slmgr /ckms
-```
-
 Verificar se o servidor KMS está *online*:
 
 - Agnóstico:
@@ -47,6 +41,12 @@ Verificar se o servidor KMS está *online*:
     ```
     nc -zv <url> 1688
     ```
+
+Para limpar o estado de ativação (chave instalada):
+
+```
+slmgr /ckms
+```
 
 <details>
 <summary>Chaves genéricas:</summary>
