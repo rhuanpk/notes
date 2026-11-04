@@ -155,6 +155,14 @@ yt-dlp -f mp4 <url>
 
 ## `spotdl`
 
+Ferramenta para *downalod* de mídia via URLs de Spotify e YouTube.
+
+As dependências `ffmpeg` e `deno` são instaladas localmente na *home* do usuário (ou na pasta onde a ferramenta executa), então é seguro aceitar o *overwrite* (se solicitado).
+
+Caso esteja utilizando a ferramenta de duas formas/versões diferentes, teoricamente basta fazer o *download* sempre que começar a utilizar para que a ferramenta atual baixe suas dependências compatíveis.
+
+### Instalação
+
 Instalação via Python:
 
 1. Instale o Python no sistema:
@@ -166,7 +174,7 @@ Instalação via Python:
     mkdir -v music/ && cd music/
     ```
 1. Crie o ambiente Python virtual:
-    ```shh
+    ```sh
     python3 -m venv .venv
     ```
 1. Ative o ambiente virtual:
@@ -177,22 +185,33 @@ Instalação via Python:
     ```sh
     python -m pip install spotdl
     ```
-1. Atualize a ferramenta:
-    ```sh
-    python -m pip install --upgrade spotdl
-    ```
 1. Se o `ffmpeg` ainda não estiver instalado no sistema e quiser instala-lo no ambiente virtual:
     ```sh
     spotdl --download-ffmpeg
     ```
 1. Se o `deno` ainda não estiver instalado no sistema e quiser instala-lo no ambiente virtual:
-    ```
+    ```sh
     spotdl --download-deno
     ```
 
-*OBSERVAÇÕES:*
+"Instalação" via executável:
 
-- Caso tenha os binários pré-compilados, teoricamente pode-se ignorando essa etapa de instalação manual e usar diretamente a ferramenta
+1. Baixe a última versão do binário na [*página de releases*](https://github.com/spotDL/spotify-downloader/releases/latest)
+1. Se a pasta temporária do seu sistema tiver restrições execução, execute o binário em outro pasta passando a variável de ambiente `TMPDIR`:
+    ```sh
+    TMPDIR="$PWD" ./spotdl
+    ```
+1. Instale as dependências da ferramenta:
+    ```sh
+    [TMPDIR="$PWD"] ./spotdl --download-ffmpeg
+    [TMPDIR="$PWD"] ./spotdl --download-deno
+    ```
+1. Especifique o caminho da instalação das dependências na utilização (se houver conflito com a biblioteca já instalada no sistema):
+    ```sh
+    [TMPDIR="$PWD"] ./spotdl [--ffmpeg ~/.config/spotdl/ffmpeg] '<url>'
+    ```
+
+### Utilização
 
 Para baixar música, álbum ou artista, passe a URL do Spotify:
 
