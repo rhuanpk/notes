@@ -2,6 +2,52 @@
 
 Anotações gerais sobre Windows: programas e configurações.
 
+## Ativação
+
+Fazer ativação da versão Pro:
+
+1. Instale a chave:
+    ```
+    slmgr /ipk <key>
+    ```
+1. Aponte o servidor KMS:
+    ```
+    slmgr /skms <url>
+    ```
+1. Ative a chave:
+    ```
+    slmgr /ato
+    ```
+1. Verifique a chave:
+    ```
+    slmgr /dlv
+    ```
+
+Para limpar o estado de ativação (chave instalada):
+
+```
+slmgr /ckms
+```
+
+<details>
+<summary>Chaves genéricas:</summary>
+
+| Edição                                                                 | KMS Client Product Key          |
+| ---------------------------------------------------------------------- | ------------------------------- |
+| Windows 11 Pro<br>Windows 10 Pro                                       | `W269N-WFGWX-YVC9B-4J6C9-T83GX` |
+| Windows 11 Pro N<br>Windows 10 Pro N                                   | `MH37W-N47XK-V7XM9-C7227-GCQG9` |
+| Windows 11 Pro for Workstations<br>Windows 10 Pro for Workstations     | `NRG8B-VKK3Q-CXVCJ-9G2XF-6Q84J` |
+| Windows 11 Pro for Workstations N<br>Windows 10 Pro for Workstations N | `9FNHH-K3HBT-3W4TD-6383H-6XYWF` |
+| Windows 11 Pro Education<br>Windows 10 Pro Education                   | `6TP4R-GNPTD-KYYHQ-7B7DP-J447Y` |
+| Windows 11 Pro Education N<br>Windows 10 Pro Education N               | `YVWGF-BXNMC-HTQYQ-CPQ99-66QFC` |
+| Windows 11 Education<br>Windows 10 Education                           | `NW6C2-QMPVW-D7KKK-3GKT6-VCFB2` |
+| Windows 11 Education N<br>Windows 10 Education N                       | `2WH4N-8QGBV-H22JP-CT43Q-MDWWJ` |
+| Windows 11 Enterprise<br>Windows 10 Enterprise                         | `NPPR9-FWDCX-D2C8J-H872K-2YT43` |
+| Windows 11 Enterprise N<br>Windows 10 Enterprise N                     | `DPH2V-TTNVB-4X9Q3-TJR4H-KHJW4` |
+| Windows 11 Enterprise G<br>Windows 10 Enterprise G                     | `YYVX9-NTFWV-6MDM3-9PT4T-4M68B` |
+| Windows 11 Enterprise G N<br>Windows 10 Enterprise G N                 | `44RPN-FTY23-9VTTB-MP9BX-T84FV` |
+</details>
+
 ## Otimização
 
 Lista de coisas a se fazer para otimização do sistema:
@@ -34,7 +80,68 @@ Configuração para desabilitar por completo as funções de IA no sistema:
 1. *botão direito* > Nova > Valor DWORD > "TurnOffWindowsCopilot"
 1. *botão direito* > Modificar > "1"
 
-## ImageMagick
+## *Browsers*
+
+Instalação de *browsers* sem precisar de um, apenas com ferramentas CLI.
+
+### Google Chrome
+
+Via `winget`:
+
+```
+winget install --id Google.Chrome -e --accept-source-agreements --accept-package-agreements
+```
+
+Via `curl`:
+
+- 64 bits (x64):
+    ```
+    curl -L -o ChromeSetup_x64.exe "https://dl.google.com/chrome/install/ChromeStandaloneSetup64.exe"
+    ```
+- 32 bits (x86):
+    ```
+    curl -L -o ChromeSetup_x86.exe "https://dl.google.com/chrome/install/ChromeStandaloneSetup.exe"
+    ```
+
+### Firefox
+
+Via `winget`:
+
+```
+winget install --id Mozilla.Firefox.pt-BR -e --accept-source-agreements --accept-package-agreements
+```
+
+Via `curl`:
+
+- 64 bits (x64):
+    ```
+    curl -L -o FirefoxSetup_x64.exe "https://download.mozilla.org/?product=firefox-latest-ssl&os=win64&lang=pt-BR"
+    ```
+- 32 bits (x86):
+    ```
+    curl -L -o FirefoxSetup_x86.exe "https://download.mozilla.org/?product=firefox-latest-ssl&os=win&lang=pt-BR"
+    ```
+- ARM64 (AArch64):
+    ```
+    curl -L -o FirefoxSetup_arm64.exe "https://download.mozilla.org/?product=firefox-latest-ssl&os=win64-aarch64&lang=pt-BR"
+    ```
+
+## Certificado
+
+Conteúdo sobre configuração de certificado digital no sistema:
+
+- [Soluti (Website)](https://manuais.soluti.com.br/certificado-a1-pj/instalando-o-certificado-digital/instalacao-windows)
+- [Dicas de Sistemas (YouTube)](https://youtu.be/aWqYiTAoDzw)
+
+## Comandos
+
+Saber arquitetura do sistema:
+
+```
+echo %PROCESSOR_ARCHITECTURE%
+```
+
+### ImageMagick
 
 Programas necessários:
 
@@ -76,13 +183,6 @@ Get-ChildItem -File -Filter *.jpg | ForEach-Object {
 	magick $_.FullName <...> "$($_.DirectoryName)\$($_.BaseName)_resize$($_.Extension)"
 }
 ```
-
-## Certificado
-
-Conteúdo sobre configuração de certificado digital no sistema:
-
-- [Soluti (Website)](https://manuais.soluti.com.br/certificado-a1-pj/instalando-o-certificado-digital/instalacao-windows)
-- [Dicas de Sistemas (YouTube)](https://youtu.be/aWqYiTAoDzw)
 
 ## Troubleshooting
 
