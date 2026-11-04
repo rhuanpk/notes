@@ -1842,6 +1842,7 @@ wget -O - <url>
 - `-k`: Desabilita verificações de segurança (*SSL* e etc)
 - `-v`: Aumenta verbosidade da saída
 - `-i`: Retorna o cabeçalho da requisição
+- `-O`: Salva o arquivo localmente com o mesmo nome do arquivo remoto
 - `-X <type>`: Tipo da *request*
 - `-H <header>`: Define cabeçalho da *request* (aceita múltiplos `-H`)
 - `-u <user>[:<password>]`: Credenciais para autênticação única
