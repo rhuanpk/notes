@@ -38,15 +38,13 @@ Verificar se o servidor KMS está *online*:
     Test-NetConnection -ComputerName <url> -Port 1688
     ```
 - Linux:
-    ```
+    ```sh
     nc -zv <url> 1688
     ```
-
-Verificar em lote (Linux), coloque um domínio por linha no arquivo `domains.txt`, o resultado sairá em `check.txt`:
-
-```sh
-> check.txt; while read domain; do { echo "=====> $domain <====="; nslookup -type=srv _vlmcs._tcp.$domain; } >> check.txt 2>&1; done < domains.txt
-```
+    ```sh
+    # batch check, put all domains (one per line) inside `domains.txt`, the result is outputed `check.txt`
+    > check.txt; while read domain; do { echo "=====> $domain <====="; nslookup -type=srv _vlmcs._tcp.$domain; } >> check.txt 2>&1; done < domains.txt
+    ```
 
 Para limpar o estado de ativação (chave instalada):
 
