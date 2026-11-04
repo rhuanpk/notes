@@ -8,9 +8,7 @@ Imprimir caracteres em sequência:
 
 ```sh
 printf -- '-%.s' `seq <count>`
-
 # or
-
 printf -- '|%.s\n' `seq <count>`
 ```
 
