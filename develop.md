@@ -23,25 +23,25 @@ apt install python3-venv python3-full
 Criando e executando projeto Python em ambiente isolado:
 
 1. Crie o ambiente virtual:
-    ```sh
-    python3 -m venv .venv
-    ```
+	```sh
+	python3 -m venv .venv
+	```
 1. Ative o ambiente virtual:
-    ```sh
-    source .venv/bin/activate
-    ```
+	```sh
+	source .venv/bin/activate
+	```
 1. Instale/Configure o programa/projeto:
-    ```sh
-    [python -m] pip install -r requirements.txt [-c constraints.txt]
-    # or
-    [python -m] pip install <program>
-    ```
+	```sh
+	[python -m] pip install -r requirements.txt [-c constraints.txt]
+	# or
+	[python -m] pip install <program>
+	```
 1. Execute/Inicie o programa/projeto:
-    ```sh
-    python main.py
-    # or
-    <program> [<options>]
-    ```
+	```sh
+	python main.py
+	# or
+	<program> [<options>]
+	```
 
 Para sair do ambiente virtual:
 
@@ -52,8 +52,8 @@ deactivate
 *OBSERVAÇÕES:*
 
 - Quando entrar no ambiente virtual, pode ser que apenas o pacote `python` esteja configurado e não o `pip`, se for o caso, temos duas opções:
-    1. Usar o `pip` pelo `python` prefixando o comando `python -m`
-    1. Configurar o `pip` para ambientes virtuais com `python -m ensurepip --upgrade` (porém, nem todos os sistemas permitem essa configuração nativamente)
+	1. Usar o `pip` pelo `python` prefixando o comando `python -m`
+	1. Configurar o `pip` para ambientes virtuais com `python -m ensurepip --upgrade` (porém, nem todos os sistemas permitem essa configuração nativamente)
 - Ao fazer o *download* de dependências (`pip install -r requirements.txt`), caso esteja demorando muito, pode ser que a versão instalada no sistema, não seja a mesma do programa/projeto, então as dependências teram que ser compiladas. Para contornar isso, use alguma ferramenta como `asdf` para definir uma versão local, a mesma da aplicação
 
 ## `base64`

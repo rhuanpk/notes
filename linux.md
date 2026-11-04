@@ -486,15 +486,15 @@ Montar arquivo *iso*:
 Montar partição *ext4* e manipular com usuário regular:
 
 - Utilizando `bindfs`:
-    ```sh
-    [sudo] mount -o user /dev/sdXY /mnt
-    bindfs -u `id -u` -g `id -g` /mnt /media/disk
-    ```
+	```sh
+	[sudo] mount -o user /dev/sdXY /mnt
+	bindfs -u `id -u` -g `id -g` /mnt /media/disk
+	```
 - Utilizando `chown`:
-    ```sh
-    [sudo] mount /dev/sdXY /media/disk
-    chown -Rv `id -un`:`id -gn` /media/disk
-    ```
+	```sh
+	[sudo] mount /dev/sdXY /media/disk
+	chown -Rv `id -un`:`id -gn` /media/disk
+	```
 
 *OBSERVAÇÕES:*
 
@@ -788,13 +788,13 @@ Altera o quanto o *cache* tende a se mantem na RAM:
 - 100 é o padrão, quanto menor o valor **mais** tempo mantem o *cache*, quanto maior o valor **menos** tempo mantem o *cache*
 - Esse parâmetro controla o quanto o Kernel tende a recuperar a memória usada por *buffer* (inodes) e *cache* (dados)
 - Diminuir faz sentido quando se tem **muita RAM disponível** ou cargas de trabalho que percorrem muitos arquivos repetidamente
-    - Servidores de arquivos (Samba, NFS) com muitos arquivos
-    - Servidores Web/CDN servindo muitos arquivos
-    - `find`/`rsync`, *backups* recorrentes sobre árvores enormes
-    - Sistemas com discos muito lentos (HDD, rede), aonde ler metadados é custoso
+	- Servidores de arquivos (Samba, NFS) com muitos arquivos
+	- Servidores Web/CDN servindo muitos arquivos
+	- `find`/`rsync`, *backups* recorrentes sobre árvores enormes
+	- Sistemas com discos muito lentos (HDD, rede), aonde ler metadados é custoso
 - Aumentar faz sentido quando se tem **pouca RAM disponível** e o *cache* de arquivos compete com a memória de aplicações
-    - Máquinas/VMs com memória escassa
-    - Cargas de trabalhos que varrem muitos arquivos uma única vez e não são (ou são pouco) reaproveitados (`find`)
+	- Máquinas/VMs com memória escassa
+	- Cargas de trabalhos que varrem muitos arquivos uma única vez e não são (ou são pouco) reaproveitados (`find`)
 - O conceito de muita ou pouca RAM é extremamente relativo ao fluxo de trabalho desempenhado
 
 Ao alterar parâmetros, utilize o comando para aplicar de imediato os parâmetros ao invés de esperar reiniciar o SO:
@@ -3884,24 +3884,24 @@ Instalação de *browsers* sem precisar de um, apenas com ferramentas CLI.
 Para base **Debian** (`.deb`):
 
 - 64 bits (x64):
-    ```
-    curl -LO 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
-    ```
+	```
+	curl -LO 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
+	```
 - ARM64 (AArch64):
-    ```
-    curl -LO 'https://dl.google.com/linux/direct/google-chrome-stable_current_arm64.deb'
-    ```
+	```
+	curl -LO 'https://dl.google.com/linux/direct/google-chrome-stable_current_arm64.deb'
+	```
 
 Para base **Fedora** (`.rpm`):
 
 - 64 bits (x64):
-    ```
-    curl -LO 'https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm'
-    ```
+	```
+	curl -LO 'https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm'
+	```
 - ARM64 (AArch64):
-    ```
-    curl -LO 'https://dl.google.com/linux/direct/google-chrome-stable_current_aarch64.rpm'
-    ```
+	```
+	curl -LO 'https://dl.google.com/linux/direct/google-chrome-stable_current_aarch64.rpm'
+	```
 
 ## Configurações
 

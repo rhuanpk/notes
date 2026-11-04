@@ -7,44 +7,44 @@ Anotações gerais sobre Windows: programas e configurações.
 Fazer ativação da versão Pro:
 
 1. Instale a chave:
-    ```
-    slmgr /ipk <key>
-    ```
+	```
+	slmgr /ipk <key>
+	```
 1. Aponte o servidor KMS:
-    ```
-    slmgr /skms <url>[:1688]
-    ```
+	```
+	slmgr /skms <url>[:1688]
+	```
 1. Ative a chave:
-    ```
-    slmgr /ato
-    ```
+	```
+	slmgr /ato
+	```
 1. Verifique a chave:
-    ```
-    slmgr /dlv
-    ```
+	```
+	slmgr /dlv
+	```
 1. Checar status da ativação:
-    ```
-    slmgr /xpr
-    ```
+	```
+	slmgr /xpr
+	```
 
 Verificar se o servidor KMS está *online*:
 
 - Agnóstico:
-    ```
-    nslookup -type=srv _vlmcs._tcp.<url>
-    ```
+	```
+	nslookup -type=srv _vlmcs._tcp.<url>
+	```
 - Windows:
-    ```
-    Test-NetConnection -ComputerName <url> -Port 1688
-    ```
+	```
+	Test-NetConnection -ComputerName <url> -Port 1688
+	```
 - Linux:
-    ```sh
-    nc -zv <url> 1688
-    ```
-    ```sh
-    # batch check, put all domains (one per line) inside `domains.txt`, the result is outputed `check.txt`
-    > check.txt; while read domain; do { echo "=====> $domain <====="; nslookup -type=srv _vlmcs._tcp.$domain; } >> check.txt 2>&1; done < domains.txt
-    ```
+	```sh
+	nc -zv <url> 1688
+	```
+	```sh
+	# batch check, put all domains (one per line) inside `domains.txt`, the result is outputed `check.txt`
+	> check.txt; while read domain; do { echo "=====> $domain <====="; nslookup -type=srv _vlmcs._tcp.$domain; } >> check.txt 2>&1; done < domains.txt
+	```
 
 Para limpar o estado de ativação (chave instalada):
 
@@ -120,13 +120,13 @@ winget install --id Google.Chrome -e --accept-source-agreements --accept-package
 Via `curl`:
 
 - 64 bits (x64):
-    ```
-    curl -L -o ChromeSetup_x64.exe "https://dl.google.com/chrome/install/ChromeStandaloneSetup64.exe"
-    ```
+	```
+	curl -L -o ChromeSetup_x64.exe "https://dl.google.com/chrome/install/ChromeStandaloneSetup64.exe"
+	```
 - 32 bits (x86):
-    ```
-    curl -L -o ChromeSetup_x86.exe "https://dl.google.com/chrome/install/ChromeStandaloneSetup.exe"
-    ```
+	```
+	curl -L -o ChromeSetup_x86.exe "https://dl.google.com/chrome/install/ChromeStandaloneSetup.exe"
+	```
 
 ### Firefox
 
@@ -139,17 +139,17 @@ winget install --id Mozilla.Firefox.pt-BR -e --accept-source-agreements --accept
 Via `curl`:
 
 - 64 bits (x64):
-    ```
-    curl -L -o FirefoxSetup_x64.exe "https://download.mozilla.org/?product=firefox-latest-ssl&os=win64&lang=pt-BR"
-    ```
+	```
+	curl -L -o FirefoxSetup_x64.exe "https://download.mozilla.org/?product=firefox-latest-ssl&os=win64&lang=pt-BR"
+	```
 - 32 bits (x86):
-    ```
-    curl -L -o FirefoxSetup_x86.exe "https://download.mozilla.org/?product=firefox-latest-ssl&os=win&lang=pt-BR"
-    ```
+	```
+	curl -L -o FirefoxSetup_x86.exe "https://download.mozilla.org/?product=firefox-latest-ssl&os=win&lang=pt-BR"
+	```
 - ARM64 (AArch64):
-    ```
-    curl -L -o FirefoxSetup_arm64.exe "https://download.mozilla.org/?product=firefox-latest-ssl&os=win64-aarch64&lang=pt-BR"
-    ```
+	```
+	curl -L -o FirefoxSetup_arm64.exe "https://download.mozilla.org/?product=firefox-latest-ssl&os=win64-aarch64&lang=pt-BR"
+	```
 
 ## Certificado
 

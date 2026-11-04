@@ -135,41 +135,41 @@ docker container run -d --name mysql --mount 'type=volume,source=mysql-db,target
 Diferença entre as opções de *system prune*.
 
 - `docker system prune`:
-    - *all stopped containers*
-    - *all unused networks*
-    - *all dangling images*
-    - *all unused build caches*
+	- *all stopped containers*
+	- *all unused networks*
+	- *all dangling images*
+	- *all unused build caches*
 - `docker system prune --all`:
-    - *all unassociated images*
-    - *all build cache*
+	- *all unassociated images*
+	- *all build cache*
 - `docker system prune --volumes`:
-    - *all unused anonymous volumes*
+	- *all unused anonymous volumes*
 - `docker system prune --all --volumes`:
 
 Diferença plena entre as opções:
 
 - `docker system prune`:
-    - *all stopped containers*
-    - *all unused networks*
-    - *all dangling images*
-    - *all unused build caches*
+	- *all stopped containers*
+	- *all unused networks*
+	- *all dangling images*
+	- *all unused build caches*
 - `docker system prune --all`:
-    - *all stopped containers*
-    - *all unused networks*
-    - *all unassociated images*
-    - *all build cache*
+	- *all stopped containers*
+	- *all unused networks*
+	- *all unassociated images*
+	- *all build cache*
 - `docker system prune --volumes`
-    - *all stopped containers*
-    - *all unused networks*
-    - *all unused anonymous volumes*
-    - *all dangling images*
-    - *all unused build caches*
+	- *all stopped containers*
+	- *all unused networks*
+	- *all unused anonymous volumes*
+	- *all dangling images*
+	- *all unused build caches*
 - `docker system prune --all --volumes`
-    - *all stopped containers*
-    - *all unused networks*
-    - *all unused anonymous volumes*
-    - *all unassociated images*
-    - *all build cache*
+	- *all stopped containers*
+	- *all unused networks*
+	- *all unused anonymous volumes*
+	- *all unassociated images*
+	- *all build cache*
 
 ## *Compose*
 

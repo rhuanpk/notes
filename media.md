@@ -166,52 +166,52 @@ Caso esteja utilizando a ferramenta de duas formas/versões diferentes, teoricam
 Instalação via Python:
 
 1. Instale o Python no sistema:
-    ```sh
-    [sudo] apt install python3-venv python3-full
-    ```
+	```sh
+	[sudo] apt install python3-venv python3-full
+	```
 1. Crie e entre numa pasta destinada:
-    ```sh
-    mkdir -v music/ && cd music/
-    ```
+	```sh
+	mkdir -v music/ && cd music/
+	```
 1. Crie o ambiente Python virtual:
-    ```sh
-    python3 -m venv .venv
-    ```
+	```sh
+	python3 -m venv .venv
+	```
 1. Ative o ambiente virtual:
-    ```sh
-    source .venv/bin/activate
-    ```
+	```sh
+	source .venv/bin/activate
+	```
 1. Instale o `spotdl`:
-    ```sh
-    python -m pip install spotdl
-    ```
+	```sh
+	python -m pip install spotdl
+	```
 1. Se o `ffmpeg` ainda não estiver instalado no sistema e quiser instala-lo no ambiente virtual:
-    ```sh
-    spotdl --download-ffmpeg
-    ```
+	```sh
+	spotdl --download-ffmpeg
+	```
 1. Se o `deno` ainda não estiver instalado no sistema e quiser instala-lo no ambiente virtual:
-    ```sh
-    spotdl --download-deno
-    ```
+	```sh
+	spotdl --download-deno
+	```
 
 "Instalação" via executável:
 
 1. Baixe a última versão do binário na [*página de releases*](https://github.com/spotDL/spotify-downloader/releases/latest)
 1. Se a pasta temporária do seu sistema tiver restrições execução, execute o binário em outro pasta passando a variável de ambiente `TMPDIR`:
-    ```sh
-    TMPDIR="$PWD" ./spotdl
-    ```
+	```sh
+	TMPDIR="$PWD" ./spotdl
+	```
 1. Instale as dependências da ferramenta:
-    ```sh
-    [TMPDIR="$PWD"] ./spotdl --download-ffmpeg
-    ```
-    ```sh
-    [TMPDIR="$PWD"] ./spotdl --download-deno
-    ```
+	```sh
+	[TMPDIR="$PWD"] ./spotdl --download-ffmpeg
+	```
+	```sh
+	[TMPDIR="$PWD"] ./spotdl --download-deno
+	```
 1. Especifique o caminho da instalação das dependências na utilização (se houver conflito com a biblioteca já instalada no sistema):
-    ```sh
-    [TMPDIR="$PWD"] ./spotdl [--ffmpeg ~/.config/spotdl/ffmpeg] '<url>'
-    ```
+	```sh
+	[TMPDIR="$PWD"] ./spotdl [--ffmpeg ~/.config/spotdl/ffmpeg] '<url>'
+	```
 
 ### Utilização
 
@@ -224,13 +224,13 @@ spotdl '<url>'
 Caso muitos *downloads* estejam falhando (provavelmente por limite de requisições), tente usar um *proxy*:
 
 1. Serve um servidor *proxy* Tor local:
-    ```sh
-    docker run --rm -it -p 127.0.0.1:3128:3128 zhaowde/rotating-tor-http-proxy
-    ```
+	```sh
+	docker run --rm -it -p 127.0.0.1:3128:3128 zhaowde/rotating-tor-http-proxy
+	```
 1. Passa as opções para o comando:
-    ```sh
-    spotdl download '<url>' --proxy http://127.0.0.1:3128 --threads 1
-    ```
+	```sh
+	spotdl download '<url>' --proxy http://127.0.0.1:3128 --threads 1
+	```
 
 ## `mkvtoolnix`
 
