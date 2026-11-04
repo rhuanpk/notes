@@ -204,6 +204,8 @@ Instalação via Python:
 1. Instale as dependências da ferramenta:
     ```sh
     [TMPDIR="$PWD"] ./spotdl --download-ffmpeg
+    ```
+    ```sh
     [TMPDIR="$PWD"] ./spotdl --download-deno
     ```
 1. Especifique o caminho da instalação das dependências na utilização (se houver conflito com a biblioteca já instalada no sistema):
