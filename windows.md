@@ -12,7 +12,7 @@ Fazer ativação da versão Pro:
     ```
 1. Aponte o servidor KMS:
     ```
-    slmgr /skms <url>
+    slmgr /skms <url>[:1688]
     ```
 1. Ative a chave:
     ```
