@@ -4642,3 +4642,93 @@ Atualmente **UEFI é suportado**.
 Caso esteja usando este modo de *firmware* e o *boot* não se complete, por exemplo, fica em tela preta eternamente, edite o arquivo `syslinux.cfg` (no dispositivo) alterando o valor da variável `UI` passando o caminho do `menu.c32` (que provavelmente está dentro da pasta `EFI`), ao invés do `vesamenu.c32` que vem por padrão.
 
 Isso pode acontecer por falha em carregar *drivers* VESA quando em UEFI.
+
+## *Troubleshooting*
+
+Procedimentos de correções em geral.
+
+### Partição UEFI
+
+O ponto de montagem UEFI (ESP) foi instalada na partição errada ou o instalador atribiu a uma já existente, por exemplo, selecionou a partição errada no instalador ou o próprio instalador usou a ESP de outro sistema pré existente (seja Windows ou Linux).
+
+Passos:
+
+1. Desmontar ESP do Windows
+1. ~Criar *backup* da ESP do Windows~
+1. ~Formatar ESP do Linux~
+1. Pegar UUID da ESP do Linux
+1. Trocar UUID da ESP do Linux no `fstab`
+1. Recarregar *daemons* do `systemd`
+1. Montar ESP do Linux
+1. ~Reinstalar Shim e GRUB assinados~
+1. Instalar GRUB do Linux na ESP do Linux
+1. Atualizar GRUB do Linux
+1. Reiniciar o sistema
+1. Checar se ESP do Linux subiu na partição
+1. Remover entrada UEFI antiga do Linux
+1. Montar ESP do Windows
+1. Remover GRUB do Linux na ESP do Windows
+
+Comandos:
+
+1. Desmontar ESP do Windows
+	```sh
+	[sudo] umount /boot/efi
+	```
+1. ~Criar *backup* da ESP do Windows~
+	```sh
+	[sudo] dd if=/dev/sdXY of=esp.img bs=4M conv=fsync status=progress
+	```
+1. ~Formatar ESP do Linux~
+	```sh
+	[sudo] mkfs.vfat -F 32 /dev/sdXY
+	```
+1. Pegar UUID da ESP do Linux
+	```sh
+	[sudo] blkid -s UUID /dev/sdXY
+	```
+1. Trocar UUID da ESP do Linux no `fstab`
+	```sh
+	[sudo] vim /etc/fstab
+	```
+1. Recarregar *daemons* do `systemd`
+	```sh
+	[sudo] systemctl daemon-reload
+	```
+1. Montar ESP do Linux
+	```sh
+	[sudo] mount /boot/efi
+	```
+1. ~Reinstalar Shim e GRUB assinados~
+	```sh
+	[sudo] apt install --reinstall grub-efi-amd64-signed shim-signed
+	```
+1. Instalar GRUB do Linux na ESP do Linux
+	```sh
+	[sudo] grub-install --target=x86_64-efi --efi-directory=/boot/efi
+	```
+1. Atualizar GRUB do Linux
+	```sh
+	[sudo] update-grub
+	```
+1. Reiniciar o sistema
+	```sh
+	[sudo] reboot
+	```
+1. Checar se ESP do Linux subiu na partição
+	```sh
+	findmnt /boot/efi
+	```
+1. Remover entrada UEFI antiga do Linux
+	```sh
+	[sudo] efibootmgr -b 000X -B
+	```
+1. Montar ESP do Windows
+	```sh
+	[sudo] mount /dev/sdXY /mnt
+	```
+1. Remover GRUB do Linux na ESP do Windows
+	```sh
+	# fat32 filesystem is case-insensitive
+	[sudo] rm -rfv /mnt/EFI/ubuntu /mnt/EFI/boot
+	```
