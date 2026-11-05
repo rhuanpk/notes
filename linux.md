@@ -767,6 +767,8 @@ Remover/Limpar os *logs*:
 
 ### `sysctl`
 
+As alterações feitas via linha de comando são temporárias, para persistir a alteração, adicione os parâmetros em `/etc/sysctl.d/99-sysctl.conf`.
+
 Altera a porcentagem de uso de RAM (que está sobrando) para que a SWAP seja ativada:
 
 ```sh
@@ -797,13 +799,11 @@ Altera o quanto o *cache* tende a se mantem na RAM:
 	- Cargas de trabalhos que varrem muitos arquivos uma única vez e não são (ou são pouco) reaproveitados (`find`)
 - O conceito de muita ou pouca RAM é extremamente relativo ao fluxo de trabalho desempenhado
 
-Ao alterar parâmetros, utilize o comando para aplicar de imediato os parâmetros ao invés de esperar reiniciar o SO:
+Ao alterar parâmetros, para aplicar de imediato ao invés de esperar reiniciar o SO:
 
 ```sh
 [sudo] sysctl --system
 ```
-
-- Arquivo de configuração do usuário (*system-wide*): `/etc/sysctl.d/99-sysctl.conf`.
 
 ### `last`
 
