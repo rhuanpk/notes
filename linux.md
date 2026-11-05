@@ -4668,6 +4668,7 @@ Passos:
 1. Remover entrada UEFI antiga do Linux
 1. Montar ESP do Windows
 1. Remover GRUB do Linux na ESP do Windows
+1. Desmontar ESP do Windows
 
 Comandos:
 
@@ -4731,4 +4732,8 @@ Comandos:
 	```sh
 	# fat32 filesystem is case-insensitive
 	[sudo] rm -rfv /mnt/EFI/ubuntu /mnt/EFI/boot
+	```
+1. Desmontar ESP do Windows
+	```sh
+	[sudo] umount /mnt
 	```
