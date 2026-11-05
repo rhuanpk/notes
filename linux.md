@@ -3196,7 +3196,7 @@ Habilitar:
 	```
 1. Iniciar o serviço:
 	```sh
-	systemctl enable --now zramswap
+	[sudo] systemctl enable --now zramswap
 	```
 
 *OBSERVAÇÕES:*
@@ -3208,8 +3208,14 @@ Desabilitar:
 
 1. Parar o serviço:
 	```sh
-	systemctl disable --now zramswap
+	[sudo] systemctl disable --now zramswap
 	```
+
+Verificar configuração:
+
+```sh
+zramctl
+```
 
 #### zSWAP
 
