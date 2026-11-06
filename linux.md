@@ -1278,11 +1278,13 @@ Exemplos de padrões de inclusão/exclusão:
 *Parâmetros usados:*
 
 - `<folder>`: Caminho para pasta
+- `<passphrase>`: Senha ou palavra passe
 
 *Opções usadas:*
 
 - `-l`: Listar o conteúdo do arquivo compactado
 - `-d <folder>`: Especifica a pasta para ser descompactado
+- `-P <passphrase>`: Especifica a palavra passe para o arquivo criptografado
 
 Descompactar:
 
@@ -1337,9 +1339,14 @@ xz -d [-kv] /path/file.txt.xz
 
 ### `7z`
 
+*Parâmetros usados:*
+
+- `<passphrase>`: Senha ou palavra passe
+
 *Opções usadas:*
 
 - `x`: Para descompactar arquivos
+- `-p<passphrase>`: Informa palavra passe para descriptografar
 
 Descompactar:
 
