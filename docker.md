@@ -26,7 +26,7 @@ docker run -it [--rm] --name windows -e "VERSION={11|11l|11e|10|10l|10e|8e|7u|vu
 Tor Proxy:
 
 ```sh
-docker run --rm -it -p 127.0.0.1:3128:3128 zhaowde/rotating-tor-http-proxy
+docker run --rm -it [-e 'TOR_INSTANCES=15'] -p 127.0.0.1:3128:3128 zhaowde/rotating-tor-http-proxy
 ```
 
 ## Comandos
