@@ -3922,7 +3922,166 @@ Anotações gerais sobre procedimentos (tutoriais).
 
 ### Kernel
 
-Assinar e "triggar" módulo do Kernel:
+Utilizar certificados criados localmente para assinar componentes ou o próprio Kernel.
+
+#### Customizado
+
+Assinar e "triggar" assinatura de Kernel customizado automaticamente.
+
+##### Assinar
+
+Passos:
+
+1. Instalar ferramentas de assinatura
+1. Criar diretório da chave
+1. Gerar chave privada e certificado (DER)
+1. Converter certificado para PEM
+1. Restringir permissão da chave privada
+1. Importar chave no MOK
+1. Reiniciar e enrolar a chave no MOK Manager
+1. Checar se a chave foi enrolada
+1. Descobrir a versão do Kernel customizado
+1. ~Criar *backup* do Kernel original~
+1. Assinar o Kernel
+1. Substituir o Kernel pelo assinado
+1. Checar a assinatura
+1. Atualizar GRUB do Linux
+1. Reiniciar o sistema e escolher o Kernel customizado
+
+Comandos:
+
+1. Instalar ferramentas de assinatura
+	```sh
+	[sudo] apt install openssl mokutil sbsigntool
+	```
+1. Criar diretório da chave
+	```sh
+	[sudo] mkdir -pv /var/lib/shim/mok
+	```
+1. Gerar chave privada e certificado (DER)
+	```sh
+	[sudo] openssl req -new -x509 -newkey rsa:2048 -nodes -days 36500 -sha256 \
+		-subj "/CN=kernel/" \
+		-addext "extendedKeyUsage=codeSigning" \
+		-keyout /var/lib/shim/mok/MOK.priv \
+		-outform DER -out /var/lib/shim/mok/MOK.der
+	```
+1. Converter certificado para PEM
+	```sh
+	[sudo] openssl x509 -inform DER \
+		-in /var/lib/shim/mok/MOK.der \
+		-out /var/lib/shim/mok/MOK.pem
+	```
+1. Restringir permissão da chave privada
+	```sh
+	[sudo] chmod -v 600 /var/lib/shim/mok/MOK.priv
+	```
+1. Importar chave no MOK
+	```sh
+	# asks for a one-time password, you will use it in MOK Manager screen
+	[sudo] mokutil --import /var/lib/shim/mok/MOK.der
+	```
+1. Reiniciar e enrolar a chave no MOK Manager
+	```sh
+	# Enroll MOK > Continue > Yes > <password> > Reboot
+	[sudo] reboot
+	```
+1. Checar se a chave foi enrolada
+	```sh
+	mokutil --list-enrolled | grep -i "kernel"
+	```
+1. Descobrir a versão do Kernel customizado
+	```sh
+	ls -l /boot/vmlinuz-*<name>*
+	```
+1. ~Criar *backup* do Kernel original~
+	```sh
+	[sudo] cp -afv /boot/<kernel> ~/<kernel>.bak
+	```
+1. Assinar o Kernel
+	```sh
+	[sudo] sbsign --key /var/lib/shim/mok/MOK.priv \
+		--cert /var/lib/shim/mok/MOK.pem \
+		--output /boot/<kernel>.signed \
+		/boot/<kernel>
+	```
+1. Substituir o Kernel pelo assinado
+	```sh
+	[sudo] mv -fv /boot/<kernel>.signed /boot/<kernel>
+	```
+1. Checar a assinatura
+	```sh
+	[sudo] sbverify --cert /var/lib/shim/mok/MOK.pem /boot/<kernel>
+	```
+1. Atualizar GRUB do Linux
+	```sh
+	[sudo] update-grub
+	```
+1. Reiniciar o sistema e escolher o Kernel customizado
+	```sh
+	[sudo] reboot
+	```
+
+*OBSERVAÇÕES:*
+
+- Caso perca o tempo da tela do MOK Manager ou pule ela sem querer, faça novamente a importação com `mokutil --import` e reinicie
+
+##### *Trigger*
+
+Passos:
+
+1. Criar o *script* de *hook* do Kernel
+1. Tornar o *script* executável
+1. Testar o *script* manualmente
+1. ~Testar via reinstalação do pacote do Kernel~
+1. Checar a assinatura
+
+Comandos:
+
+1. Criar o *script* de *hook* do Kernel
+	```sh
+	[sudo] tee /etc/kernel/postinst.d/99-kernel-sign > /dev/null << \EOF
+	#!/bin/bash
+	set -eu
+
+	VERSION="$1"
+	IMAGE="${2:-/boot/vmlinuz-$VERSION}"
+	KEY=/var/lib/shim/mok/MOK.priv
+	CERT=/var/lib/shim/mok/MOK.pem
+	MATCH='liquorix|xpto'
+
+	# only custom kernels (already signed ones are skipped)
+	[[ ! "$VERSION" =~ $MATCH ]] && exit 0
+
+	[ ! -f "$IMAGE" ] && exit 0
+
+	# already signed with our key
+	if sbverify --cert "$CERT" "$IMAGE" > /dev/null 2>&1; then
+		exit 0
+	fi
+
+	sbsign --key "$KEY" --cert "$CERT" --output "$IMAGE.signed" "$IMAGE"
+	mv -fv "$IMAGE.signed" "$IMAGE"
+	EOF
+	```
+1. Tornar o *script* executável
+	```sh
+	[sudo] chmod -v +x /etc/kernel/postinst.d/99-kernel-sign
+	```
+1. Testar o *script* manualmente
+	```sh
+	[sudo] /etc/kernel/postinst.d/99-kernel-sign <version> /boot/vmlinuz-<version>
+	```
+1. ~Testar via reinstalação do pacote do Kernel~
+	```sh
+	[sudo] apt install --reinstall linux-image-<version>
+	```
+1. Checar a assinatura
+	```sh
+	[sudo] sbverify --cert /var/lib/shim/mok/MOK.pem /boot/vmlinuz-<version>
+	```
+
+#### Módulo
 
 1. Instalar dependências:
 	```sh
