@@ -4654,9 +4654,9 @@ Isso pode acontecer por falha em carregar *drivers* VESA quando em UEFI.
 
 Procedimentos de correções em geral.
 
-### Partição UEFI
+### Partição EFI
 
-O ponto de montagem UEFI (ESP) foi instalada na partição errada ou o instalador atribiu a uma já existente, por exemplo, selecionou a partição errada no instalador ou o próprio instalador usou a ESP de outro sistema pré existente (seja Windows ou Linux).
+O ponto de montagem EFI (ESP) foi instalada na partição errada ou o instalador atribiu a uma já existente, por exemplo, selecionou a partição errada no instalador ou o próprio instalador usou a ESP de outro sistema pré existente (seja Windows ou Linux).
 
 Passos:
 
@@ -4709,7 +4709,7 @@ Comandos:
 	```
 1. ~Reinstalar Shim e GRUB assinados~
 	```sh
-	[sudo] apt install --reinstall grub-efi-amd64-signed shim-signed
+	[sudo] apt install --reinstall shim-signed grub-efi-amd64-signed
 	```
 1. Instalar GRUB do Linux na ESP do Linux
 	```sh
