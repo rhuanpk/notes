@@ -4541,7 +4541,7 @@ Diretórios de configuração:
 Arquivos de identificação:
 
 - `known_hosts`: Servidores que o *client* (usuário) aceitou como confiaveis na hora de estabelecer/solicitar conexão com um servidor. Ele envia seu *fingerprint* para que o *client* possa validar que está se conectando com o destino correto
-- `authorized_keys`: Clientes que o usuário aceitou como confiaveis para se conectar. Caso o *server* estiver cofigurado para aceitar apenas conexões via chave, somente os clientes que tem suas chaves públicas adicionadas neste arquivo serão bem-sucedidos
+- `authorized_keys`: Clientes que o usuário aceitou como confiaveis para se conectar. Caso o *server* estiver cofigurado para aceitar apenas conexões via chave, somente os clientes que tiverem suas chaves públicas adicionadas neste arquivo, as conexões serão bem-sucedidos
 
 #### Segurança e Privacidade
 
@@ -4567,7 +4567,7 @@ Nos arquivos de configuração para o servidor/*daemon*/`sshd`:
 - Bloquear ou liberar determinados IPs (corings `*` e `?` podem ser usados):
 	`{Allow|Deny}Users <user>[@<host>][ ...]`
 
-Arquivo final de exemplo:
+Arquivo final de exemplo (`/etc/ssh/sshd_config.d/sshd_config.conf`):
 
 ```conf
 Port 9999
@@ -4667,7 +4667,7 @@ Caso não queira desabilita-lo:
 1. Edite as configurações do *server*:
 	`/etc/ssh/sshd_config.d/sshd_config.conf`
 1. Recarregue os *daemons* e reinicie o *socket*:
-	`systemctl daemon-reload && systemctl restart ssh.socket`
+	`[sudo] systemctl daemon-reload && [sudo] systemctl restart ssh.socket`
 
 *OBSERVAÇÕES:*
 
