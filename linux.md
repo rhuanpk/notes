@@ -3853,6 +3853,28 @@ Monitores CLI (*top like*):
 - `powertop`
 - `usbtop`
 
+### *Diff & Patch*
+
+Gerar e aplicar *patch* de qualquer arquivo:
+
+1. Gerar o *patch* com `diff`:
+
+```sh
+diff -u original.txt modified.txt > changes.patch
+```
+
+1. Aplicar o *patch* com `patch`:
+
+```sh
+patch [--backup] [--dry-run] original.txt < changes.patch
+```
+
+Desafazer a aplicação do *patch*:
+
+```sh
+patch -R original.txt < changes.patch
+```
+
 ### ANSI Colors
 
 Escapes:
