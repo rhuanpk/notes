@@ -1193,13 +1193,14 @@ echo /foo/bar/xpto.any | parallel "echo '{} | {.} | {/} | {//} | {/.}'"
 
 *Opções usadas:*
 
-- `-z`: Para manipulação de arquivos `.gz`
-- `-c`: Para criar arquivos compactados
+- `-z`: Para operações de arquivos `.tar.gz` (*gzip*)
+- `-J`: Para criação de arquivos `.tar.xz` (*xz*)
+- `-x`: Para extração de arquivos `.tar*`
+- `-c`: Para criação de arquivos `.tar*`
+- `-t`: Para listagem de arquivos `.tar*`
 - `-v`: Modo verboso (imprime o processamento)
-- `-x`: Para fazer extração de arquivos `.tar`
-- `-t`: Para fazer listagem de arquivos compactados
-- `-f <path>`: Informa o arquivo compactado daquela operação
-- `-C <folder>`: Para descompactar em outra pasta
+- `-f <path>`: Especifica o arquivo `.tar*`
+- `-C <folder>`: Descompacta dentro da pasta especificada
 
 #### `.tar.gz`
 
