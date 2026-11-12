@@ -4788,50 +4788,6 @@ bt-obex -ys
 
 - Os arquivos serão salvos por padrão em `~/.cache/obexd/`
 
-## Distribuições
-
-Instruções gerais sobre distribuições Linux.
-
-*Parâmetros usados:*
-
-- `X`: Letra do disco
-- `Y`: Número da partição
-
-### Slax
-
-Instalação em dispositivo persistente (HDD/SSD, *pendrive* e etc):
-
-1. Crie as pastas para montagem da ISO e do dispositivo:
-	`[sudo] mkdir -pv /mnt/{iso,usb}`
-1. Edite o dipositivo criando uma nova tabela de partição MBR e uma partição primária:
-	`[sudo] fdisk /dev/sdX # o, [y], n, <enter>, <enter>, <enter>, <enter>, [y], w`
-1. Formate a partição do dispositivo em FAT32:
-	`[sudo] mkfs.vfat -F 32 /dev/sdX1`
-1. Monte a ISO (*read-only*):
-	`[sudo] mount -o loop slax.iso /mnt/iso/`
-1. Monte o dispositovo:
-	`[sudo] mount /dev/sdX1 /mnt/usb/`
-1. Copie todo a pasta do Slax para a raiz do dispositivo:
-	`[sudo] cp -av /mnt/iso/slax/ /mnt/usb/`
-1. Entre na pasta de *boot* que foi copiado para o dispositovo:
-	`cd /mnt/usb/slax/boot/`
-1. Execute o *script* de configuração de *bootloader*:
-	`[sudo] ./bootinst.sh`
-1. Desmonte a ISO e o dispositivo:
-	`[sudo] umount /mnt/iso/ /mnt/usb/`
-1. Ejete o dispositivo:
-	`[sudo] eject /dev/sdX`
-
-Esse procedimento faz uma instalação limpa (e persistente) do Slax do dispositivo.
-
-#### UEFI
-
-Atualmente **UEFI é suportado**.
-
-Caso esteja usando este modo de *firmware* e o *boot* não se complete, por exemplo, fica em tela preta eternamente, edite o arquivo `syslinux.cfg` (no dispositivo) alterando o valor da variável `UI` passando o caminho do `menu.c32` (que provavelmente está dentro da pasta `EFI`), ao invés do `vesamenu.c32` que vem por padrão.
-
-Isso pode acontecer por falha em carregar *drivers* VESA quando em UEFI.
-
 ## *Troubleshooting*
 
 Procedimentos de correções em geral.
@@ -4926,3 +4882,47 @@ Comandos:
 	```sh
 	[sudo] umount /mnt
 	```
+
+## Distribuições
+
+Instruções gerais sobre distribuições Linux.
+
+*Parâmetros usados:*
+
+- `X`: Letra do disco
+- `Y`: Número da partição
+
+### Slax
+
+Instalação em dispositivo persistente (HDD/SSD, *pendrive* e etc):
+
+1. Crie as pastas para montagem da ISO e do dispositivo:
+	`[sudo] mkdir -pv /mnt/{iso,usb}`
+1. Edite o dipositivo criando uma nova tabela de partição MBR e uma partição primária:
+	`[sudo] fdisk /dev/sdX # o, [y], n, <enter>, <enter>, <enter>, <enter>, [y], w`
+1. Formate a partição do dispositivo em FAT32:
+	`[sudo] mkfs.vfat -F 32 /dev/sdX1`
+1. Monte a ISO (*read-only*):
+	`[sudo] mount -o loop slax.iso /mnt/iso/`
+1. Monte o dispositovo:
+	`[sudo] mount /dev/sdX1 /mnt/usb/`
+1. Copie todo a pasta do Slax para a raiz do dispositivo:
+	`[sudo] cp -av /mnt/iso/slax/ /mnt/usb/`
+1. Entre na pasta de *boot* que foi copiado para o dispositovo:
+	`cd /mnt/usb/slax/boot/`
+1. Execute o *script* de configuração de *bootloader*:
+	`[sudo] ./bootinst.sh`
+1. Desmonte a ISO e o dispositivo:
+	`[sudo] umount /mnt/iso/ /mnt/usb/`
+1. Ejete o dispositivo:
+	`[sudo] eject /dev/sdX`
+
+Esse procedimento faz uma instalação limpa (e persistente) do Slax do dispositivo.
+
+#### UEFI
+
+Atualmente **UEFI é suportado**.
+
+Caso esteja usando este modo de *firmware* e o *boot* não se complete, por exemplo, fica em tela preta eternamente, edite o arquivo `syslinux.cfg` (no dispositivo) alterando o valor da variável `UI` passando o caminho do `menu.c32` (que provavelmente está dentro da pasta `EFI`), ao invés do `vesamenu.c32` que vem por padrão.
+
+Isso pode acontecer por falha em carregar *drivers* VESA quando em UEFI.
