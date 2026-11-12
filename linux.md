@@ -4342,6 +4342,20 @@ Execute com `bash -c` e `declare -f`:
 [sudo] bash -c "$(declare -f <function>); <function> [args]"
 ```
 
+### *Filesystems*
+
+Opções de montagem dos sistemas de arquivos:
+
+1. `atime`: Registra o *timestamp* de último acesso sempre que o arquivo ou diretório é acessado
+1. `noatime`: Nunca atualiza o `atime`, seja do arquivo ou diretório
+1. `nodiratime`: Nunca atualiza o `atime` somente em **diretório**
+1. `relatime`: Atualiza o `atime` apenas se for mais antigo que `mtime`/`ctime` e tiver mais de 24h
+1. `discard`: Quando algum arquivo é deletado o disco é avisado imediatamente
+
+*OBSERVAÇÕES:*
+
+- É necessário checar se o *filesystem* tem suporte a opção escolhida.
+
 ### Partições
 
 > If you are growing a partition, you have to first resize the partition and then resize the filesystem on it, while for shrinking the filesystem must be resized before the partition to avoid data loss.
