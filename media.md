@@ -225,9 +225,9 @@ Caso muitos *downloads* estejam falhando (provavelmente por limite de requisiç�
 
 1. Serve um servidor *proxy* Tor local:
 	```sh
-	docker run --rm -it -p 127.0.0.1:3128:3128 zhaowde/rotating-tor-http-proxy
+	docker run --rm -it -p 127.0.0.1:3128:3128 [-e "TOR_INSTANCES=5"] zhaowde/rotating-tor-http-proxy
 	```
-1. Passa as opções para o comando:
+1. Passe as opções para o comando:
 	```sh
 	spotdl download '<url>' --proxy http://127.0.0.1:3128 --threads 1
 	```
