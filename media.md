@@ -225,7 +225,7 @@ Caso muitos *downloads* estejam falhando (provavelmente por limite de requisiç�
 
 1. Serve um servidor *proxy* Tor local:
 	```sh
-	docker run --rm -it -p 127.0.0.1:3128:3128 [-e "TOR_INSTANCES=5"] zhaowde/rotating-tor-http-proxy
+	docker run --rm -it -p 127.0.0.1:3128:3128 [-e "TOR_INSTANCES=40"] [-e "TOR_REBUILD_INTERVAL=3600"] zhaowde/rotating-tor-http-proxy
 	```
 1. Passe as opções para o comando:
 	```sh
