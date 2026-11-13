@@ -232,6 +232,20 @@ Caso muitos *downloads* estejam falhando (provavelmente por limite de requisiç�
 	spotdl download '<url>' --proxy http://127.0.0.1:3128 --threads 1
 	```
 
+### Atualização
+
+Para atualizar o `spotdl`:
+
+```sh
+python -m pip install -U spotdl
+```
+
+~Para atualizar a API do `spotdl`:~
+
+```sh
+python -m pip install -U spotapi
+```
+
 ## `mkvtoolnix`
 
 Programas necessários:
