@@ -218,7 +218,7 @@ Instalação via Python:
 Para baixar música, álbum ou artista, passe a URL do Spotify:
 
 ```sh
-spotdl '<url>'
+spotdl '<url>' [--output '{artist}/{album}/{title}.{output-ext}']
 ```
 
 Caso muitos *downloads* estejam falhando (provavelmente por limite de requisições), tente usar um *proxy*:
