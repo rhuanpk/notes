@@ -213,6 +213,16 @@ Get-ChildItem -File -Filter *.jpg | ForEach-Object {
 
 Correções de problemas em gera.
 
+### *Fast Startup*
+
+Desabilitar via CMD:
+
+```cmd
+powercfg /h off
+```
+
+Para desabilitar temporariamente via tela de *login*, segure o `shift` e desligue pelo meno de energia.
+
 ### Reparar NTFS
 
 Reparar partição NTFS:
