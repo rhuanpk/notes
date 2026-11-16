@@ -4185,43 +4185,63 @@ Shell **Não-Interativo**:
 
 Configuração dos arquivos de inicialização no sistema.
 
-#### CLI
+#### Sessão
 
-Shells de *Login*:
+Independente do *shell*, aplicável conforme o Gerenciador de Sessão e a configuração do sistema.
 
-1. `/etc/environment` (`~/.pam_environment`):
-	- Independete (carregado pelo **PAM**)
-1. `/etc/profile` (`/etc/profile.d/*.sh`):
-	- Configuração global para *shells* de *login*
+**PAM:**
+
+1. `/etc/environment`:
+    - Variáveis de ambiente globais, se configurado
+1. `~/.pam_environment`:
+    - Variáveis de ambiente locais do usuário, se configurado (**depreciado**)
+
+**Systemd:**
+
+1. `/etc/environment.d/*.conf`:
+    - Variáveis de ambiente globais, para serviços do usuário
+1. `~/.config/environment.d/*.conf`:
+    - Variáveis de ambiente locais do usuário, para serviços do usuário
+    - Processado pelo `systemd --user` (`systemctl --user import-environment`)
+
+#### *Shell* (Bash)
+
+**Shells de Login:**
+
+1. `/etc/profile`:
+    - Configuração global para *shells* de *login*
+1. `/etc/profile.d/*.sh`:
+    - Configuração global para *shells* de *login*, do usuário
+    - Processado pelo `/etc/profile`, se configurado
 1. `~/.bash_profile`:
 	- Configuração local para *shells* de *login*
 1. `~/.bash_login`:
-	- Carregado caso o anterior não exista a menos que seja explícito
+	- Configuração local para *shells* de *login*
+	- Carregado caso o anterior não exista (ou seja importado explicamente)
 1. `~/.profile`:
-	- Carregado caso o anterior não exista a menos que seja explícito
+	- Configuração local para *shells* de *login*
+	- Carregado caso o anterior não exista (ou seja importado explicamente)
 
-Shells Interativos:
+**Shells Interativos Não-Login:**
 
 1. `/etc/bash.bashrc`:
-	- Configuração global para *shells* interativos
+    - Configuração global para *shells* interativos
 1. `~/.bashrc`:
-	- Configuração local do usuario para *shells* interativos
+    - Configuração local para *shells* interativos, do usuário
 
-Shells de *Não-Login* e Não-Interativos:
+**Shells Não-Interativos:**
 
-1. Fazem o `source` da variável `$BASH_ENV` se populada
-
-#### GUI
-
-1. `/etc/environment` (`~/.pam_environment`):
-	- Independente (carregado pelo **PAM**)
-1. `~/.config/environment.d/*.conf`:
-	- Crregados pelo *systemd* (caso o ambiente gráfico execute: *systemctl --user import-environment*)
+1. `$BASH_ENV`:
+    - Variável com caminho do arquivo (*rc*) a ser carregado
+    - Se estiver definida o carregamento é feito automaticamente pelo *shell*
 
 *LINKS:*
 
-- [Environment Variables (Debian Wiki)](https://wiki.debian.org/EnvironmentVariables)
+- [Environment Variables (DebianWiki)](https://wiki.debian.org/EnvironmentVariables)
 - [Configuration Files (ArchWiki)](https://wiki.archlinux.org/title/bash#Configuration_files)
+- [Bash Startup Files (GNU Manual)](https://www.gnu.org/software/bash/manual/html_node/Bash-Startup-Files)
+- [Linux-PAM Manual](https://www.man7.org/linux/man-pages/man8/pam_env.8.html)
+- [environment.d (Freedesktop.org)](https://www.freedesktop.org/software/systemd/man/261/environment.d.html)
 
 ### Sudo
 
