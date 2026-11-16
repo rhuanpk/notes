@@ -3767,6 +3767,14 @@ qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -drive file={/path/disk.qcow2|/dev
 
 - Crie cópias do arquivo de variáiveis para cada VM que subir
 
+#### USB (*Pendrive*)
+
+Iniciar VM de *pendrive*:
+
+```sh
+qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -hda {/path/disk.qcow2|/dev/sdX} -boot menu=on -drive file=/dev/sdX
+```
+
 #### Conexão SSH
 
 Configurar *network* entre *host* e *guest*:
