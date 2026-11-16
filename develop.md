@@ -12,6 +12,14 @@ printf -- '-%.s' `seq <count>`
 printf -- '|%.s\n' `seq <count>`
 ```
 
+## `cargo`
+
+Instalar pacote Rust especificando pasta temporária:
+
+```sh
+TMPDIR="/path/tmp" cargo install <package>
+```
+
 ## `python`
 
 Programas necessários:
