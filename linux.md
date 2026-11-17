@@ -4275,6 +4275,28 @@ Programas e fluxos de sessão são independentes de programas ou fluxos de *shel
 - Tarefas agendadas pelo Cron
 - Serviços do Systemd
 
+#### Herança
+
+Caso um programa/fluxo seja iniciado a partir do outro, o que foi iniciado herda o ambiente do iniciador.
+
+Sessão > *Shell*:
+
+```
+PAM
+└── Display Manager
+	└── Sessão Gráfica
+		└── Desktop Environment
+			└── Emulador de Terminal
+				└── Bash
+```
+
+*Shell* > Sessão:
+
+```sh
+export VAR='xpto'
+./program
+```
+
 *LINKS:*
 
 - [Environment Variables (DebianWiki)](https://wiki.debian.org/EnvironmentVariables)
