@@ -4206,6 +4206,9 @@ Independente do *shell*, aplicável conforme o Gerenciador de Sessão e a config
 
 #### *Shell* (Bash)
 
+- *Login/Não-Login*: Determina quais arquivos de inicialização de *login* serão carregados
+- *Interativo/Não-Interativo*: Determina se o Bash está operando em interação com o usuário
+
 **Shells de Login:**
 
 1. `/etc/profile`:
@@ -4234,6 +4237,43 @@ Independente do *shell*, aplicável conforme o Gerenciador de Sessão e a config
 1. `$BASH_ENV`:
     - Variável com caminho do arquivo (*rc*) a ser carregado
     - Se estiver definida o carregamento é feito automaticamente pelo *shell*
+
+#### Utilização
+
+Programas e fluxos de sessão são independentes de programas ou fluxos de *shell*, isso significa que num caso de sessão, pode ou também ser um caso de *shell*.
+
+**PAM & Systemd:**
+
+- *Display Managers* (GDM, SDDM, LightDM)
+- *Login* via TTY
+- *Login* via SSH
+- `su`/`su -`
+- `sudo`/`sudo -i`
+
+**Shells de Login:**
+
+- *Login* via TTY (após autenticação)
+- *Login* via SSH (interativo)
+- `su -`
+- `sudo -i`
+- `bash -l`
+
+**Shells Interativos Não-Login:**
+
+- Terminal aberto via menu do DE
+- Terminal aberto via *keyboard* (atalho)
+- Nova aba ou janela de terminal
+- `su` sem `-`
+- *Shell* iniciado dentro outro *shell* (`$ bash`)
+
+**Shells Não-Interativos:**
+
+- Execução de *scripts* (`./script.sh`)
+- `bash ./script.sh`
+- `bash -c <commnd>`
+- Comandos remotos via SSH (`ssh user@host <command>`)
+- Tarefas agendadas pelo Cron
+- Serviços do Systemd
 
 *LINKS:*
 
