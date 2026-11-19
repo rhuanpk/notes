@@ -268,6 +268,18 @@ Passar credenciais Spotify caso esteja tomando limite de requisição na hora de
     spotdl --client-id '<id>' --client-secret '<secret>' --auth-token '<token>'
     ```
 
+Exemplo de utilização completa com credencial (sem *proxy*) em *loop*:
+
+```sh
+while read link; do spotdl download "$link" --output '{artist}/{album}/{title}.{output-ext}' --threads 3 --cookie-file cookies.txt --yt-dlp-args '--sleep-requests 1 --sleep-interval 5 --max-sleep-interval 10 --retry-sleep exp=2:32'; sleep 1m; done < links.txt
+```
+
+Exemplo de utilização completa com *proxy* (sem credencial) em *loop*:
+
+```sh
+while read link; do spotdl download "$link" --output '{artist}/{album}/{title}.{output-ext}' --proxy http://127.0.0.1:3128 --threads 10 --yt-dlp-args '--sleep-requests 1 --sleep-interval 3 --max-sleep-interval 10 --retry-sleep exp=2:32'; sleep 1m; done < links.txt
+```
+
 ### Atualização
 
 Para atualizar o `spotdl`:
