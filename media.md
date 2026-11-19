@@ -229,7 +229,7 @@ Caso muitos *downloads* estejam falhando (provavelmente por limite de requisiç�
 	```
 1. Passe as opções para o comando:
 	```sh
-	spotdl download '<url>' --proxy http://127.0.0.1:3128 --threads 1
+	spotdl download '<url>' --proxy http://127.0.0.1:3128 --threads 10
 	```
 
 Especificar opções para o *download* das músicas passado diretamente para o `yt-dlp`:
