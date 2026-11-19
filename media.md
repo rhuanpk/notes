@@ -232,6 +232,42 @@ Caso muitos *downloads* estejam falhando (provavelmente por limite de requisiç�
 	spotdl download '<url>' --proxy http://127.0.0.1:3128 --threads 1
 	```
 
+Especificar opções para o *download* das músicas passado diretamente para o `yt-dlp`:
+
+```sh
+spotdl --yt-dlp-args '--sleep-requests 1 --sleep-interval 5 --max-sleep-interval 10 --retry-sleep exp=2:32'
+```
+
+Informar credenciais YouTube caso esteja tomando erro de *download* em músicas privadas ou protegidas:
+
+1. Instale a extensão de navegador para capturar *cookies* no estilo Netscape no [Chrome](https://chrome.google.com/webstore/detail/get-cookiestxt-locally/cclelndahbckbenkjhflpdbgdldlbecc) ou [Firefox](https://addons.mozilla.org/en-US/firefox/addon/cookies-txt/)
+1. Faça o [*login*](https://www.youtube.com/) na sua conta do YouTube
+1. Use a extensão para salvar o *cookie file*
+1. Passe o *cookie* via opções:
+    ```sh
+    spotdl --cookie-file cookies.txt
+    ```
+
+Passar credenciais Spotify caso esteja tomando limite de requisição na hora de buscar informações ou o servidor de credenciais *default* não esteja disponível:
+
+1. Faça o [*login*](https://accounts.spotify.com/login) na sua conta do Spotify
+1. Acesse o [painel do desenvolvedor](https://developer.spotify.com/dashboard) do Spotify
+1. Crie um novo aplicativo e coloque as informações obrigatórias ("*Redirect URIs*", pode informar uma URI *fake* como `http://127.0.0.1:3000`)
+1. Acesse o aplicativo criado
+1. Pegue o "Client ID" e o "Client secret"
+1. Gere o *token* de autenticação:
+    ```sh
+    curl -X POST "https://accounts.spotify.com/api/token" -H "Content-Type: application/x-www-form-urlencoded" -d "grant_type=client_credentials&client_id=<id>&client_secret=<secret>"
+    ```
+1. Teste o *token* de autenticação:
+    ```sh
+    curl -L 'https://api.spotify.com/v1/artists/6MQhMvMTFK4nAQzoOKrwY3' -H 'Authorization: Bearer <token>'
+    ```
+1. Passe as credenciais via opções:
+    ```sh
+    spotdl --client-id '<id>' --client-secret '<secret>' --auth-token '<token>'
+    ```
+
 ### Atualização
 
 Para atualizar o `spotdl`:
