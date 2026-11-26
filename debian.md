@@ -99,6 +99,12 @@ Listar pacotes instalados que não sejam dos repositórios do Debian:
 apt list '~i!~Odebian'
 ```
 
+Listar histórico de instalação:
+
+```sh
+zgrep -E 'apt(-get)? install' /var/log/apt/history.log*
+```
+
 ### *apt-pinning*
 
 Edite `/etc/apt/preferences.d/all`:
