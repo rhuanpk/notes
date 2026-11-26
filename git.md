@@ -541,6 +541,12 @@ Adicionar no índice algum arquivo que esteja sendo ignorado:
 git add -f file.txt
 ```
 
+Passar o diretório de trabalho corrente:
+
+```sh
+git -C <path> <command>
+```
+
 ### *Work Tree*
 
 Remover da árvore de trabalho:
@@ -999,7 +1005,7 @@ Isso é importante no Git porque é possível reescrever o histórico ou aplicar
 Código de saída para arquivos modificados/deletados (*worktree*):
 
 ```sh
-if git diff -s --exit-code <pathspec>; then echo not changed; else echo changed; fi
+if git diff -s --exit-code <path>; then echo not changed; else echo changed; fi
 ```
 
 Código de saída para arquivos não traqueados (*untracked*):
