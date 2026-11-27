@@ -326,3 +326,38 @@ fio --output-format=<type> [--output /path/log.<type>] <job>
 *OBSERVAÇÕES:*
 
 - O teste será executado no *drive* onde o arquivo de dados está (parâmetro `filename`), ou seja, se não alterar o caminho desse arquivo (com base no exemplo de configuração global), o teste será executado no disco atual (provável `/dev/sda` ou `/dev/nvme0n1`). Se quiser realizar o teste em outro disco interno ou dispositivo *flash*, monte alguma partição desse *drive* e altere o valor do parâmetro `filename` apontando o caminho do arquivo para lá
+
+## *Troubleshooting*
+
+Anotações gerais sobre resolução de problemas relacionados ao *hardware*.
+
+### *Pendrive Fake Size*
+
+*Parâmetros usados:*
+
+- `X`: Letra do disco
+- `Y`: Número da partição
+
+Programas necessários:
+
+```sh
+[sudo] apt install f3
+```
+
+Fazer a verificação de tamanho real de disco (a opção `-n` torna a opção destrutiva para os dados):
+
+```sh
+f3probe -nt /dev/sdX
+```
+
+Caso seja identificado divergencia no que o *firmware* reporta para o tamanho físico real disponível, reescreva a partição para reportar o tamanho real:
+
+```sh
+[sudo] f3fix --last-sec=<sectors> /dev/sdX
+```
+
+Caso tenha sido necessário passar o `f3fix`, (re)formate a partição:
+
+```sh
+[sudo] mkfs.<type> [<options>] /dev/sdXY
+```
