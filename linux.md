@@ -1202,6 +1202,21 @@ echo /foo/bar/xpto.any | parallel "echo '{} | {.} | {/} | {//} | {/.}'"
 - `-f <path>`: Especifica o arquivo `.tar*`
 - `-C <folder>`: Descompacta dentro da pasta especificada
 
+#### `.tar`
+
+Simplesmente compactar muitos arquivos (sem compressão?):
+
+```sh
+tar -cf archive.tar -C /path/parent folder/
+```
+
+Checando o progresso:
+
+```sh
+cd /path/parent
+tar -cf - folder/ | pv > archive.tar
+```
+
 #### `.tar.gz`
 
 Compactar em `.tar.gz`:
